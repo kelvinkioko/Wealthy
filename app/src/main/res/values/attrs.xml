@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="emphasisHighAlpha" format="float"/>
+
+    <declare-styleable name="DotsIndicator">
+        <attr name="dotsColor" format="color" />
+        <attr name="dotsSize" format="dimension" />
+        <attr name="dotsWidthFactor" format="integer" />
+        <attr name="dotsSpacing" format="dimension" />
+        <attr name="dotsCornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="GenericClickableItem">
+        <attr name="text" format="string" />
+        <attr name="profile" format="integer" />
+    </declare-styleable>
+</resources>

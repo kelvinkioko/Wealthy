@@ -1,0 +1,30 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity">
+
+    <item
+        android:id="@+id/expensesHostFragment"
+        android:icon="@drawable/ic_expenses"
+        android:enabled="true"
+        android:title="Expenses" />
+
+    <item
+        android:id="@+id/statisticsFragment"
+        android:icon="@drawable/ic_chart"
+        android:enabled="true"
+        android:title="Statistics" />
+
+    <item
+        android:id="@+id/accountsFragment"
+        android:icon="@drawable/ic_account"
+        android:enabled="true"
+        android:title="Sources" />
+
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/ic_settings"
+        android:enabled="true"
+        android:title="Settings" />
+
+</menu>

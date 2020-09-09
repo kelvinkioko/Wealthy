@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Wealthy</string>
+    <string name="image_description">Generic image description</string>
+
+    <string-array name="account_hint">
+        <item>Account type</item>
+    </string-array>
+</resources>

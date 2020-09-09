@@ -1,0 +1,94 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!--Typography-->
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Wealthy.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Wealthy.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Wealthy.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Wealthy.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Wealthy.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Wealthy.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Wealthy.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Wealthy.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Wealthy.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Wealthy.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Wealthy.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Wealthy.Overline</item>
+    </style>
+
+    <style name="App.Theme.BottomSheet.Rounded" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="bottomSheetStyle">@style/MaterialBottomSheet.Rounded.Tops</item>
+        <item name="android:windowAnimationStyle">@style/Animation.AppTheme.BottomSheet.Modal</item>
+    </style>
+
+    <style name="MaterialBottomSheet.Rounded.Tops" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Rounded.Tops</item>
+    </style>
+
+    <style name="circleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="ColoredButtonAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Rounded.Corners</item>
+    </style>
+
+    <style name="NegativeColoredButtonAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@color/colorNegative</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Rounded.Corners</item>
+    </style>
+
+    <style name="AccentColoredButtonAppearance">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="backgroundTint">@color/colorPositive</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Rounded.Corners</item>
+    </style>
+
+    <style name="OutlinesButtonAppearance" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.Rounded.Corners</item>
+    </style>
+
+    <style name="InputOutline" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@color/colorBackground</item>
+    </style>
+
+    <!-- Shapes -->
+
+    <style name="ShapeAppearance.Rounded.Tops" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyTopRight">rounded</item>
+        <item name="cornerSizeTopLeft">@dimen/hard_corner_cuts</item>
+        <item name="cornerSizeTopRight">@dimen/hard_corner_cuts</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Rounded.Corners" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">10dp</item>
+    </style>
+
+</resources>

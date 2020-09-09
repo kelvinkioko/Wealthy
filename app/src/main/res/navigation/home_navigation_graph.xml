@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation_graph"
+    app:startDestination="@+id/dailyExpensesFragment">
+
+    <fragment
+        android:id="@+id/dailyExpensesFragment"
+        android:name="com.money.budget.wealthy.ui.expenses.daily.DailyExpensesFragment"
+        android:label="Daily expenses fragment"
+        tools:layout="@layout/expenses_daily_fragment"/>
+
+    <action
+        android:id="@+id/toDailyExpensesFragment"
+        app:destination="@id/dailyExpensesFragment" />
+
+    <fragment
+        android:id="@+id/weeklyExpensesFragment"
+        android:name="com.money.budget.wealthy.ui.expenses.weekly.WeeklyExpensesFragment"
+        android:label="Weekly expenses fragment"
+        tools:layout="@layout/expenses_weekly_fragment"/>
+
+    <action
+        android:id="@+id/toWeeklyExpensesFragment"
+        app:destination="@id/weeklyExpensesFragment" />
+
+    <fragment
+        android:id="@+id/monthlyExpensesFragment"
+        android:name="com.money.budget.wealthy.ui.expenses.monthly.MonthlyExpensesFragment"
+        android:label="Monthly expenses fragment"
+        tools:layout="@layout/expenses_monthly_fragment"/>
+
+    <action
+        android:id="@+id/toMonthlyExpensesFragment"
+        app:destination="@id/monthlyExpensesFragment" />
+
+    <fragment
+        android:id="@+id/calendarExpensesFragment"
+        android:name="com.money.budget.wealthy.ui.expenses.calendar.CalendarExpensesFragment"
+        android:label="Calendar expenses fragment"
+        tools:layout="@layout/expenses_calendar_fragment"/>
+
+    <action
+        android:id="@+id/toCalendarExpensesFragment"
+        app:destination="@id/calendarExpensesFragment" />
+
+</navigation>

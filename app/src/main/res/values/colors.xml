@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#56c1d1</color>
+    <color name="colorPrimaryDark">#00b3ce</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="hint_text">#aeb0a5</color>
+
+    <color name="colorBackground">#ffffff</color>
+    <color name="viewBackgroundColor">#929497</color>
+
+    <!--Indicator colors-->
+    <color name="colorActive">#ffffff</color>
+    <color name="colorSemiActive">#85ffffff</color>
+    <color name="colorInactive">#50ffffff</color>
+
+    <color name="colorPositive">#38aba5</color>
+    <color name="colorNegative">#e25d6f</color>
+    <color name="colorIdle">#ffb74d</color>
+    <color name="colorTransparent">#00000000</color>
+</resources>

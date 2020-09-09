@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/onBoardingWelcomeFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/onBoardingWelcomeFragment"
+        android:name="com.money.budget.wealthy.ui.onboarding.OnboardingWelcomeFragment"
+        android:label="Onboarding fragment"
+        tools:layout="@layout/onboarding_welcome">
+        <action
+            android:id="@+id/toExpensesHostFragment"
+            app:destination="@id/expensesHostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/expensesHostFragment"
+        android:name="com.money.budget.wealthy.ui.expenses.ExpensesFragment"
+        android:label="expenses host fragment"
+        tools:layout="@layout/expenses_fragment">
+        <argument
+            android:name="hasBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/statisticsFragment"
+        android:name="com.money.budget.wealthy.ui.statistics.StatisticsFragment"
+        android:label="Statistics host fragment"
+        tools:layout="@layout/statistics_fragment">
+        <argument
+            android:name="hasBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="com.money.budget.wealthy.ui.accounts.AccountsFragment"
+        android:label="Accounts host fragment"
+        tools:layout="@layout/accounts_fragment">
+        <argument
+            android:name="hasBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/toManageAccountFragment"
+            app:destination="@id/manageAccountsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/manageAccountsFragment"
+        android:name="com.money.budget.wealthy.ui.accounts.manage_accounts.ManageAccountsFragment"
+        android:label="Manage accounts fragment"
+        tools:layout="@layout/account_manage_fragment">
+        <action
+            android:id="@+id/toAddAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addAccountFragment"
+        android:name="com.money.budget.wealthy.ui.accounts.manage_accounts.AddAccountFragment"
+        android:label="Add accounts fragment"
+        tools:layout="@layout/account_add_fragment"/>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.money.budget.wealthy.ui.settings.SettingsFragment"
+        android:label="Settings host fragment"
+        tools:layout="@layout/settings_fragment">
+        <argument
+            android:name="hasBottomNav"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/toSettingsAccountTypesFragment"
+            app:destination="@id/settingsAccountTypesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingsAccountTypesFragment"
+        android:name="com.money.budget.wealthy.ui.settings.account_types.AccountTypesFragment"
+        android:label="Manage accounts types fragment"
+        tools:layout="@layout/settings_manage_account_types_fragment" />
+
+</navigation>
