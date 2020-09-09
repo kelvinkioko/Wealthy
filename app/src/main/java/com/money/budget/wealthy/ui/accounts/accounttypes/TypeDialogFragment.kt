@@ -1,4 +1,4 @@
-package com.money.budget.wealthy.ui.accounts.account_types
+package com.money.budget.wealthy.ui.accounts.accounttypes
 
 import android.app.Dialog
 import android.content.res.Resources

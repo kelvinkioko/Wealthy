@@ -1,4 +1,4 @@
-package com.money.budget.wealthy.ui.accounts.manage_accounts
+package com.money.budget.wealthy.ui.accounts.manageaccounts
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.money.budget.wealthy.R
 import com.money.budget.wealthy.constants.Hive
@@ -29,6 +30,7 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
     private val binding by viewBinding(AccountAddFragmentBinding::bind)
 
     private val viewModel: AccountsViewModel by viewModel()
+    private val args: AddAccountFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +51,7 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 is AccountsUIState.Success -> findNavController().navigateUp()
+                is AccountsUIState.Account -> populateEditContent(it.accountEntity)
                 is AccountsUIState.AccountCallBack -> renderAccountTypeCallBack(it.accountTypesEntity)
             }
         }
@@ -57,6 +60,17 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
                 is AccountsActions.Navigate -> findNavController().navigate(it.destination)
                 is AccountsActions.BottomNavigate -> showDialog(it.bottomSheetDialogFragment)
             }
+        }
+    }
+
+    private fun populateEditContent(accountEntity: AccountsEntity) {
+        binding.apply {
+            accountName.editText!!.setText(accountEntity.sourceName)
+            accountAmount.editText!!.setText(accountEntity.sourceBalance)
+            accountAmount.editText!!.isEnabled = false
+            accountNumber.editText!!.setText(accountEntity.sourceNumber)
+            accountType.accountTypeName.text.toString()
+            accountDescription.editText!!.setText(accountEntity.sourceDescription)
         }
     }
 
@@ -117,6 +131,10 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
         binding.apply {
             accountType.apply {
                 accountTypeName.hint = "Select account type"
+            }
+
+            if (args.accountID.isNotEmpty()) {
+                viewModel.loadAccountByID(args.accountID)
             }
         }
     }

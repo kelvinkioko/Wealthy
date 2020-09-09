@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.money.budget.wealthy.constants.Hive
 import com.money.budget.wealthy.database.models.AccountsEntity
+import com.money.budget.wealthy.databinding.ItemAccountBinding
 import com.money.budget.wealthy.databinding.ItemAccountHeaderBinding
-import com.money.budget.wealthy.databinding.ItemAccountManageBinding
 import com.money.budget.wealthy.util.SectioningAdapter
 import java.util.ArrayList
 
@@ -15,7 +16,7 @@ class AccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Sectioni
 
     private val sections = ArrayList<Section>()
 
-    private lateinit var itemBinding: ItemAccountManageBinding
+    private lateinit var itemBinding: ItemAccountBinding
     private lateinit var headerBinding: ItemAccountHeaderBinding
 
     inner class Section {
@@ -24,7 +25,7 @@ class AccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Sectioni
     }
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemType: Int): ItemViewHolder =
-        ItemViewHolder(ItemAccountManageBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        ItemViewHolder(ItemAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onCreateHeaderViewHolder(parent: ViewGroup, headerType: Int): HeaderViewHolder =
         HeaderViewHolder(ItemAccountHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -37,7 +38,7 @@ class AccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Sectioni
 
     override fun doesSectionHaveFooter(sectionIndex: Int): Boolean = false
 
-    inner class ItemViewHolder(binding: ItemAccountManageBinding) : SectioningAdapter.ItemViewHolder(binding.root) {
+    inner class ItemViewHolder(binding: ItemAccountBinding) : SectioningAdapter.ItemViewHolder(binding.root) {
         init {
             itemBinding = binding
         }
@@ -70,8 +71,8 @@ class AccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Sectioni
 
         itemBinding.apply {
             accountName.text = account.sourceName
-            accountDescription.text = account.sourceDescription
-            accountDescription.isVisible = true
+            accountBalance.text = "Kes ${Hive().formatCurrency(account.sourceBalance.toInt())}"
+            accountBalance.isVisible = true
 
             if ((itemIndex + 1) == section.items.size) {
                 accountView.isGone = true

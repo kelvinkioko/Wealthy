@@ -1,4 +1,4 @@
-package com.money.budget.wealthy.ui.settings.account_types
+package com.money.budget.wealthy.ui.settings.accounttypes
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

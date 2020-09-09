@@ -1,6 +1,7 @@
 package com.money.budget.wealthy.constants
 
 import android.annotation.SuppressLint
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -22,5 +23,11 @@ class Hive {
         val calendar = Calendar.getInstance()
         @SuppressLint("SimpleDateFormat") val mdformat = SimpleDateFormat("yyyyMMdd_HHmmss")
         return mdformat.format(calendar.time)
+    }
+
+    fun formatCurrency(amount: Int): String {
+        val df = DecimalFormat("#,###,###,###,###.00")
+        df.minimumFractionDigits = 2
+        return df.format(amount)
     }
 }

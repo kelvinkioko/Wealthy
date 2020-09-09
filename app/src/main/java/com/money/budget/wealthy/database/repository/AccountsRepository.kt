@@ -22,8 +22,16 @@ class AccountsRepository(application: Application) {
         return accountsDao.loadAccounts()
     }
 
+    fun loadAccountByID(sourceID: String): AccountsEntity {
+        return accountsDao.loadAccountByID(sourceID)
+    }
+
     fun countAccounts(): Int {
         return accountsDao.countAccounts()
+    }
+
+    fun deleteAccountByID(sourceID: String) {
+        return accountsDao.deleteAccountByID(sourceID = sourceID)
     }
 
     fun deleteAccounts() {

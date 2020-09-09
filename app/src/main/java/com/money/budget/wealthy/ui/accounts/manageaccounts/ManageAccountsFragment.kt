@@ -1,4 +1,4 @@
-package com.money.budget.wealthy.ui.accounts.manage_accounts
+package com.money.budget.wealthy.ui.accounts.manageaccounts
 
 import android.os.Bundle
 import android.view.View
@@ -6,12 +6,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.money.budget.wealthy.R
-import com.money.budget.wealthy.database.models.AccountsEntity
 import com.money.budget.wealthy.databinding.AccountManageFragmentBinding
 import com.money.budget.wealthy.ui.accounts.AccountsActions
 import com.money.budget.wealthy.ui.accounts.AccountsUIState
 import com.money.budget.wealthy.ui.accounts.AccountsViewModel
+import com.money.budget.wealthy.ui.accounts.ManageAccountsEntity
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
@@ -23,12 +24,7 @@ class ManageAccountsFragment : Fragment(R.layout.account_manage_fragment) {
 
     private val viewModel: AccountsViewModel by viewModel()
 
-    private val accountAdapter: ManageAccountsAdapter by lazy {
-        ManageAccountsAdapter { onAccountPicked(it) }
-    }
-
-    private fun onAccountPicked(account: AccountsEntity) {
-    }
+    private val accountAdapter: ManageAccountsAdapter by lazy { ManageAccountsAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,17 +52,22 @@ class ManageAccountsFragment : Fragment(R.layout.account_manage_fragment) {
     private fun setupViewObservers() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
-                is AccountsUIState.Accounts -> populateAccounts(it.accountEntity)
+                is AccountsUIState.ManageAccounts -> populateAccounts(it.accountEntity)
             }
         }
         viewModel.action.observeEvent(viewLifecycleOwner) {
             when (it) {
                 is AccountsActions.Navigate -> findNavController().navigate(it.destination)
+                is AccountsActions.BottomNavigate -> showDialog(it.bottomSheetDialogFragment)
             }
         }
     }
 
-    private fun populateAccounts(accountsEntity: List<AccountsEntity>) {
+    private fun showDialog(bottomSheetDialogFragment: BottomSheetDialogFragment) {
+        bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    private fun populateAccounts(accountsEntity: List<ManageAccountsEntity>) {
         accountAdapter.setAccounts(accountsEntity)
     }
 
@@ -76,6 +77,6 @@ class ManageAccountsFragment : Fragment(R.layout.account_manage_fragment) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadAccounts()
+        viewModel.loadManageAccounts()
     }
 }

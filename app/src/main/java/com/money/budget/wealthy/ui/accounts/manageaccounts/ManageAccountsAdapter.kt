@@ -1,17 +1,17 @@
-package com.money.budget.wealthy.ui.accounts.manage_accounts
+package com.money.budget.wealthy.ui.accounts.manageaccounts
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import com.money.budget.wealthy.database.models.AccountsEntity
 import com.money.budget.wealthy.databinding.ItemAccountHeaderBinding
 import com.money.budget.wealthy.databinding.ItemAccountManageBinding
+import com.money.budget.wealthy.ui.accounts.ManageAccountsEntity
 import com.money.budget.wealthy.util.SectioningAdapter
 import java.util.ArrayList
 
-class ManageAccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : SectioningAdapter() {
+class ManageAccountsAdapter : SectioningAdapter() {
 
     private val sections = ArrayList<Section>()
 
@@ -20,7 +20,7 @@ class ManageAccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Se
 
     inner class Section {
         var alpha: String = ""
-        var items: ArrayList<AccountsEntity> = ArrayList()
+        var items: ArrayList<ManageAccountsEntity> = ArrayList()
     }
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemType: Int): ItemViewHolder =
@@ -76,10 +76,13 @@ class ManageAccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Se
             if ((itemIndex + 1) == section.items.size) {
                 accountView.isGone = true
             }
+
+            accountEdit.setOnClickListener { account.editAccountClick.invoke() }
+            accountDelete.setOnClickListener { account.deleteAccountClick.invoke() }
         }
     }
 
-    fun setAccounts(accounts: List<AccountsEntity>) {
+    fun setAccounts(accounts: List<ManageAccountsEntity>) {
         sections.clear()
 
         var alpha: String

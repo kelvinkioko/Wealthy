@@ -1,4 +1,4 @@
-package com.money.budget.wealthy.ui.settings.account_types
+package com.money.budget.wealthy.ui.settings.accounttypes
 
 import android.os.Bundle
 import android.view.View

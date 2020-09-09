@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/manageAccountsFragment"
-        android:name="com.money.budget.wealthy.ui.accounts.manage_accounts.ManageAccountsFragment"
+        android:name="com.money.budget.wealthy.ui.accounts.manageaccounts.ManageAccountsFragment"
         android:label="Manage accounts fragment"
         tools:layout="@layout/account_manage_fragment">
         <action
@@ -64,9 +64,13 @@
 
     <fragment
         android:id="@+id/addAccountFragment"
-        android:name="com.money.budget.wealthy.ui.accounts.manage_accounts.AddAccountFragment"
+        android:name="com.money.budget.wealthy.ui.accounts.manageaccounts.AddAccountFragment"
         android:label="Add accounts fragment"
-        tools:layout="@layout/account_add_fragment"/>
+        tools:layout="@layout/account_add_fragment">
+        <argument
+            android:name="accountID"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/settingsFragment"
@@ -84,7 +88,7 @@
 
     <fragment
         android:id="@+id/settingsAccountTypesFragment"
-        android:name="com.money.budget.wealthy.ui.settings.account_types.AccountTypesFragment"
+        android:name="com.money.budget.wealthy.ui.settings.accounttypes.AccountTypesFragment"
         android:label="Manage accounts types fragment"
         tools:layout="@layout/settings_manage_account_types_fragment" />
 
