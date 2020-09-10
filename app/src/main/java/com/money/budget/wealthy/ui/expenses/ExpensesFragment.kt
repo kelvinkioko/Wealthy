@@ -3,11 +3,14 @@ package com.money.budget.wealthy.ui.expenses
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.money.budget.wealthy.R
 import com.money.budget.wealthy.databinding.ExpensesFragmentBinding
+import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.viewBinding
 
 class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
@@ -46,6 +49,10 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
                     // Handle tab unselect
                 }
             })
+
+            addTransaction.debouncedClick(lifecycleScope) {
+                findNavController().navigate(ExpensesFragmentDirections.toAddExpenseFragment())
+            }
         }
     }
 }

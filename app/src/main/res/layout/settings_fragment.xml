@@ -46,7 +46,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Account types"
-                app:profile="@drawable/ic_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -62,16 +61,57 @@
                 app:layout_constraintTop_toBottomOf="@+id/accountTypes"/>
 
             <com.money.budget.wealthy.widget.GenericActionItem
+                android:id="@+id/transactionTypes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:text="Transaction types"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/accountTypesView"/>
+
+            <View
+                android:id="@+id/transactionTypesView"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="40dp"
+                android:background="@color/hint_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/transactionTypes"/>
+
+            <com.money.budget.wealthy.widget.GenericActionItem
+                android:id="@+id/categoryTypes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                app:text="Expense categories"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/transactionTypesView"/>
+
+            <View
+                android:id="@+id/categoryTypesView"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="40dp"
+                android:background="@color/hint_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/categoryTypes"/>
+
+            <com.money.budget.wealthy.widget.GenericActionItem
                 android:id="@+id/tellAFriend"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Tell a friend"
-                app:profile="@drawable/ic_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/accountTypesView"/>
+                app:layout_constraintTop_toBottomOf="@id/categoryTypesView"/>
 
             <View
                 android:id="@+id/tellAFriendView"
@@ -90,7 +130,6 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="App info"
-                app:profile="@drawable/ic_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tellAFriendView"/>

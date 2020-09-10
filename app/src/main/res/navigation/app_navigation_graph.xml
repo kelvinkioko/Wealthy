@@ -25,7 +25,16 @@
             android:name="hasBottomNav"
             android:defaultValue="true"
             app:argType="boolean" />
+        <action
+            android:id="@+id/toAddExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/addExpenseFragment"
+        android:name="com.money.budget.wealthy.ui.expenses.manageexpenses.AddExpenseFragment"
+        android:label="add expenses fragment"
+        tools:layout="@layout/add_expenses_fragment"/>
 
     <fragment
         android:id="@+id/statisticsFragment"

@@ -6,14 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.money.budget.wealthy.database.dao.AccountTypesDao
 import com.money.budget.wealthy.database.dao.AccountsDao
+import com.money.budget.wealthy.database.dao.CategoryTypesDao
+import com.money.budget.wealthy.database.dao.TransactionTypesDao
 import com.money.budget.wealthy.database.models.AccountTypesEntity
 import com.money.budget.wealthy.database.models.AccountsEntity
+import com.money.budget.wealthy.database.models.CategoryTypesEntity
+import com.money.budget.wealthy.database.models.TransactionTypesEntity
 
-@Database(entities = [AccountsEntity::class, AccountTypesEntity::class], version = 1)
+@Database(entities = [AccountsEntity::class, AccountTypesEntity::class, CategoryTypesEntity::class, TransactionTypesEntity::class], version = 1)
 abstract class WealthyDatabase : RoomDatabase() {
 
     abstract fun accountsDao(): AccountsDao
     abstract fun accountTypesDao(): AccountTypesDao
+    abstract fun categoryTypesDao(): CategoryTypesDao
+    abstract fun transactionTypesDao(): TransactionTypesDao
 
     companion object {
         @Volatile
