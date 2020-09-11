@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val expensesModule = module {
-    viewModel { ManageExpenseViewModel(get(), get(), get()) }
+    viewModel { ManageExpenseViewModel(get(), get(), get(), get()) }
 }

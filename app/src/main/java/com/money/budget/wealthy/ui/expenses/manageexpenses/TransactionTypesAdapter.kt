@@ -11,6 +11,8 @@ class TransactionTypesAdapter(private val transactionType: (TransactionTypesEnti
 
     private val items = mutableListOf<TransactionTypesEntity>()
 
+    private var checkedItems = ""
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder =
         TransactionViewHolder(
             ItemTransactionTypeBinding.inflate(
@@ -39,8 +41,11 @@ class TransactionTypesAdapter(private val transactionType: (TransactionTypesEnti
         init {
             itemView.setOnClickListener {
                 transactionType.invoke(items[adapterPosition])
+                val radioItem = items[adapterPosition]
+                checkedItems = if (checkedItems.contains(radioItem.transactionName)) { " " } else { radioItem.transactionName }
                 binding.apply {
-                    itemRadioButton.isChecked = !itemRadioButton.isChecked
+                    itemRadioButton.isChecked = checkedItems.contains(radioItem.transactionName)
+                    notifyDataSetChanged()
                 }
             }
         }
@@ -48,6 +53,9 @@ class TransactionTypesAdapter(private val transactionType: (TransactionTypesEnti
         fun bind(transactionType: TransactionTypesEntity) {
             binding.apply {
                 transactionName.text = transactionType.transactionName
+                if (checkedItems.isNotEmpty()) {
+                    itemRadioButton.isChecked = checkedItems.contains(transactionType.transactionName)
+                }
             }
         }
     }

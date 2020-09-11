@@ -36,22 +36,6 @@ class CalendarExpensesFragment : Fragment(R.layout.expenses_calendar_fragment), 
                 .setWeekStartDay(Calendar.SUNDAY, false)
                 .setCallback(this@CalendarExpensesFragment)
                 .build()
-
-            val c = Calendar.getInstance()
-            c.add(Calendar.DAY_OF_MONTH, 2)
-            eventsCalendar.addEvent(c)
-            c.add(Calendar.DAY_OF_MONTH, 3)
-            eventsCalendar.addEvent(c)
-            c.add(Calendar.DAY_OF_MONTH, 4)
-            eventsCalendar.addEvent(c)
-            c.add(Calendar.DAY_OF_MONTH, 7)
-            eventsCalendar.addEvent(c)
-            c.add(Calendar.MONTH, 1)
-            c[Calendar.DAY_OF_MONTH] = 1
-            eventsCalendar.addEvent(c)
-
-            val dc = Calendar.getInstance()
-            dc.add(Calendar.DAY_OF_MONTH, 2)
         }
     }
 

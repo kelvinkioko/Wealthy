@@ -8,9 +8,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.money.budget.wealthy.constants.Hive
 import com.money.budget.wealthy.database.models.AccountsEntity
 import com.money.budget.wealthy.database.models.CategoryTypesEntity
+import com.money.budget.wealthy.database.models.ExpensesEntity
 import com.money.budget.wealthy.database.models.TransactionTypesEntity
 import com.money.budget.wealthy.database.repository.AccountsRepository
 import com.money.budget.wealthy.database.repository.CategoryRepository
+import com.money.budget.wealthy.database.repository.ExpensesRepository
 import com.money.budget.wealthy.database.repository.TransactionRepository
 import com.money.budget.wealthy.ui.expenses.manageexpenses.choose.ChooseAccountDialogFragment
 import com.money.budget.wealthy.ui.expenses.manageexpenses.choose.ChooseCategoryDialogFragment
@@ -20,6 +22,7 @@ import com.money.budget.wealthy.util.asEvent
 class ManageExpenseViewModel(
     private val accountsRepository: AccountsRepository,
     private val categoryRepository: CategoryRepository,
+    private val expensesRepository: ExpensesRepository,
     private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
@@ -142,6 +145,25 @@ class ManageExpenseViewModel(
             }
         )
         _action.postValue(ManageExpenseActions.BottomNavigate(bottomSheetFragment).asEvent())
+    }
+
+    fun saveExpense(name: String, amount: String, description: String, date: String) {
+        expensesRepository.insertExpenses(
+            ExpensesEntity(
+                id = 0,
+                expenseID = "EXP-${Hive().getTimestamp()}",
+                expenseType = "${transactionTypesEntity.transactionName}#${transactionTypesEntity.transactionID}",
+                expenseName = name,
+                expenseAmount = amount,
+                expenseAccount = "${accountsEntity.sourceName}#${accountsEntity.sourceID}",
+                expenseCategory = "${categoryTypesEntity.categoryName}#${categoryTypesEntity.categoryID}",
+                expenseDescription = description,
+                expenseImage = "",
+                expenseDate = date,
+                createdAt = Hive().getCurrentDateTime()
+            )
+        )
+        _uiState.postValue(ManageExpenseUIState.Success)
     }
 }
 

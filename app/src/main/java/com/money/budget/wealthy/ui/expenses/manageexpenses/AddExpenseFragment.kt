@@ -1,6 +1,7 @@
 package com.money.budget.wealthy.ui.expenses.manageexpenses
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.money.budget.wealthy.R
 import com.money.budget.wealthy.database.models.AccountsEntity
 import com.money.budget.wealthy.database.models.CategoryTypesEntity
@@ -16,6 +18,7 @@ import com.money.budget.wealthy.databinding.AddExpensesFragmentBinding
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
+import java.text.SimpleDateFormat
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
@@ -24,12 +27,15 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
 
     private val viewModel: ManageExpenseViewModel by viewModel()
 
+    private var transactionTypeSelected: Boolean = false
+
     private val transactionTypeAdapter: TransactionTypesAdapter by lazy {
         TransactionTypesAdapter { onTransactionTypePicked(it) }
     }
 
     private fun onTransactionTypePicked(transactionTypes: TransactionTypesEntity) {
         viewModel.setTransactionTypes(transactionTypes)
+        transactionTypeSelected = true
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +64,37 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
             category.parent.debouncedClick(lifecycleScope) {
                 viewModel.chooseCategory()
             }
+            transactionDate.editText!!.debouncedClick(lifecycleScope) {
+                // Date Range Picker
+                val builder = MaterialDatePicker.Builder.datePicker()
+                val picker = builder.build()
+                picker.show(requireActivity().supportFragmentManager, picker.toString())
+                picker.addOnCancelListener {
+                    Log.d("DatePicker Activity", "Dialog was cancelled")
+                }
+                picker.addOnPositiveButtonClickListener {
+                    val uniformDateFormatter = SimpleDateFormat("dd/MM/yyyy").format(it)
+                    transactionDate.editText!!.setText(uniformDateFormatter)
+                }
+            }
+            saveTransaction.debouncedClick(lifecycleScope) {
+                when {
+                    expenseNickname.editText!!.text.toString().isEmpty() -> expenseNickname.error = "Required"
+                    accountAmount.editText!!.text.toString().isEmpty() -> accountAmount.error = "Required"
+                    !transactionTypeSelected -> transactionTypesError.isVisible = true
+                    accountType.accountTypeName.text.toString().contains("Select") -> accountTypeError.isVisible = true
+                    category.accountTypeName.text.toString().contains("Select") -> categoryError.isVisible = true
+                    transactionDate.editText!!.text.toString().isEmpty() -> transactionDate.error = "Required"
+                    else -> {
+                        viewModel.saveExpense(
+                            name = expenseNickname.editText!!.text.toString(),
+                            amount = accountAmount.editText!!.text.toString(),
+                            description = transactionDescription.editText!!.text.toString(),
+                            date = transactionDate.editText!!.text.toString()
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -65,7 +102,7 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 is ManageExpenseUIState.Loading -> { }
-                is ManageExpenseUIState.Success -> { }
+                is ManageExpenseUIState.Success -> findNavController().navigateUp()
                 is ManageExpenseUIState.Accounts -> renderAccounts(it.accountsEntity)
                 is ManageExpenseUIState.CategoryTypes -> renderCategory(it.categoryTypesEntity)
                 is ManageExpenseUIState.TransactionTypes -> renderTransactionTypes(it.transactionTypesEntity)

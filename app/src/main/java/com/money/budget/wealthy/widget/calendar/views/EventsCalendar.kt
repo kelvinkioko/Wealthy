@@ -378,14 +378,14 @@ class EventsCalendar : ViewPager, MonthView.Callback {
                         // post {
                         EventsCalendarUtil.monthPos = currentItem
                         EventsCalendarUtil.selectedDate = selectedDate
-                        mCalendarMonthsAdapter?.getItem(currentItem)?.setSelectedDate(selectedDate!!)
+                        mCalendarMonthsAdapter?.getItem(currentItem)?.setSelectedDate(selectedDate)
                         doFocus = true
                         // }
                     } else {
                         position = EventsCalendarUtil.getWeekPosition(selectedDate, mMinMonth)
                         setCurrentItem(position, false)
                         post {
-                            mCalendarWeekPagerAdapter.getItem(currentItem)?.setSelectedDate(selectedDate!!)
+                            mCalendarWeekPagerAdapter.getItem(currentItem)?.setSelectedDate(selectedDate)
                             doFocus = true
                         }
                     }
