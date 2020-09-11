@@ -5,7 +5,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginVertical="16dp">
+    android:layout_marginBottom="16dp">
+
+    <com.money.budget.wealthy.widget.calendar.views.EventsCalendar
+        android:id="@+id/eventsCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        app:eventDotColor="#F9C23B"
+        app:isBoldTextOnSelectionEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rangeSelectionColor="#F9C23B"
+        app:rangeSelectionEndColor="#F9C23B"
+        app:rangeSelectionStartColor="#F9C23B"
+        app:selectionColor="#FF416C"
+        app:weekHeaderColor="#FF416C" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"

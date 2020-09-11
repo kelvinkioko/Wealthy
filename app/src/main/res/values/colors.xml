@@ -19,4 +19,6 @@
     <color name="colorNegative">#e25d6f</color>
     <color name="colorIdle">#ffb74d</color>
     <color name="colorTransparent">#00000000</color>
+
+    <color name="text_black_disabled">#54000000</color>
 </resources>
