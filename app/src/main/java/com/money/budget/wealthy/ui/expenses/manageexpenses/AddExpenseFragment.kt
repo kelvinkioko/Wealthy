@@ -109,7 +109,6 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
                 is ManageExpenseUIState.Error -> { }
             }
         }
-
         viewModel.action.observeEvent(viewLifecycleOwner) {
             when (it) {
                 is ManageExpenseActions.Navigate -> findNavController().navigate(it.destination)

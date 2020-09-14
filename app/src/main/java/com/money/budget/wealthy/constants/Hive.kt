@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 
 class Hive {
 
@@ -29,5 +30,16 @@ class Hive {
         val df = DecimalFormat("#,###,###,###,###.00")
         df.minimumFractionDigits = 2
         return df.format(amount)
+    }
+
+    fun formatDateHeader(date: String): String {
+        val inFormat = SimpleDateFormat("dd/MM/yyyy")
+        val input: Date = inFormat.parse(date)
+        val weekDayFormat = SimpleDateFormat("EEEE").format(input)
+        val dayFormat = SimpleDateFormat("dd").format(input)
+        val monthFormat = SimpleDateFormat("MM").format(input)
+        val yearFormat = SimpleDateFormat("yyyy").format(input)
+
+        return "$weekDayFormat#$dayFormat#$monthFormat#$yearFormat"
     }
 }
