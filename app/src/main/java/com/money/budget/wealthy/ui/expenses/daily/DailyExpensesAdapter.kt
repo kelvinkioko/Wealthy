@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.money.budget.wealthy.R
 import com.money.budget.wealthy.constants.Hive
-import com.money.budget.wealthy.database.models.ExpensesEntity
 import com.money.budget.wealthy.databinding.ItemExpenseDailyBinding
 import com.money.budget.wealthy.databinding.ItemExpenseDailyHeaderBinding
 import com.money.budget.wealthy.util.SectioningAdapter
@@ -21,7 +21,7 @@ class DailyExpensesAdapter : SectioningAdapter() {
 
     inner class Section {
         var alpha: String = ""
-        var items: ArrayList<ExpensesEntity> = ArrayList()
+        var items: ArrayList<DisplayTransactionsEntity> = ArrayList()
     }
 
     override fun onCreateItemViewHolder(parent: ViewGroup, itemType: Int): ItemViewHolder =
@@ -60,31 +60,45 @@ class DailyExpensesAdapter : SectioningAdapter() {
             monthYearValue.text = date[2] + "." + date[3]
             saturdayValue.text = date[0]
 
+            if (!section.items[0].TotalExpense.equals("0.0", true)) {
+                expensesTitle.isVisible = true
+                expensesValue.isVisible = true
+                expensesValue.text =
+                    "Ksh ${Hive().formatCurrency(section.items[0].TotalExpense.toFloat())}"
+            }
+
+            if (!section.items[0].TotalIncome.equals("0.0", true)) {
+                incomeTitle.isVisible = true
+                incomeValue.isVisible = true
+                incomeValue.text =
+                    "Ksh ${Hive().formatCurrency(section.items[0].TotalIncome.toFloat())}"
+            }
+
             if (sectionIndex == 0) {
                 headerViewTop.isGone = true
             }
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "NewApi")
     override fun onBindItemViewHolder(viewHolder: SectioningAdapter.ItemViewHolder, sectionIndex: Int, itemIndex: Int, itemType: Int) {
         val section = sections[sectionIndex]
 
         val account = section.items[itemIndex]
 
         itemBinding.apply {
-            expenseNameValue.text = account.expenseName
-            expenseCategoryValue.text = "${account.expenseCategory.split("#")[0]} - ${account.expenseAccount.split("#")[0]}"
+            transactionNameValue.text = account.expenseName
+            transactionCategoryValue.text = "${account.expenseCategory.split("#")[0]} - ${account.expenseAccount.split("#")[0]}"
 
             if (account.expenseType.contains("expense", true)) {
-                expensesTitle.isVisible = true
-                expensesValue.isVisible = true
-                expensesValue.text = "Ksh ${Hive().formatCurrency(account.expenseAmount.toInt())}"
-            } else {
-                incomeTitle.isVisible = true
-                incomeValue.isVisible = true
-                incomeValue.text = "Ksh ${Hive().formatCurrency(account.expenseAmount.toInt())}"
+                transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorNegative))
+            } else if (account.expenseType.contains("income", true)) {
+                transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorPositive))
             }
+
+            transactionTitle.isVisible = true
+            transactionValue.isVisible = true
+            transactionValue.text = "Ksh ${Hive().formatCurrency(account.expenseAmount)}"
 
             if ((itemIndex + 1) == section.items.size) {
                 expensesDailyView.isGone = true
@@ -92,7 +106,7 @@ class DailyExpensesAdapter : SectioningAdapter() {
         }
     }
 
-    fun setExpenses(accounts: List<ExpensesEntity>) {
+    fun setExpenses(accounts: List<DisplayTransactionsEntity>) {
         sections.clear()
 
         var alpha: String

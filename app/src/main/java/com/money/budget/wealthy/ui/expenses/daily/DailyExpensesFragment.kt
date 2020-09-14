@@ -7,7 +7,6 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.money.budget.wealthy.R
-import com.money.budget.wealthy.database.models.ExpensesEntity
 import com.money.budget.wealthy.databinding.ExpensesDailyFragmentBinding
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
@@ -46,7 +45,7 @@ class DailyExpensesFragment : Fragment(R.layout.expenses_daily_fragment) {
         bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
     }
 
-    private fun populateExpenses(expensesEntity: List<ExpensesEntity>) {
+    private fun populateExpenses(expensesEntity: List<DisplayTransactionsEntity>) {
         expensesAdapter.setExpenses(expensesEntity)
     }
 

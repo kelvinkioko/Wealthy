@@ -16,6 +16,14 @@ class ExpensesRepository(application: Application) {
         return expensesDao.loadExpenses()
     }
 
+    fun loadExpensesByDate(expenseDate: String): Float {
+        return expensesDao.loadExpensesByDate(expenseDate)
+    }
+
+    fun loadIncomeByDate(expenseDate: String): Float {
+        return expensesDao.loadIncomeByDate(expenseDate)
+    }
+
     fun countExpenses(): Int {
         return expensesDao.countExpenses()
     }

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.money.budget.wealthy.database.models.ExpensesEntity
 import com.money.budget.wealthy.database.repository.ExpensesRepository
 import com.money.budget.wealthy.util.Event
 
@@ -24,8 +23,30 @@ class DailyExpensesViewModel(
     }
 
     fun loadExpenses() {
-        val accounts = expensesRepository.loadExpenses()
-        _uiState.postValue(DailyExpensesUIState.DailyExpenses(accounts))
+        val transactions = expensesRepository.loadExpenses()
+        val displayTransactionsEntity: ArrayList<DisplayTransactionsEntity> = ArrayList()
+        for (transaction in transactions) {
+            displayTransactionsEntity.add(
+                DisplayTransactionsEntity(
+                    expenseID = transaction.expenseID,
+                    expenseType = transaction.expenseType,
+                    expenseName = transaction.expenseName,
+                    expenseAmount = transaction.expenseAmount,
+                    expenseAccount = transaction.expenseAccount,
+                    expenseCategory = transaction.expenseCategory,
+                    expenseDescription = transaction.expenseDescription,
+                    expenseImage = transaction.expenseImage,
+                    expenseDate = transaction.expenseDate,
+                    createdAt = transaction.createdAt,
+                    TotalExpense = expensesRepository.loadExpensesByDate(transaction.expenseDate).toString(),
+                    TotalIncome = expensesRepository.loadIncomeByDate(transaction.expenseDate).toString()
+                )
+            )
+
+            println("Total ${expensesRepository.loadExpensesByDate(transaction.expenseDate)}")
+            println("Total ${expensesRepository.loadIncomeByDate(transaction.expenseDate)}")
+        }
+        _uiState.postValue(DailyExpensesUIState.DailyExpenses(displayTransactionsEntity))
     }
 }
 
@@ -40,7 +61,22 @@ sealed class DailyExpensesUIState {
 
     object Success : DailyExpensesUIState()
 
-    data class DailyExpenses(val expensesEntity: List<ExpensesEntity>) : DailyExpensesUIState()
+    data class DailyExpenses(val expensesEntity: List<DisplayTransactionsEntity>) : DailyExpensesUIState()
 
     data class Error(val statusCode: String, val message: String) : DailyExpensesUIState()
 }
+
+data class DisplayTransactionsEntity(
+    var expenseID: String,
+    var expenseType: String,
+    var expenseName: String,
+    var expenseAmount: Float,
+    var expenseAccount: String,
+    var expenseCategory: String,
+    var expenseDescription: String,
+    var expenseImage: String,
+    var expenseDate: String,
+    var createdAt: String,
+    var TotalExpense: String,
+    var TotalIncome: String
+)

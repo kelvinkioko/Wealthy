@@ -71,7 +71,7 @@ class AccountsAdapter(private val accounts: (AccountsEntity) -> Unit) : Sectioni
 
         itemBinding.apply {
             accountName.text = account.sourceName
-            accountBalance.text = "Kes ${Hive().formatCurrency(account.sourceBalance.toInt())}"
+            accountBalance.text = "Kes ${Hive().formatCurrency(account.sourceBalance.toFloat())}"
             accountBalance.isVisible = true
 
             if ((itemIndex + 1) == section.items.size) {

@@ -154,7 +154,7 @@ class ManageExpenseViewModel(
                 expenseID = "EXP-${Hive().getTimestamp()}",
                 expenseType = "${transactionTypesEntity.transactionName}#${transactionTypesEntity.transactionID}",
                 expenseName = name,
-                expenseAmount = amount,
+                expenseAmount = amount.toFloat(),
                 expenseAccount = "${accountsEntity.sourceName}#${accountsEntity.sourceID}",
                 expenseCategory = "${categoryTypesEntity.categoryName}#${categoryTypesEntity.categoryID}",
                 expenseDescription = description,

@@ -8,7 +8,7 @@
     android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/expenseNameValue"
+        android:id="@+id/transactionNameValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
@@ -16,14 +16,14 @@
         android:textAppearance="?attr/textAppearanceCaption"
         android:textSize="14sp"
         app:layout_constraintHorizontal_weight="1.5"
-        app:layout_constraintBottom_toTopOf="@+id/expenseCategoryValue"
+        app:layout_constraintBottom_toTopOf="@+id/transactionCategoryValue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/incomeTitle"
+        app:layout_constraintEnd_toStartOf="@+id/transactionTitle"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/expenseCategoryValue"
+        android:id="@+id/transactionCategoryValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
@@ -33,48 +33,13 @@
         android:textSize="14sp"
         app:layout_goneMarginBottom="8dp"
         app:layout_constraintHorizontal_weight="1.5"
-        app:layout_constraintEnd_toStartOf="@+id/incomeValue"
+        app:layout_constraintEnd_toStartOf="@+id/transactionValue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenseNameValue"
+        app:layout_constraintTop_toBottomOf="@+id/transactionNameValue"
         app:layout_constraintBottom_toTopOf="@+id/expensesDailyView" />
 
     <TextView
-        android:id="@+id/incomeTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:includeFontPadding="false"
-        android:text="Income"
-        android:textAppearance="?attr/textAppearanceBody1"
-        android:textSize="14sp"
-        android:gravity="right"
-        android:textStyle="bold"
-        android:textColor="@color/colorPositive"
-        android:visibility="gone"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/incomeValue"
-        app:layout_constraintStart_toEndOf="@+id/expenseNameValue"
-        app:layout_constraintTop_toTopOf="@+id/expenseNameValue"
-        app:layout_constraintEnd_toEndOf="@+id/incomeValue"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/incomeValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:includeFontPadding="false"
-        android:text="Ksh 15,000.00"
-        android:textAppearance="?attr/textAppearanceCaption"
-        android:textSize="14sp"
-        android:gravity="end"
-        android:visibility="gone"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintBottom_toBottomOf="@+id/expenseCategoryValue"
-        app:layout_constraintStart_toEndOf="@+id/expenseCategoryValue"
-        app:layout_constraintEnd_toStartOf="@+id/expensesValue"
-        app:layout_constraintTop_toBottomOf="@+id/incomeTitle" />
-
-    <TextView
-        android:id="@+id/expensesTitle"
+        android:id="@+id/transactionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
@@ -85,15 +50,16 @@
         android:textStyle="bold"
         android:textColor="@color/colorNegative"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/expensesValue"
-        app:layout_constraintStart_toEndOf="@+id/incomeTitle"
-        app:layout_constraintTop_toTopOf="@+id/incomeTitle"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/transactionValue"
+        app:layout_constraintStart_toEndOf="@+id/transactionNameValue"
+        app:layout_constraintTop_toTopOf="@+id/transactionNameValue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         tools:visibility="visible" />
 
     <TextView
-        android:id="@+id/expensesValue"
+        android:id="@+id/transactionValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
@@ -103,10 +69,10 @@
         android:gravity="end"
         android:visibility="gone"
         app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintBottom_toBottomOf="@+id/incomeValue"
-        app:layout_constraintStart_toEndOf="@+id/incomeValue"
+        app:layout_constraintBottom_toBottomOf="@+id/transactionCategoryValue"
+        app:layout_constraintStart_toEndOf="@+id/transactionCategoryValue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expensesTitle"
+        app:layout_constraintTop_toBottomOf="@+id/transactionTitle"
         tools:visibility="visible" />
 
     <View
@@ -119,6 +85,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expenseCategoryValue" />
+        app:layout_constraintTop_toBottomOf="@+id/transactionCategoryValue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

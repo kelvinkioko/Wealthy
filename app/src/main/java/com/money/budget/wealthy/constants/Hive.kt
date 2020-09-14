@@ -26,7 +26,7 @@ class Hive {
         return mdformat.format(calendar.time)
     }
 
-    fun formatCurrency(amount: Int): String {
+    fun formatCurrency(amount: Float): String {
         val df = DecimalFormat("#,###,###,###,###.00")
         df.minimumFractionDigits = 2
         return df.format(amount)

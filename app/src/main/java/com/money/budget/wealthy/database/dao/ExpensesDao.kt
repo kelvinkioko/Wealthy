@@ -13,6 +13,12 @@ interface ExpensesDao {
     @Query("SELECT * FROM expenses")
     fun loadExpenses(): List<ExpensesEntity>
 
+    @Query("SELECT SUM(expenseAmount) as Total FROM expenses where expenseDate =:expenseDate AND expenseType LIKE '%Expense%'")
+    fun loadExpensesByDate(expenseDate: String): Float
+
+    @Query("SELECT sum(expenseAmount) FROM expenses where expenseDate =:expenseDate AND expenseType LIKE '%Income%'")
+    fun loadIncomeByDate(expenseDate: String): Float
+
     @Query("SELECT COUNT(id) FROM expenses")
     fun countExpenses(): Int
 

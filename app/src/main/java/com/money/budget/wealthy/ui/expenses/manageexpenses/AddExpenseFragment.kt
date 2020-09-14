@@ -1,6 +1,8 @@
 package com.money.budget.wealthy.ui.expenses.manageexpenses
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
@@ -18,7 +20,11 @@ import com.money.budget.wealthy.databinding.AddExpensesFragmentBinding
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
+import java.util.Currency
+import java.util.Locale
+import kotlinx.android.synthetic.main.add_expenses_fragment.accountAmount
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
@@ -88,7 +94,7 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
                     else -> {
                         viewModel.saveExpense(
                             name = expenseNickname.editText!!.text.toString(),
-                            amount = accountAmount.editText!!.text.toString(),
+                            amount = accountAmount.editText!!.text.toString().replace("[Ksh,]".toRegex(), ""),
                             description = transactionDescription.editText!!.text.toString(),
                             date = transactionDate.editText!!.text.toString()
                         )
@@ -115,6 +121,31 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
                 is ManageExpenseActions.BottomNavigate -> showDialog(it.bottomSheetDialogFragment)
             }
         }
+        var current = ""
+        accountAmount.editText!!.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val stringText = s.toString()
+
+                if (stringText != current) {
+                    accountAmount.editText!!.removeTextChangedListener(this)
+
+                    val locale: Locale = Locale.UK
+                    val currency = Currency.getInstance(locale)
+                    val cleanString = stringText.replace("[Ksh,.]".toRegex(), "")
+                    val parsed = cleanString.toDouble()
+                    val formatted = NumberFormat.getCurrencyInstance(locale).format(parsed / 100)
+                    val secondCleanString = formatted.replace("[${currency.symbol}]".toRegex(), "Ksh ")
+
+                    current = secondCleanString
+                    accountAmount.editText!!.setText(secondCleanString)
+                    accountAmount.editText!!.setSelection(secondCleanString.length)
+                    accountAmount.editText!!.addTextChangedListener(this)
+                }
+            }
+        })
     }
 
     private fun renderAccounts(accounts: AccountsEntity) {

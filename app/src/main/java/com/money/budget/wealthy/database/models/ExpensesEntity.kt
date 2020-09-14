@@ -14,7 +14,7 @@ data class ExpensesEntity(
     @ColumnInfo(name = "expenseID") var expenseID: String,
     @ColumnInfo(name = "expenseType") var expenseType: String,
     @ColumnInfo(name = "expenseName") var expenseName: String,
-    @ColumnInfo(name = "expenseAmount") var expenseAmount: String,
+    @ColumnInfo(name = "expenseAmount") var expenseAmount: Float,
     @ColumnInfo(name = "expenseAccount") var expenseAccount: String,
     @ColumnInfo(name = "expenseCategory") var expenseCategory: String,
     @ColumnInfo(name = "expenseDescription") var expenseDescription: String,
