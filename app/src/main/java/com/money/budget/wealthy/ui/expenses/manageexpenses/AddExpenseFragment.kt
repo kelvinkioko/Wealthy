@@ -129,7 +129,9 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val stringText = s.toString()
 
-                if (stringText != current) {
+                println("stringtext = $stringText")
+
+                if (stringText != current && stringText.isNotEmpty() && !stringText.equals("Ksh ", true)) {
                     accountAmount.editText!!.removeTextChangedListener(this)
 
                     val locale: Locale = Locale.UK

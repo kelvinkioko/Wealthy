@@ -98,6 +98,7 @@ class DailyExpensesAdapter : SectioningAdapter() {
 
             transactionTitle.isVisible = true
             transactionValue.isVisible = true
+            transactionTitle.text = account.expenseType.split("#")[0]
             transactionValue.text = "Ksh ${Hive().formatCurrency(account.expenseAmount)}"
 
             if ((itemIndex + 1) == section.items.size) {
