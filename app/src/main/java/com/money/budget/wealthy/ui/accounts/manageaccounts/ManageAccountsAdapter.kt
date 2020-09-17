@@ -1,122 +1,101 @@
 package com.money.budget.wealthy.ui.accounts.manageaccounts
 
-import android.annotation.SuppressLint
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.money.budget.wealthy.R
 import com.money.budget.wealthy.databinding.ItemAccountHeaderBinding
 import com.money.budget.wealthy.databinding.ItemAccountManageBinding
-import com.money.budget.wealthy.ui.accounts.ManageAccountsEntity
-import com.money.budget.wealthy.util.SectioningAdapter
-import java.util.ArrayList
+import com.money.budget.wealthy.ui.accounts.SectionedAccountItem
 
-class ManageAccountsAdapter : SectioningAdapter() {
+class ManageAccountsAdapter :
+    ListAdapter<SectionedAccountItem, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
-    private val sections = ArrayList<Section>()
+    private val itemAccountHeader = R.layout.item_account_header
+    private val itemAccount = R.layout.item_account_manage
 
-    private lateinit var itemBinding: ItemAccountManageBinding
-    private lateinit var headerBinding: ItemAccountHeaderBinding
-
-    inner class Section {
-        var alpha: String = ""
-        var items: ArrayList<ManageAccountsEntity> = ArrayList()
-    }
-
-    override fun onCreateItemViewHolder(parent: ViewGroup, itemType: Int): ItemViewHolder =
-        ItemViewHolder(ItemAccountManageBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
-    override fun onCreateHeaderViewHolder(parent: ViewGroup, headerType: Int): HeaderViewHolder =
-        HeaderViewHolder(ItemAccountHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
-    override fun getNumberOfSections(): Int = sections.size
-
-    override fun getNumberOfItemsInSection(sectionIndex: Int): Int = sections[sectionIndex].items.size
-
-    override fun doesSectionHaveHeader(sectionIndex: Int): Boolean = true
-
-    override fun doesSectionHaveFooter(sectionIndex: Int): Boolean = false
-
-    inner class ItemViewHolder(binding: ItemAccountManageBinding) : SectioningAdapter.ItemViewHolder(binding.root) {
-        init {
-            itemBinding = binding
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            itemAccountHeader -> AccountItemHeaderViewHolder(
+                ItemAccountHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            else -> AccountItemViewHolder(
+                ItemAccountManageBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
         }
     }
 
-    inner class HeaderViewHolder(binding: ItemAccountHeaderBinding) : SectioningAdapter.HeaderViewHolder(binding.root) {
-        init {
-            headerBinding = binding
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is SectionedAccountItem.ManageAccountsEntity -> (holder as AccountItemViewHolder).bind(item)
+            is SectionedAccountItem.ManageAccountsHeader -> (holder as AccountItemHeaderViewHolder).bind(item)
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onBindHeaderViewHolder(holder: SectioningAdapter.HeaderViewHolder, sectionIndex: Int, headerType: Int) {
-        val section = sections[sectionIndex]
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is SectionedAccountItem.ManageAccountsEntity -> itemAccount
+            is SectionedAccountItem.ManageAccountsHeader -> itemAccountHeader
+        }
+    }
 
-        headerBinding.apply {
-            headerTitle.text = section.alpha
+    inner class AccountItemViewHolder(
+        private val binding: ItemAccountManageBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-            if (sectionIndex == 0) {
-                headerViewTop.isGone = true
+//        init {
+//            itemView.setOnClickListener {
+//                currencyClicked.invoke(getItem(position) as SectionedAccountItem.ManageAccountsEntity)
+//            }
+//        }
+
+        fun bind(account: SectionedAccountItem.ManageAccountsEntity) {
+            binding.apply {
+                accountName.text = account.sourceName
+                accountDescription.text = account.sourceDescription
+                accountDescription.isVisible = true
+
+//                if ((position + 1) == section.items.size) {
+//                    accountView.isGone = true
+//                }
+
+                accountEdit.setOnClickListener { account.editAccountClick.invoke() }
+                accountDelete.setOnClickListener { account.deleteAccountClick.invoke() }
             }
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    override fun onBindItemViewHolder(viewHolder: SectioningAdapter.ItemViewHolder, sectionIndex: Int, itemIndex: Int, itemType: Int) {
-        val section = sections[sectionIndex]
+    inner class AccountItemHeaderViewHolder(
+        private val binding: ItemAccountHeaderBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        val account = section.items[itemIndex]
-
-        itemBinding.apply {
-            accountName.text = account.sourceName
-            accountDescription.text = account.sourceDescription
-            accountDescription.isVisible = true
-
-            if ((itemIndex + 1) == section.items.size) {
-                accountView.isGone = true
+        fun bind(content: SectionedAccountItem.ManageAccountsHeader) {
+            binding.apply {
+                accountHeader.text = content.title
+                accountHeader.paintFlags = accountHeader.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             }
-
-            accountEdit.setOnClickListener { account.editAccountClick.invoke() }
-            accountDelete.setOnClickListener { account.deleteAccountClick.invoke() }
         }
     }
 
-    fun setAccounts(accounts: List<ManageAccountsEntity>) {
-        sections.clear()
+    companion object {
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<SectionedAccountItem>() {
+            override fun areItemsTheSame(old: SectionedAccountItem, new: SectionedAccountItem): Boolean =
+                old == new
 
-        var alpha: String
-        var secAlpha = ""
-        var currentSection: Section? = null
-        for (account in accounts) {
-            alpha = account.sourceType
-            when {
-                secAlpha.isEmpty() -> {
-                    secAlpha = account.sourceType
-
-                    currentSection = Section()
-                    currentSection.alpha = account.sourceType
-                    currentSection.items.add(account)
-
-                    if (currentSection != null) {
-                        sections.add(currentSection)
-                    }
-                }
-                secAlpha.equals(alpha, true) -> currentSection!!.items.add(account)
-                else -> {
-                    secAlpha = account.sourceType
-
-                    currentSection = Section()
-                    currentSection.alpha = account.sourceType
-                    currentSection.items.add(account)
-
-                    if (currentSection != null) {
-                        sections.add(currentSection)
-                    }
-                }
-            }
+            override fun areContentsTheSame(old: SectionedAccountItem, new: SectionedAccountItem): Boolean =
+                old == new
         }
-
-        notifyAllSectionsDataSetChanged()
     }
 }

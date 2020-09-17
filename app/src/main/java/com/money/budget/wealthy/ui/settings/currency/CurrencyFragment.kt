@@ -2,6 +2,7 @@ package com.money.budget.wealthy.ui.settings.currency
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -16,7 +17,13 @@ class CurrencyFragment : Fragment(R.layout.settings_currency_fragment) {
 
     private val viewModel: CurrencyViewModel by viewModel()
 
-    private val currencyFragment = CurrencyAdapter()
+    private val currencyAdapter: CurrencyAdapter by lazy {
+        CurrencyAdapter { onCurrencyTypePicked(it) }
+    }
+
+    private fun onCurrencyTypePicked(currencyItems: SectionedCurrencyItem.CurrencyItems) {
+        Toast.makeText(requireContext(), currencyItems.country, Toast.LENGTH_LONG).show()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,10 +49,10 @@ class CurrencyFragment : Fragment(R.layout.settings_currency_fragment) {
 
     private fun populateAccountTypes(sectionedCurrencyItem: List<SectionedCurrencyItem>) {
         println("Currency called ${sectionedCurrencyItem.size}")
-        currencyFragment.submitList(sectionedCurrencyItem)
+        currencyAdapter.submitList(sectionedCurrencyItem)
     }
 
     private fun setupAccountTypesList() {
-        binding.currenciesList.adapter = currencyFragment
+        binding.currenciesList.adapter = currencyAdapter
     }
 }

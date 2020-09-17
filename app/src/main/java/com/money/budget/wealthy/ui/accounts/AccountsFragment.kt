@@ -25,7 +25,7 @@ class AccountsFragment : Fragment(R.layout.accounts_fragment) {
         AccountsAdapter { onAccountPicked(it) }
     }
 
-    private fun onAccountPicked(account: AccountsEntity) {
+    private fun onAccountPicked(accountEntity: SectionedAccountDetailsItem.AccountsEntity) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,8 +57,8 @@ class AccountsFragment : Fragment(R.layout.accounts_fragment) {
         }
     }
 
-    private fun populateAccounts(accountsEntity: List<AccountsEntity>) {
-        accountAdapter.setAccounts(accountsEntity)
+    private fun populateAccounts(accountsEntity: List<SectionedAccountDetailsItem>) {
+        accountAdapter.submitList(accountsEntity)
     }
 
     private fun setupAccountTypesList() {

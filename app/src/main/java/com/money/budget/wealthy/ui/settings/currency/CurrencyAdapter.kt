@@ -1,18 +1,17 @@
 package com.money.budget.wealthy.ui.settings.currency
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.money.budget.wealthy.R
-import com.money.budget.wealthy.database.models.AccountTypesEntity
 import com.money.budget.wealthy.databinding.ItemCurrencyBinding
 import com.money.budget.wealthy.databinding.ItemCurrencyHeaderBinding
 
-class CurrencyAdapter : ListAdapter<SectionedCurrencyItem, RecyclerView.ViewHolder>(DIFF_UTIL) {
-
-    private val items = mutableListOf<AccountTypesEntity>()
+class CurrencyAdapter(private val currencyClicked: (SectionedCurrencyItem.CurrencyItems) -> Unit) :
+    ListAdapter<SectionedCurrencyItem, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
     private val itemCurrencyHeader = R.layout.item_currency_header
     private val itemCurrency = R.layout.item_currency
@@ -54,6 +53,12 @@ class CurrencyAdapter : ListAdapter<SectionedCurrencyItem, RecyclerView.ViewHold
         private val binding: ItemCurrencyBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            itemView.setOnClickListener {
+                currencyClicked.invoke(getItem(position) as SectionedCurrencyItem.CurrencyItems)
+            }
+        }
+
         fun bind(content: SectionedCurrencyItem.CurrencyItems) {
             binding.apply {
                 currencyName.text = content.country
@@ -69,6 +74,7 @@ class CurrencyAdapter : ListAdapter<SectionedCurrencyItem, RecyclerView.ViewHold
         fun bind(content: SectionedCurrencyItem.CurrencyHeader) {
             binding.apply {
                 currencyRegionHeader.text = content.title
+                currencyRegionHeader.paintFlags = currencyRegionHeader.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             }
         }
     }

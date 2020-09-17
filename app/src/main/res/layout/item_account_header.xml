@@ -1,43 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <View
-        android:id="@+id/headerViewTop"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_reverse"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="16dp">
 
     <TextView
-        android:id="@+id/headerTitle"
+        android:id="@+id/accountHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Accounts"
-        android:textSize="16sp"
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        android:background="#e1e1e1"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:includeFontPadding="false"
+        tools:text="Night out with friends"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerViewTop"
-        app:layout_constraintBottom_toTopOf="@+id/headerViewBottom"/>
-
-    <View
-        android:id="@+id/headerViewBottom"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_shadow"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerTitle"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintVertical_chainStyle="packed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

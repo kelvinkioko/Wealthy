@@ -27,29 +27,55 @@ class AccountsViewModel(
     val action: LiveData<Event<AccountsActions>> = _action
 
     fun loadAccounts() {
-        val account = accountsRepository.loadAccounts()
-        _uiState.postValue(AccountsUIState.Accounts(account))
+        val accounts = accountsRepository.loadAccounts()
+
+        val sectionedAccountDetailsItem = mutableListOf<SectionedAccountDetailsItem>()
+        var previousSource = ""
+        accounts.forEach {
+            val currentSource = it.sourceType
+            if (previousSource.isNullOrEmpty() || previousSource != currentSource) {
+                previousSource = currentSource
+                sectionedAccountDetailsItem.add(SectionedAccountDetailsItem.AccountsHeader(currentSource))
+            }
+            sectionedAccountDetailsItem.add(
+                SectionedAccountDetailsItem.AccountsEntity(
+                    sourceID = it.sourceID,
+                    identifier = it.identifier,
+                    sourceName = it.sourceName,
+                    sourceBalance = it.sourceBalance,
+                    sourceNumber = it.sourceNumber,
+                    sourceType = it.sourceType,
+                    sourceDescription = it.sourceDescription
+                ))
+        }
+        _uiState.postValue(AccountsUIState.Accounts(sectionedAccountDetailsItem))
     }
 
     fun loadManageAccounts() {
         val accounts = accountsRepository.loadAccounts()
-        val manageAccountsEntity: ArrayList<ManageAccountsEntity> = ArrayList()
-        for (account in accounts) {
-            manageAccountsEntity.add(
-                ManageAccountsEntity(
-                    account.sourceID,
-                    account.identifier,
-                    account.sourceName,
-                    account.sourceBalance,
-                    account.sourceNumber,
-                    account.sourceType,
-                    account.sourceDescription,
-                    { deleteAccountSheet(account.sourceID) },
-                    { addOrEditAccounts(account.sourceID) }
-                )
-            )
+
+        val sectionedAccountItem = mutableListOf<SectionedAccountItem>()
+        var previousSource = ""
+        accounts.forEach {
+            val currentSource = it.sourceType
+            if (previousSource.isNullOrEmpty() || previousSource != currentSource) {
+                previousSource = currentSource
+                sectionedAccountItem.add(SectionedAccountItem.ManageAccountsHeader(currentSource))
+            }
+            sectionedAccountItem.add(
+                SectionedAccountItem.ManageAccountsEntity(
+                    sourceID = it.sourceID,
+                    identifier = it.identifier,
+                    sourceName = it.sourceName,
+                    sourceBalance = it.sourceBalance,
+                    sourceNumber = it.sourceNumber,
+                    sourceType = it.sourceType,
+                    sourceDescription = it.sourceDescription,
+                    deleteAccountClick = { deleteAccountSheet(it.sourceID) },
+                    editAccountClick = { addOrEditAccounts(it.sourceID) }
+                ))
         }
-        _uiState.postValue(AccountsUIState.ManageAccounts(manageAccountsEntity))
+        _uiState.postValue(AccountsUIState.ManageAccounts(sectionedAccountItem))
     }
 
     fun loadAccountTypes() {
@@ -107,9 +133,9 @@ sealed class AccountsUIState {
 
     object Success : AccountsUIState()
 
-    data class Accounts(val accountEntity: List<AccountsEntity>) : AccountsUIState()
+    data class Accounts(val accountEntity: List<SectionedAccountDetailsItem>) : AccountsUIState()
 
-    data class ManageAccounts(val accountEntity: List<ManageAccountsEntity>) : AccountsUIState()
+    data class ManageAccounts(val accountEntity: List<SectionedAccountItem>) : AccountsUIState()
 
     data class AccountTypes(val accountTypesEntity: List<AccountTypesEntity>) : AccountsUIState()
 
@@ -120,14 +146,32 @@ sealed class AccountsUIState {
     data class Error(val statusCode: String, val message: String) : AccountsUIState()
 }
 
-data class ManageAccountsEntity(
-    var sourceID: String,
-    var identifier: String,
-    var sourceName: String,
-    var sourceBalance: String,
-    var sourceNumber: String,
-    var sourceType: String,
-    var sourceDescription: String,
-    var deleteAccountClick: () -> Unit,
-    var editAccountClick: () -> Unit
-)
+sealed class SectionedAccountItem {
+    data class ManageAccountsEntity(
+        var sourceID: String,
+        var identifier: String,
+        var sourceName: String,
+        var sourceBalance: String,
+        var sourceNumber: String,
+        var sourceType: String,
+        var sourceDescription: String,
+        var deleteAccountClick: () -> Unit,
+        var editAccountClick: () -> Unit
+    ) : SectionedAccountItem()
+
+    data class ManageAccountsHeader(val title: String) : SectionedAccountItem()
+}
+
+sealed class SectionedAccountDetailsItem {
+    data class AccountsEntity(
+        var sourceID: String,
+        var identifier: String,
+        var sourceName: String,
+        var sourceBalance: String,
+        var sourceNumber: String,
+        var sourceType: String,
+        var sourceDescription: String
+    ) : SectionedAccountDetailsItem()
+
+    data class AccountsHeader(val title: String) : SectionedAccountDetailsItem()
+}

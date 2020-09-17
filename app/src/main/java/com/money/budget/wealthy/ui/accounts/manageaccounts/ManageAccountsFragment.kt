@@ -12,7 +12,7 @@ import com.money.budget.wealthy.databinding.AccountManageFragmentBinding
 import com.money.budget.wealthy.ui.accounts.AccountsActions
 import com.money.budget.wealthy.ui.accounts.AccountsUIState
 import com.money.budget.wealthy.ui.accounts.AccountsViewModel
-import com.money.budget.wealthy.ui.accounts.ManageAccountsEntity
+import com.money.budget.wealthy.ui.accounts.SectionedAccountItem
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
@@ -67,8 +67,8 @@ class ManageAccountsFragment : Fragment(R.layout.account_manage_fragment) {
         bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
     }
 
-    private fun populateAccounts(accountsEntity: List<ManageAccountsEntity>) {
-        accountAdapter.setAccounts(accountsEntity)
+    private fun populateAccounts(accountsEntity: List<SectionedAccountItem>) {
+        accountAdapter.submitList(accountsEntity)
     }
 
     private fun setupAccountTypesList() {
