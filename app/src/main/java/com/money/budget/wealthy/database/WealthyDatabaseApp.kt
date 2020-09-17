@@ -5,6 +5,7 @@ import android.content.Context
 import com.money.budget.wealthy.database.dao.AccountTypesDao
 import com.money.budget.wealthy.database.dao.AccountsDao
 import com.money.budget.wealthy.database.dao.CategoryTypesDao
+import com.money.budget.wealthy.database.dao.CurrencyDao
 import com.money.budget.wealthy.database.dao.ExpensesDao
 import com.money.budget.wealthy.database.dao.TransactionTypesDao
 
@@ -13,6 +14,7 @@ class WealthyDatabaseApp : Application() {
     private lateinit var accountsDao: AccountsDao
     private lateinit var accountTypesDao: AccountTypesDao
     private lateinit var categoryTypesDao: CategoryTypesDao
+    private lateinit var currencyDao: CurrencyDao
     private lateinit var expensesDao: ExpensesDao
     private lateinit var transactionTypesDao: TransactionTypesDao
 
@@ -24,6 +26,7 @@ class WealthyDatabaseApp : Application() {
         accountsDao = WealthyDatabase.getDatabase(this).accountsDao()
         accountTypesDao = WealthyDatabase.getDatabase(this).accountTypesDao()
         categoryTypesDao = WealthyDatabase.getDatabase(this).categoryTypesDao()
+        currencyDao = WealthyDatabase.getDatabase(this).currencyDao()
         expensesDao = WealthyDatabase.getDatabase(this).expensesDao()
         transactionTypesDao = WealthyDatabase.getDatabase(this).transactionTypesDao()
     }
@@ -41,6 +44,11 @@ class WealthyDatabaseApp : Application() {
     @Synchronized
     fun getCategoryTypesDao(context: Context): CategoryTypesDao {
         return WealthyDatabase.getDatabase(context.applicationContext).categoryTypesDao()
+    }
+
+    @Synchronized
+    fun getCurrencyDao(context: Context): CurrencyDao {
+        return WealthyDatabase.getDatabase(context.applicationContext).currencyDao()
     }
 
     @Synchronized

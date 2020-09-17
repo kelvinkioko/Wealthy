@@ -93,6 +93,9 @@
         <action
             android:id="@+id/toSettingsAccountTypesFragment"
             app:destination="@id/settingsAccountTypesFragment" />
+        <action
+            android:id="@+id/toSettingsCurrencyFragment"
+            app:destination="@id/settingsCurrencyFragment" />
     </fragment>
 
     <fragment
@@ -100,5 +103,11 @@
         android:name="com.money.budget.wealthy.ui.settings.accounttypes.AccountTypesFragment"
         android:label="Manage accounts types fragment"
         tools:layout="@layout/settings_manage_account_types_fragment" />
+
+    <fragment
+        android:id="@+id/settingsCurrencyFragment"
+        android:name="com.money.budget.wealthy.ui.settings.currency.CurrencyFragment"
+        android:label="Manage currencies fragment"
+        tools:layout="@layout/settings_currency_fragment" />
 
 </navigation>

@@ -25,6 +25,9 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             accountTypes.debouncedClick(lifecycleScope) {
                 findNavController().navigate(SettingsFragmentDirections.toSettingsAccountTypesFragment())
             }
+            currencyTypes.debouncedClick(lifecycleScope) {
+                findNavController().navigate(SettingsFragmentDirections.toSettingsCurrencyFragment())
+            }
         }
     }
 }
