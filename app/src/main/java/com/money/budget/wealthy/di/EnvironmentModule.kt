@@ -16,5 +16,5 @@ val environmentModule = module {
     single { ExpensesRepository(get()) }
     single { TransactionRepository(get()) }
 
-    viewModel { DefaultViewModel(get()) }
+    viewModel { DefaultViewModel(get(), get(), get()) }
 }

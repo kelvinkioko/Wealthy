@@ -96,6 +96,12 @@
         <action
             android:id="@+id/toSettingsCurrencyFragment"
             app:destination="@id/settingsCurrencyFragment" />
+        <action
+            android:id="@+id/toExpenseCategoryFragment"
+            app:destination="@id/expenseCategoryFragment" />
+        <action
+            android:id="@+id/toTransactionTypesFragment"
+            app:destination="@id/transactionTypesFragment" />
     </fragment>
 
     <fragment
@@ -109,5 +115,17 @@
         android:name="com.money.budget.wealthy.ui.settings.currency.CurrencyFragment"
         android:label="Manage currencies fragment"
         tools:layout="@layout/settings_currency_fragment" />
+
+    <fragment
+        android:id="@+id/expenseCategoryFragment"
+        android:name="com.money.budget.wealthy.ui.settings.expensecategory.ExpenseCategoryFragment"
+        android:label="Expense category fragment"
+        tools:layout="@layout/settings_expense_category_fragment" />
+
+    <fragment
+        android:id="@+id/transactionTypesFragment"
+        android:name="com.money.budget.wealthy.ui.settings.transactiontypes.TransactionTypesFragment"
+        android:label="Transaction types fragment"
+        tools:layout="@layout/settings_transaction_types_fragment" />
 
 </navigation>

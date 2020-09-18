@@ -28,6 +28,12 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             currencyTypes.debouncedClick(lifecycleScope) {
                 findNavController().navigate(SettingsFragmentDirections.toSettingsCurrencyFragment())
             }
+            categoryTypes.debouncedClick(lifecycleScope) {
+                findNavController().navigate(SettingsFragmentDirections.toExpenseCategoryFragment())
+            }
+            transactionTypes.debouncedClick(lifecycleScope) {
+                findNavController().navigate(SettingsFragmentDirections.toTransactionTypesFragment())
+            }
         }
     }
 }

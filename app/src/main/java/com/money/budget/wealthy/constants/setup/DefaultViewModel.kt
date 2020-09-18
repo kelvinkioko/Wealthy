@@ -3,11 +3,18 @@ package com.money.budget.wealthy.constants.setup
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.money.budget.wealthy.constants.Hive
+import com.money.budget.wealthy.database.models.CategoryTypesEntity
 import com.money.budget.wealthy.database.models.CurrencyEntity
+import com.money.budget.wealthy.database.models.TransactionTypesEntity
+import com.money.budget.wealthy.database.repository.CategoryRepository
 import com.money.budget.wealthy.database.repository.CurrencyRepository
+import com.money.budget.wealthy.database.repository.TransactionRepository
 
 class DefaultViewModel(
-    private val currencyRepository: CurrencyRepository
+    private val categoryRepository: CategoryRepository,
+    private val currencyRepository: CurrencyRepository,
+    private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<DefaultUIState>(DefaultUIState.Loading)
@@ -15,7 +22,8 @@ class DefaultViewModel(
 
     init {
         setupCurrency()
-        println("Default called")
+        setupTransactionTypes()
+        setupExpenseCategories()
     }
 
     private fun setupCurrency() {
@@ -76,6 +84,133 @@ class DefaultViewModel(
             currencyRepository.deleteCurrency()
             for (singleCurrency in currency) {
                 currencyRepository.insertCurrency(singleCurrency)
+            }
+        }
+    }
+
+    private fun setupTransactionTypes() {
+        val transactionType = mutableListOf<TransactionTypesEntity>()
+
+        transactionType.add(TransactionTypesEntity(
+            id = 0,
+            transactionID = "TTE-20200918-103320",
+            transactionName = "Income",
+            transactionDescription = "Money coming into you account, wallet or other personal sources",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        transactionType.add(TransactionTypesEntity(
+            id = 0,
+            transactionID = "TTE-20200918-103430",
+            transactionName = "Expense",
+            transactionDescription = "Money spent from your account",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        transactionType.add(TransactionTypesEntity(
+            id = 0,
+            transactionID = "TTE-20200918-103540",
+            transactionName = "Transfer",
+            transactionDescription = "Money moved from one account to another",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        if (transactionType.size != transactionRepository.countTransactionTypes()) {
+            transactionRepository.deleteTransactionTypes()
+            for (singleTransactionType in transactionType) {
+                transactionRepository.insertTransactionTypes(singleTransactionType)
+            }
+        }
+    }
+
+    private fun setupExpenseCategories() {
+        val categoryTypes = mutableListOf<CategoryTypesEntity>()
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Salary",
+            categoryDescription = "Regular income from formal employment.",
+            transactionType = "Income#TTE-20200918-103320",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Business",
+            categoryDescription = "Financed from partially or fully owned business",
+            transactionType = "Income#TTE-20200918-103320",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Loan",
+            categoryDescription = "Sum of money borrowed and is expected to be paid back with interest",
+            transactionType = "Income#TTE-20200918-103320",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Debt repayment",
+            categoryDescription = "past lending repaid",
+            transactionType = "Income#TTE-20200918-103320",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Food",
+            categoryDescription = "Food",
+            transactionType = "Expense#TTE-20200918-103430",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Social life",
+            categoryDescription = "Social",
+            transactionType = "Expense#TTE-20200918-103430",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Transportation",
+            categoryDescription = "Movement from one destination to another",
+            transactionType = "Expense#TTE-20200918-103430",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Education",
+            categoryDescription = "education",
+            transactionType = "Expense#TTE-20200918-103430",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        categoryTypes.add(CategoryTypesEntity(
+            id = 0,
+            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryName = "Education",
+            categoryDescription = "education",
+            transactionType = "Expense#TTE-20200918-103430",
+            createdAt = Hive().getCurrentDateTime()
+        ))
+
+        if (categoryTypes.size != categoryRepository.countCategoryTypes()) {
+            categoryRepository.deleteCategoryTypes()
+            for (singleCategoryType in categoryTypes) {
+                categoryRepository.insertCategoryTypes(singleCategoryType)
             }
         }
     }

@@ -14,5 +14,6 @@ data class CategoryTypesEntity(
     @ColumnInfo(name = "categoryID") var categoryID: String,
     @ColumnInfo(name = "categoryName") var categoryName: String,
     @ColumnInfo(name = "categoryDescription") var categoryDescription: String,
+    @ColumnInfo(name = "transactionType") var transactionType: String,
     @ColumnInfo(name = "createdAt") var createdAt: String
 ) : Parcelable

@@ -10,7 +10,7 @@
     android:foreground="?selectableItemBackground">
 
     <TextView
-        android:id="@+id/transactionType"
+        android:id="@+id/categoryType"
         android:textAppearance="?attr/textAppearanceBody1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,11 +20,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/transactionTypeDescription"
+        app:layout_constraintBottom_toTopOf="@+id/categoryTypeDescription"
         tools:text="Takezo Kensei" />
 
     <TextView
-        android:id="@+id/transactionTypeDescription"
+        android:id="@+id/categoryTypeDescription"
         android:textAppearance="?attr/textAppearanceCaption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -35,13 +35,13 @@
         app:layout_goneMarginBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transactionType"
-        app:layout_constraintBottom_toTopOf="@+id/transactionTypeView"
-        tools:text="Just a basic transaction type description that will help you understand in future"
+        app:layout_constraintTop_toBottomOf="@+id/categoryType"
+        app:layout_constraintBottom_toTopOf="@+id/categoryTypeView"
+        tools:text="Just a basic account type description that will help you understand in future"
         tools:visibility="visible"/>
 
     <View
-        android:id="@+id/transactionTypeView"
+        android:id="@+id/categoryTypeView"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/viewBackgroundColor"
@@ -49,6 +49,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transactionTypeDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/categoryTypeDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
