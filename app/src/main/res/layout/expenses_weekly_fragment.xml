@@ -4,71 +4,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginVertical="16dp">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/incomeTitle"
-        style="@style/TextAppearance.MaterialComponents.Caption"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expensesList"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/expensesTitle"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:clipToPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Income" />
-
-    <TextView
-        android:id="@+id/expensesTitle"
-        style="@style/TextAppearance.MaterialComponents.Caption"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/balanceTitle"
-        app:layout_constraintStart_toEndOf="@id/incomeTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Expenses" />
-
-    <TextView
-        android:id="@+id/balanceTitle"
-        style="@style/TextAppearance.MaterialComponents.Caption"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toEndOf="@id/expensesTitle"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="Balance" />
-
-    <TextView
-        android:id="@+id/incomeValue"
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toStartOf="@id/expensesValue"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/incomeTitle"
-        android:text="100,000.00 KES" />
-
-    <TextView
-        android:id="@+id/expensesValue"
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toStartOf="@id/balanceTitle"
-        app:layout_constraintStart_toEndOf="@id/incomeValue"
-        app:layout_constraintTop_toBottomOf="@+id/expensesTitle"
-        android:text="100,000.00 KES" />
-
-    <TextView
-        android:id="@+id/balanceValue"
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toEndOf="@id/expensesValue"
-        app:layout_constraintTop_toBottomOf="@+id/balanceTitle"
-        android:text="0.00 KES" />
+        tools:itemCount="3"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"

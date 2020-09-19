@@ -14,6 +14,30 @@ class Hive {
         return mdformat.format(calendar.time)
     }
 
+    fun getCurrentMonth(): String {
+        val calendar = Calendar.getInstance()
+        @SuppressLint("SimpleDateFormat") val mdformat = SimpleDateFormat("MMM, yyyy")
+        return mdformat.format(calendar.time)
+    }
+
+    fun getPreviousMonth(currentMonth: String): String {
+        val calendar = Calendar.getInstance()
+        @SuppressLint("SimpleDateFormat") val currentDateFormat = SimpleDateFormat("MMM, yyyy")
+        val date: Date = currentDateFormat.parse(currentMonth)!!
+        calendar.time = date
+        calendar.add(Calendar.MONTH, -1)
+        return currentDateFormat.format(calendar.time)
+    }
+
+    fun getNextMonth(currentMonth: String): String {
+        val calendar = Calendar.getInstance()
+        @SuppressLint("SimpleDateFormat") val currentDateFormat = SimpleDateFormat("MMM, yyyy")
+        val date: Date = currentDateFormat.parse(currentMonth)!!
+        calendar.time = date
+        calendar.add(Calendar.MONTH, 1)
+        return currentDateFormat.format(calendar.time)
+    }
+
     fun getCurrentDateTime(): String {
         val calendar = Calendar.getInstance()
         @SuppressLint("SimpleDateFormat") val mdformat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")

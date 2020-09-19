@@ -26,6 +26,46 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
+    <ImageView
+        android:id="@+id/calendarPast"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingHorizontal="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        app:srcCompat="@drawable/ic_chevron_left"
+        app:layout_constraintEnd_toStartOf="@+id/calendarMonthYear"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"/>
+
+    <TextView
+        android:id="@+id/calendarMonthYear"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Aug, 2020"
+        android:textColor="@color/colorWhite"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:paddingHorizontal="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/calendarFuture"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar" />
+
+    <ImageView
+        android:id="@+id/calendarFuture"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingHorizontal="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        app:srcCompat="@drawable/ic_chevron_right"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/topNavigation"
         android:layout_width="match_parent"

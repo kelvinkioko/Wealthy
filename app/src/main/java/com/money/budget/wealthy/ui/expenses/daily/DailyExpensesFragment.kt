@@ -2,12 +2,16 @@ package com.money.budget.wealthy.ui.expenses.daily
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.money.budget.wealthy.R
 import com.money.budget.wealthy.databinding.ExpensesDailyFragmentBinding
+import com.money.budget.wealthy.ui.expenses.SharedExpenseViewModel
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -25,6 +29,11 @@ class DailyExpensesFragment : Fragment(R.layout.expenses_daily_fragment) {
 
         setupViewObservers()
         setupAccountTypesList()
+
+        val sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedExpenseViewModel::class.java) }
+        sharedViewModel.toolbarCalendar.observe(viewLifecycleOwner, Observer {
+            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+        })
     }
 
     private fun setupViewObservers() {
