@@ -5,6 +5,7 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 class Hive {
 
@@ -56,6 +57,7 @@ class Hive {
         return df.format(amount)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun formatDateHeader(date: String): String {
         val inFormat = SimpleDateFormat("dd/MM/yyyy")
         val input: Date = inFormat.parse(date)
@@ -65,5 +67,50 @@ class Hive {
         val yearFormat = SimpleDateFormat("yyyy").format(input)
 
         return "$weekDayFormat#$dayFormat#$monthFormat#$yearFormat"
+    }
+
+    fun loadWeeks() {
+        val cal = Calendar.getInstance()
+        for (i in 0..11) {
+            cal[Calendar.YEAR] = 2020
+            cal[Calendar.DAY_OF_MONTH] = 1
+            cal[Calendar.MONTH] = i
+            val maxWeekNumber = cal.getActualMaximum(Calendar.WEEK_OF_MONTH)
+            println("loadWeeks For Month :: $i Num Week :: $maxWeekNumber")
+        }
+    }
+
+    fun getWeekRange(year: Int, week_no: Int): Pair<String?, String?>? {
+        val cal = Calendar.getInstance()
+        cal[Calendar.DAY_OF_WEEK] = Calendar.SUNDAY
+        cal[Calendar.YEAR] = year
+        cal[Calendar.WEEK_OF_YEAR] = week_no
+        val sunday = cal.time
+        cal.add(Calendar.DATE, 6)
+        val saturday = cal.time
+        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        println("getWeekRange :: ${sdf.format(sunday)}, ${sdf.format(saturday)}")
+        return Pair<String, String>(sdf.format(sunday), sdf.format(saturday))
+    }
+
+    fun getWeeksOfMonth(): ArrayList<String> {
+        val cal = Calendar.getInstance()
+        cal[Calendar.YEAR] = 2020
+        cal[Calendar.MONTH] = 9 - 1
+        cal[Calendar.DAY_OF_MONTH] = 1
+        val monthDays = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
+        val positionOfWeekOfYear: ArrayList<String> = ArrayList()
+        for (i in 0 until monthDays) {
+            cal.set(2020, 9 - 1, i)
+            val weekOfYear: Int = cal.get(Calendar.WEEK_OF_YEAR)
+
+            if (!positionOfWeekOfYear.contains("$weekOfYear")) {
+                positionOfWeekOfYear.add("$weekOfYear")
+                println("getWeeksOfYear :: $weekOfYear")
+            }
+            getWeekRange(2020, cal[Calendar.WEEK_OF_YEAR])
+            cal.add(Calendar.DATE, 1)
+        }
+        return positionOfWeekOfYear
     }
 }

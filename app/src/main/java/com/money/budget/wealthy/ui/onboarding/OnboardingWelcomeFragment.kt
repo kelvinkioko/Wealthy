@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.money.budget.wealthy.R
+import com.money.budget.wealthy.constants.Hive
 import com.money.budget.wealthy.constants.setup.DefaultUIState
 import com.money.budget.wealthy.constants.setup.DefaultViewModel
 import com.money.budget.wealthy.databinding.OnboardingWelcomeBinding
@@ -36,6 +37,9 @@ class OnboardingWelcomeFragment : Fragment(R.layout.onboarding_welcome) {
         }
 
         setupClickListeners()
+
+        Hive().loadWeeks()
+        Hive().getWeeksOfMonth()
 
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
