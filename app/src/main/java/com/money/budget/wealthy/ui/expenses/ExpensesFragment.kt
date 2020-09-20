@@ -24,6 +24,8 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
 
     private lateinit var sharedViewModel: SharedExpenseViewModel
 
+    private var isCalendarMonthly = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,26 +38,44 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
 
     private fun setupData() {
         binding.apply {
-            val newCalendarDisplay = Hive().getCurrentMonth()
-            calendarMonthYear.text = newCalendarDisplay!!.first
-            sharedViewModel.setToolbarCalendar(newCalendarDisplay.second)
-            PreferenceHandler(requireActivity()).setCalendarMonth("${newCalendarDisplay.first}#${newCalendarDisplay.second}")
+            if (isCalendarMonthly) {
+                val newCalendarDisplay = Hive().getCurrentYear()
+                calendarMonthYear.text = newCalendarDisplay
+                sharedViewModel.setToolbarYearCalendar(newCalendarDisplay)
+            } else {
+                val newCalendarDisplay = Hive().getCurrentMonth()
+                calendarMonthYear.text = newCalendarDisplay!!.first
+                sharedViewModel.setToolbarMonthCalendar(newCalendarDisplay.second)
+                PreferenceHandler(requireActivity()).setCalendarMonth("${newCalendarDisplay.first}#${newCalendarDisplay.second}")
+            }
         }
     }
 
     private fun setupClickListeners() {
         binding.apply {
             calendarPast.setOnClickListener {
-                val newCalendarDisplay = Hive().getPreviousMonth(calendarMonthYear.text.toString())
-                calendarMonthYear.text = newCalendarDisplay!!.first
-                sharedViewModel.setToolbarCalendar(newCalendarDisplay.second)
-                PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
+                if (isCalendarMonthly) {
+                    val newCalendarDisplay = Hive().getPreviousYear(calendarMonthYear.text.toString())
+                    calendarMonthYear.text = newCalendarDisplay
+                    sharedViewModel.setToolbarYearCalendar(newCalendarDisplay)
+                } else {
+                    val newCalendarDisplay = Hive().getPreviousMonth(calendarMonthYear.text.toString())
+                    calendarMonthYear.text = newCalendarDisplay!!.first
+                    sharedViewModel.setToolbarMonthCalendar(newCalendarDisplay.second)
+                    PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
+                }
             }
             calendarFuture.setOnClickListener {
-                val newCalendarDisplay = Hive().getNextMonth(calendarMonthYear.text.toString())
-                calendarMonthYear.text = newCalendarDisplay!!.first
-                sharedViewModel.setToolbarCalendar(newCalendarDisplay.second)
-                PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
+                if (isCalendarMonthly) {
+                    val newCalendarDisplay = Hive().getNextYear(calendarMonthYear.text.toString())
+                    calendarMonthYear.text = newCalendarDisplay
+                    sharedViewModel.setToolbarYearCalendar(newCalendarDisplay)
+                } else {
+                    val newCalendarDisplay = Hive().getNextMonth(calendarMonthYear.text.toString())
+                    calendarMonthYear.text = newCalendarDisplay!!.first
+                    sharedViewModel.setToolbarMonthCalendar(newCalendarDisplay.second)
+                    PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
+                }
             }
         }
     }
@@ -68,10 +88,21 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
                     // Handle tab select
                     tab!!.position
                     when (tab.position) {
-                        0 -> mainNavController.navigate(R.id.toDailyExpensesFragment)
-                        1 -> mainNavController.navigate(R.id.toWeeklyExpensesFragment)
-                        2 -> mainNavController.navigate(R.id.toMonthlyExpensesFragment)
-                        3 -> mainNavController.navigate(R.id.toCalendarExpensesFragment)
+                        0 -> {
+                            isCalendarMonthly = false
+                            setupData()
+                            mainNavController.navigate(R.id.toDailyExpensesFragment)
+                        }
+                        1 -> {
+                            isCalendarMonthly = false
+                            setupData()
+                            mainNavController.navigate(R.id.toWeeklyExpensesFragment)
+                        }
+                        2 -> {
+                            isCalendarMonthly = true
+                            setupData()
+                            mainNavController.navigate(R.id.toMonthlyExpensesFragment)
+                        }
                         else -> println("selected tab, Click not supported")
                     }
                 }

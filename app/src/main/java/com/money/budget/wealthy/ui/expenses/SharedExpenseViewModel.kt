@@ -5,9 +5,14 @@ import androidx.lifecycle.ViewModel
 
 class SharedExpenseViewModel : ViewModel() {
 
-    val toolbarCalendar = MutableLiveData<Any>()
+    val toolbarYearCalendar = MutableLiveData<Any>()
+    val toolbarMonthCalendar = MutableLiveData<Any>()
 
-    fun setToolbarCalendar(toolbarCalendar: String) {
-        this.toolbarCalendar.value = toolbarCalendar
+    fun setToolbarMonthCalendar(toolbarMonthCalendar: String) {
+        this.toolbarMonthCalendar.value = toolbarMonthCalendar
+    }
+
+    fun setToolbarYearCalendar(toolbarYearCalendar: String) {
+        this.toolbarYearCalendar.value = toolbarYearCalendar
     }
 }

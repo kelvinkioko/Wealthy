@@ -25,12 +25,24 @@ class ExpensesRepository(application: Application) {
         return expensesDao.loadExpensesByDate(expenseDate)
     }
 
+    fun loadAnnualExpensesByDate(startDate: Date, endDate: Date): Float {
+        return expensesDao.loadAnnualExpensesByDate(startDate, endDate)
+    }
+
     fun loadIncomeByDate(expenseDate: Date): Float {
         return expensesDao.loadIncomeByDate(expenseDate)
     }
 
+    fun loadAnnualIncomeByDate(startDate: Date, endDate: Date): Float {
+        return expensesDao.loadAnnualIncomeByDate(startDate, endDate)
+    }
+
     fun countExpenses(): Int {
         return expensesDao.countExpenses()
+    }
+
+    fun countExpensesByRange(startDate: Date, endDate: Date): Int {
+        return expensesDao.loadExpensesByRange(startDate, endDate)
     }
 
     fun deleteExpenses() {

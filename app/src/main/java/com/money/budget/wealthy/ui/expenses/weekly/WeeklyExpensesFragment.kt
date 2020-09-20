@@ -37,7 +37,7 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
         setupAccountTypesList()
 
         val sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedExpenseViewModel::class.java) }
-        sharedViewModel.toolbarCalendar.observe(viewLifecycleOwner, Observer {
+        sharedViewModel.toolbarMonthCalendar.observe(viewLifecycleOwner, Observer {
             viewModel.loadExpenses(it.toString())
         })
     }

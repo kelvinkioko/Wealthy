@@ -20,11 +20,20 @@ interface ExpensesDao {
     @Query("SELECT SUM(expenseAmount) as Total FROM expenses where expenseDate =:expenseDate AND expenseType LIKE '%Expense%'")
     fun loadExpensesByDate(expenseDate: Date): Float
 
+    @Query("SELECT sum(expenseAmount) FROM expenses where expenseDate BETWEEN :startDate AND :endDate AND expenseType LIKE '%Expense%' ORDER BY expenseDate ASC")
+    fun loadAnnualExpensesByDate(startDate: Date, endDate: Date): Float
+
     @Query("SELECT sum(expenseAmount) FROM expenses where expenseDate =:expenseDate AND expenseType LIKE '%Income%'")
     fun loadIncomeByDate(expenseDate: Date): Float
 
+    @Query("SELECT sum(expenseAmount) FROM expenses where expenseDate BETWEEN :startDate AND :endDate AND expenseType LIKE '%Income%' ORDER BY expenseDate ASC")
+    fun loadAnnualIncomeByDate(startDate: Date, endDate: Date): Float
+
     @Query("SELECT COUNT(id) FROM expenses")
     fun countExpenses(): Int
+
+    @Query("SELECT COUNT(id) FROM expenses where expenseDate BETWEEN :startDate AND :endDate ORDER BY expenseDate ASC")
+    fun loadExpensesByRange(startDate: Date, endDate: Date): Int
 
     @Query("DELETE FROM expenses")
     fun deleteExpenses()

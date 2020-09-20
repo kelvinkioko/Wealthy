@@ -2,6 +2,7 @@ package com.money.budget.wealthy.ui.expenses.weekly
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -89,18 +90,25 @@ class WeeklyExpensesAdapter(private val transactionClicked: (SectionedTransactio
                 rangeValue.text = content.range
                 transactionValue.text = content.transactions
 
-                if (!content.TotalExpense.equals("0.0", true)) {
-                    expensesTitle.isVisible = true
-                    expensesValue.isVisible = true
-                    expensesValue.text =
-                        "Ksh ${Hive().formatCurrency(content.TotalExpense.toFloat())}"
-                }
+                expensesTitle.isVisible = true
+                expensesValue.isVisible = true
+                expensesValue.text = "Ksh ${Hive().formatCurrency(content.TotalExpense.toFloat())}"
 
-                if (!content.TotalIncome.equals("0.0", true)) {
-                    incomeTitle.isVisible = true
-                    incomeValue.isVisible = true
-                    incomeValue.text =
-                        "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
+                incomeTitle.isVisible = true
+                incomeValue.isVisible = true
+                incomeValue.text = "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
+
+                if ((content.TotalIncome.equals("0.0", true) || content.TotalIncome.equals("0", true)) &&
+                    (content.TotalExpense.equals("0.0", true) || content.TotalExpense.equals("0", true))) {
+                    headerViewTop.isGone = true
+                    headerViewBottom.isGone = true
+                    headerViewAlternateTop.isVisible = true
+                    headerViewAlternateBottom.isVisible = true
+                } else {
+                    headerViewTop.isVisible = true
+                    headerViewBottom.isVisible = true
+                    headerViewAlternateTop.isGone = true
+                    headerViewAlternateBottom.isGone = true
                 }
             }
         }
