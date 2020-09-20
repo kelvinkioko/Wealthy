@@ -1,147 +1,119 @@
 package com.money.budget.wealthy.ui.expenses.daily
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.money.budget.wealthy.R
 import com.money.budget.wealthy.constants.Hive
 import com.money.budget.wealthy.databinding.ItemExpenseDailyBinding
 import com.money.budget.wealthy.databinding.ItemExpenseDailyHeaderBinding
-import com.money.budget.wealthy.util.SectioningAdapter
-import java.util.ArrayList
 
-class DailyExpensesAdapter : SectioningAdapter() {
+class DailyExpensesAdapter(private val transactionClicked: (SectionedTransactionsEntity.DisplayTransactionsEntity) -> Unit) :
+    ListAdapter<SectionedTransactionsEntity, RecyclerView.ViewHolder>(DIFF_UTIL) {
 
-    private val sections = ArrayList<Section>()
+    private val itemDailyHeader = R.layout.item_expense_daily_header
+    private val itemDaily = R.layout.item_expense_daily
 
-    private lateinit var itemBinding: ItemExpenseDailyBinding
-    private lateinit var headerBinding: ItemExpenseDailyHeaderBinding
-
-    inner class Section {
-        var alpha: String = ""
-        var items: ArrayList<DisplayTransactionsEntity> = ArrayList()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            itemDailyHeader -> DailyItemHeaderViewHolder(
+                ItemExpenseDailyHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+            else -> DailyItemViewHolder(
+                ItemExpenseDailyBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
+        }
     }
 
-    override fun onCreateItemViewHolder(parent: ViewGroup, itemType: Int): ItemViewHolder =
-        ItemViewHolder(ItemExpenseDailyBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when (val item = getItem(position)) {
+            is SectionedTransactionsEntity.DisplayTransactionsEntity -> (holder as DailyItemViewHolder).bind(item)
+            is SectionedTransactionsEntity.TransactionsHeader -> (holder as DailyItemHeaderViewHolder).bind(item)
+        }
+    }
 
-    override fun onCreateHeaderViewHolder(parent: ViewGroup, headerType: Int): HeaderViewHolder =
-        HeaderViewHolder(ItemExpenseDailyHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+    override fun getItemViewType(position: Int): Int {
+        return when (getItem(position)) {
+            is SectionedTransactionsEntity.DisplayTransactionsEntity -> itemDaily
+            is SectionedTransactionsEntity.TransactionsHeader -> itemDailyHeader
+        }
+    }
 
-    override fun getNumberOfSections(): Int = sections.size
+    inner class DailyItemViewHolder(
+        private val binding: ItemExpenseDailyBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-    override fun getNumberOfItemsInSection(sectionIndex: Int): Int = sections[sectionIndex].items.size
-
-    override fun doesSectionHaveHeader(sectionIndex: Int): Boolean = true
-
-    override fun doesSectionHaveFooter(sectionIndex: Int): Boolean = false
-
-    inner class ItemViewHolder(binding: ItemExpenseDailyBinding) : SectioningAdapter.ItemViewHolder(binding.root) {
         init {
-            itemBinding = binding
-        }
-    }
-
-    inner class HeaderViewHolder(binding: ItemExpenseDailyHeaderBinding) : SectioningAdapter.HeaderViewHolder(binding.root) {
-        init {
-            headerBinding = binding
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onBindHeaderViewHolder(holder: SectioningAdapter.HeaderViewHolder, sectionIndex: Int, headerType: Int) {
-        val section = sections[sectionIndex]
-
-        headerBinding.apply {
-            val date = Hive().formatDateHeader(section.alpha).split("#")
-            dayDateValue.text = date[1]
-            monthYearValue.text = date[2] + "." + date[3]
-            saturdayValue.text = date[0]
-
-            if (!section.items[0].TotalExpense.equals("0.0", true)) {
-                expensesTitle.isVisible = true
-                expensesValue.isVisible = true
-                expensesValue.text =
-                    "Ksh ${Hive().formatCurrency(section.items[0].TotalExpense.toFloat())}"
-            }
-
-            if (!section.items[0].TotalIncome.equals("0.0", true)) {
-                incomeTitle.isVisible = true
-                incomeValue.isVisible = true
-                incomeValue.text =
-                    "Ksh ${Hive().formatCurrency(section.items[0].TotalIncome.toFloat())}"
-            }
-
-            if (sectionIndex == 0) {
-                headerViewTop.isGone = true
+            itemView.setOnClickListener {
+                transactionClicked.invoke(getItem(position) as SectionedTransactionsEntity.DisplayTransactionsEntity)
             }
         }
-    }
 
-    @SuppressLint("SetTextI18n", "NewApi")
-    override fun onBindItemViewHolder(viewHolder: SectioningAdapter.ItemViewHolder, sectionIndex: Int, itemIndex: Int, itemType: Int) {
-        val section = sections[sectionIndex]
+        fun bind(content: SectionedTransactionsEntity.DisplayTransactionsEntity) {
+            binding.apply {
+                transactionNameValue.text = content.expenseName
+                transactionCategoryValue.text = "${content.expenseCategory.split("#")[0]} - ${content.expenseAccount.split("#")[0]}"
 
-        val account = section.items[itemIndex]
-
-        itemBinding.apply {
-            transactionNameValue.text = account.expenseName
-            transactionCategoryValue.text = "${account.expenseCategory.split("#")[0]} - ${account.expenseAccount.split("#")[0]}"
-
-            if (account.expenseType.contains("expense", true)) {
-                transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorNegative))
-            } else if (account.expenseType.contains("income", true)) {
-                transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorPositive))
-            }
-
-            transactionTitle.isVisible = true
-            transactionValue.isVisible = true
-            transactionTitle.text = account.expenseType.split("#")[0]
-            transactionValue.text = "Ksh ${Hive().formatCurrency(account.expenseAmount)}"
-
-            if ((itemIndex + 1) == section.items.size) {
-                expensesDailyView.isGone = true
-            }
-        }
-    }
-
-    fun setExpenses(accounts: List<DisplayTransactionsEntity>) {
-        sections.clear()
-
-        var alpha: String
-        var secAlpha = ""
-        var currentSection: Section? = null
-        for (account in accounts) {
-            alpha = account.expenseDate
-            when {
-                secAlpha.isEmpty() -> {
-                    secAlpha = account.expenseDate
-
-                    currentSection = Section()
-                    currentSection.alpha = account.expenseDate
-                    currentSection.items.add(account)
-
-                    if (currentSection != null) {
-                        sections.add(currentSection)
-                    }
+                if (content.expenseType.contains("expense", true)) {
+                    transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorNegative))
+                } else if (content.expenseType.contains("income", true)) {
+                    transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorPositive))
                 }
-                secAlpha.equals(alpha, true) -> currentSection!!.items.add(account)
-                else -> {
-                    secAlpha = account.expenseDate
 
-                    currentSection = Section()
-                    currentSection.alpha = account.expenseDate
-                    currentSection.items.add(account)
+                transactionTitle.isVisible = true
+                transactionValue.isVisible = true
+                transactionTitle.text = content.expenseType.split("#")[0]
+                transactionValue.text = "Ksh ${Hive().formatCurrency(content.expenseAmount)}"
+            }
+        }
+    }
 
-                    if (currentSection != null) {
-                        sections.add(currentSection)
-                    }
+    inner class DailyItemHeaderViewHolder(
+        private val binding: ItemExpenseDailyHeaderBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(content: SectionedTransactionsEntity.TransactionsHeader) {
+            binding.apply {
+                val date = Hive().formatDateHeader(content.title).split("#")
+                dayDateValue.text = date[1]
+                monthYearValue.text = date[2] + "." + date[3]
+                saturdayValue.text = date[0]
+
+                if (!content.TotalExpense.equals("0.0", true)) {
+                    expensesTitle.isVisible = true
+                    expensesValue.isVisible = true
+                    expensesValue.text =
+                        "Ksh ${Hive().formatCurrency(content.TotalExpense.toFloat())}"
+                }
+
+                if (!content.TotalIncome.equals("0.0", true)) {
+                    incomeTitle.isVisible = true
+                    incomeValue.isVisible = true
+                    incomeValue.text =
+                        "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
                 }
             }
         }
+    }
 
-        notifyAllSectionsDataSetChanged()
+    companion object {
+        private val DIFF_UTIL = object : DiffUtil.ItemCallback<SectionedTransactionsEntity>() {
+            override fun areItemsTheSame(old: SectionedTransactionsEntity, new: SectionedTransactionsEntity): Boolean =
+                old == new
+
+            override fun areContentsTheSame(old: SectionedTransactionsEntity, new: SectionedTransactionsEntity): Boolean =
+                old == new
+        }
     }
 }

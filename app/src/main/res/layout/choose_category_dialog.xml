@@ -23,7 +23,7 @@
             android:textColor="@color/colorWhite"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textSize="18sp"
-            android:text="Choose category" />
+            android:text="Choose transaction category" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

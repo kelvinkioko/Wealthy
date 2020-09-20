@@ -17,6 +17,10 @@ class CategoryRepository(application: Application) {
         return categoryTypesDao.loadCategoryTypes()
     }
 
+    fun loadCategoryTypes(transactionType: String): List<CategoryTypesEntity> {
+        return categoryTypesDao.loadCategoryTypes(transactionType)
+    }
+
     fun countCategoryTypes(): Int {
         return categoryTypesDao.countCategoryTypes()
     }

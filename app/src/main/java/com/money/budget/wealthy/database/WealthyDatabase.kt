@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.money.budget.wealthy.constants.Converters
 import com.money.budget.wealthy.database.dao.AccountTypesDao
 import com.money.budget.wealthy.database.dao.AccountsDao
 import com.money.budget.wealthy.database.dao.CategoryTypesDao
@@ -18,6 +20,7 @@ import com.money.budget.wealthy.database.models.ExpensesEntity
 import com.money.budget.wealthy.database.models.TransactionTypesEntity
 
 @Database(entities = [AccountsEntity::class, AccountTypesEntity::class, CategoryTypesEntity::class, CurrencyEntity::class, ExpensesEntity::class, TransactionTypesEntity::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class WealthyDatabase : RoomDatabase() {
 
     abstract fun accountsDao(): AccountsDao

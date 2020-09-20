@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.util.Date
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -19,6 +20,6 @@ data class ExpensesEntity(
     @ColumnInfo(name = "expenseCategory") var expenseCategory: String,
     @ColumnInfo(name = "expenseDescription") var expenseDescription: String,
     @ColumnInfo(name = "expenseImage") var expenseImage: String,
-    @ColumnInfo(name = "expenseDate") var expenseDate: String,
+    @ColumnInfo(name = "expenseDate") var expenseDate: Date,
     @ColumnInfo(name = "createdAt") var createdAt: String
 ) : Parcelable

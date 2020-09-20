@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayout
 import com.money.budget.wealthy.R
 import com.money.budget.wealthy.constants.Hive
+import com.money.budget.wealthy.constants.PreferenceHandler
 import com.money.budget.wealthy.databinding.ExpensesFragmentBinding
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.viewBinding
@@ -35,8 +36,10 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
 
     private fun setupData() {
         binding.apply {
-            calendarMonthYear.text = Hive().getCurrentMonth()
-            sharedViewModel.setToolbarCalendar(Hive().getCurrentMonth())
+            val newCalendarDisplay = Hive().getCurrentMonth()
+            calendarMonthYear.text = newCalendarDisplay!!.first
+            sharedViewModel.setToolbarCalendar(newCalendarDisplay.second)
+            PreferenceHandler(requireActivity()).setCalendarMonth("${newCalendarDisplay.first}#${newCalendarDisplay.second}")
         }
     }
 
@@ -44,13 +47,15 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
         binding.apply {
             calendarPast.setOnClickListener {
                 val newCalendarDisplay = Hive().getPreviousMonth(calendarMonthYear.text.toString())
-                calendarMonthYear.text = newCalendarDisplay
-                sharedViewModel.setToolbarCalendar(newCalendarDisplay)
+                calendarMonthYear.text = newCalendarDisplay!!.first
+                sharedViewModel.setToolbarCalendar(newCalendarDisplay.second)
+                PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
             }
             calendarFuture.setOnClickListener {
                 val newCalendarDisplay = Hive().getNextMonth(calendarMonthYear.text.toString())
-                calendarMonthYear.text = newCalendarDisplay
-                sharedViewModel.setToolbarCalendar(newCalendarDisplay)
+                calendarMonthYear.text = newCalendarDisplay!!.first
+                sharedViewModel.setToolbarCalendar(newCalendarDisplay.second)
+                PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
             }
         }
     }

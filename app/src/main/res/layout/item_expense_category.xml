@@ -16,6 +16,8 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:maxLines="1"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_goneMarginBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

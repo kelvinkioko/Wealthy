@@ -47,13 +47,21 @@ class ManageExpenseViewModel(
 
     fun chooseCategory() {
         val bottomSheetFragment = ChooseCategoryDialogFragment(
-            categoryRepository.loadCategoryTypes(),
+            loadCategories(),
             resendCategoryCallback = {
                 this.categoryTypesEntity = it
                 _uiState.postValue(ManageExpenseUIState.CategoryTypes(it))
             }
         )
         _action.postValue(ManageExpenseActions.BottomNavigate(bottomSheetFragment).asEvent())
+    }
+
+    private fun loadCategories(): List<CategoryTypesEntity> {
+        return if (this::transactionTypesEntity.isInitialized) {
+            categoryRepository.loadCategoryTypes("${transactionTypesEntity.transactionName}#${transactionTypesEntity.transactionID}")
+        } else {
+            categoryRepository.loadCategoryTypes()
+        }
     }
 
     fun chooseAccount() {
@@ -79,7 +87,7 @@ class ManageExpenseViewModel(
                 expenseCategory = "${categoryTypesEntity.categoryName}#${categoryTypesEntity.categoryID}",
                 expenseDescription = description,
                 expenseImage = "",
-                expenseDate = date,
+                expenseDate = Hive().getDateFromString(date),
                 createdAt = Hive().getCurrentDateTime()
             )
         )

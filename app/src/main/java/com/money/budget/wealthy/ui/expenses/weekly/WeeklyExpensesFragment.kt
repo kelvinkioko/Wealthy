@@ -22,7 +22,13 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
 
     private val viewModel: WeeklyExpensesViewModel by viewModel()
 
-    private val expensesAdapter: WeeklyExpensesAdapter by lazy { WeeklyExpensesAdapter() }
+    private val expensesAdapter: WeeklyExpensesAdapter by lazy {
+        WeeklyExpensesAdapter { onTransactionPicked(it) }
+    }
+
+    private fun onTransactionPicked(transactionsEntity: SectionedTransactionsEntity.DisplayTransactionsEntity) {
+        Toast.makeText(requireContext(), transactionsEntity.expenseName, Toast.LENGTH_LONG).show()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,7 +38,7 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
 
         val sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedExpenseViewModel::class.java) }
         sharedViewModel.toolbarCalendar.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG).show()
+            viewModel.loadExpenses(it.toString())
         })
     }
 
@@ -54,8 +60,8 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
         bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
     }
 
-    private fun populateExpenses(expensesEntity: List<WeeklyTransactionsEntity>) {
-        expensesAdapter.setExpenses(expensesEntity)
+    private fun populateExpenses(expensesEntity: List<SectionedTransactionsEntity>) {
+        expensesAdapter.submitList(expensesEntity)
     }
 
     private fun setupAccountTypesList() {
@@ -64,6 +70,5 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
 
     override fun onResume() {
         super.onResume()
-        viewModel.loadExpenses()
     }
 }

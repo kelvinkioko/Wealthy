@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.money.budget.wealthy.constants.Hive
 import com.money.budget.wealthy.database.repository.ExpensesRepository
 import com.money.budget.wealthy.util.Event
 
@@ -18,35 +19,62 @@ class WeeklyExpensesViewModel(
     private val _action = MutableLiveData<Event<WeeklyExpensesActions>>()
     val action: LiveData<Event<WeeklyExpensesActions>> = _action
 
-    init {
-        loadExpenses()
-    }
+    fun loadExpenses(monthYear: String) {
+        val splitMonth = monthYear.split("/")
+        val ranges = Hive().getWeeksOfMonth(month = splitMonth[0].toInt(), year = splitMonth[1].toInt())
+        val sectionedTransactionsItem = mutableListOf<SectionedTransactionsEntity>()
 
-    fun loadExpenses() {
-        val transactions = expensesRepository.loadExpenses()
-        val displayTransactionsEntity: ArrayList<WeeklyTransactionsEntity> = ArrayList()
-        for (transaction in transactions) {
-            displayTransactionsEntity.add(
-                WeeklyTransactionsEntity(
-                    expenseID = transaction.expenseID,
-                    expenseType = transaction.expenseType,
-                    expenseName = transaction.expenseName,
-                    expenseAmount = transaction.expenseAmount,
-                    expenseAccount = transaction.expenseAccount,
-                    expenseCategory = transaction.expenseCategory,
-                    expenseDescription = transaction.expenseDescription,
-                    expenseImage = transaction.expenseImage,
-                    expenseDate = transaction.expenseDate,
-                    createdAt = transaction.createdAt,
-                    TotalExpense = expensesRepository.loadExpensesByDate(transaction.expenseDate).toString(),
-                    TotalIncome = expensesRepository.loadIncomeByDate(transaction.expenseDate).toString()
+        ranges.forEach { range ->
+            val transactions = expensesRepository.loadExpenses(Hive().getDateFromString(range.startDate), Hive().getDateFromString(range.endDate))
+            println("Range ${transactions.size}")
+
+            if (transactions.isNotEmpty()) {
+                var previousTransaction = ""
+                transactions.forEach {
+                    val currentTransaction = Hive().getStringFromDate(it.expenseDate)
+                    if (previousTransaction.isNullOrEmpty() || previousTransaction != currentTransaction) {
+                        previousTransaction = currentTransaction
+                        sectionedTransactionsItem.add(
+                            SectionedTransactionsEntity.TransactionsHeader(
+                                title = currentTransaction,
+                                range = "${range.startDate.replace("/${splitMonth[1]}", "")} - ${range.endDate.replace("/${splitMonth[1]}", "")}",
+                                weekPosition = range.weekPosition,
+                                transactions = "5 Transactions",
+                                TotalExpense = expensesRepository.loadExpensesByDate(it.expenseDate).toString(),
+                                TotalIncome = expensesRepository.loadIncomeByDate(it.expenseDate).toString()
+                            )
+                        )
+                    }
+                    sectionedTransactionsItem.add(
+                        SectionedTransactionsEntity.DisplayTransactionsEntity(
+                            expenseID = it.expenseID,
+                            expenseType = it.expenseType,
+                            expenseName = it.expenseName,
+                            expenseAmount = it.expenseAmount,
+                            expenseAccount = it.expenseAccount,
+                            expenseCategory = it.expenseCategory,
+                            expenseDescription = it.expenseDescription,
+                            expenseImage = it.expenseImage,
+                            expenseDate = Hive().getStringFromDate(it.expenseDate),
+                            createdAt = it.createdAt
+                        )
+                    )
+                }
+            } else {
+                sectionedTransactionsItem.add(
+                    SectionedTransactionsEntity.TransactionsHeader(
+                        title = "",
+                        range = "${range.startDate.replace("/${splitMonth[1]}", "")} - ${range.endDate.replace("/${splitMonth[1]}", "")}",
+                        weekPosition = range.weekPosition,
+                        transactions = "0 Transaction(s)",
+                        TotalExpense = "0",
+                        TotalIncome = "0"
+                    )
                 )
-            )
-
-            println("Total ${expensesRepository.loadExpensesByDate(transaction.expenseDate)}")
-            println("Total ${expensesRepository.loadIncomeByDate(transaction.expenseDate)}")
+            }
         }
-        _uiState.postValue(WeeklyExpensesUIState.WeeklyExpenses(displayTransactionsEntity))
+
+        _uiState.postValue(WeeklyExpensesUIState.WeeklyExpenses(sectionedTransactionsItem))
     }
 }
 
@@ -61,22 +89,31 @@ sealed class WeeklyExpensesUIState {
 
     object Success : WeeklyExpensesUIState()
 
-    data class WeeklyExpenses(val expensesEntity: List<WeeklyTransactionsEntity>) : WeeklyExpensesUIState()
+    data class WeeklyExpenses(val expensesEntity: List<SectionedTransactionsEntity>) : WeeklyExpensesUIState()
 
     data class Error(val statusCode: String, val message: String) : WeeklyExpensesUIState()
 }
 
-data class WeeklyTransactionsEntity(
-    var expenseID: String,
-    var expenseType: String,
-    var expenseName: String,
-    var expenseAmount: Float,
-    var expenseAccount: String,
-    var expenseCategory: String,
-    var expenseDescription: String,
-    var expenseImage: String,
-    var expenseDate: String,
-    var createdAt: String,
-    var TotalExpense: String,
-    var TotalIncome: String
-)
+sealed class SectionedTransactionsEntity {
+    data class DisplayTransactionsEntity(
+        var expenseID: String,
+        var expenseType: String,
+        var expenseName: String,
+        var expenseAmount: Float,
+        var expenseAccount: String,
+        var expenseCategory: String,
+        var expenseDescription: String,
+        var expenseImage: String,
+        var expenseDate: String,
+        var createdAt: String
+    ) : SectionedTransactionsEntity()
+
+    data class TransactionsHeader(
+        val title: String,
+        val range: String,
+        val weekPosition: String,
+        val transactions: String,
+        var TotalExpense: String,
+        var TotalIncome: String
+    ) : SectionedTransactionsEntity()
+}
