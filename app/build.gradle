@@ -16,6 +16,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":anychart")
 
     api(Dependencies.Kotlin.stdlib)
     api(Dependencies.AndroidX.appcompat)

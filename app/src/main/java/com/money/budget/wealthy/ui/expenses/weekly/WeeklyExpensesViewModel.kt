@@ -39,7 +39,7 @@ class WeeklyExpensesViewModel(
                                 title = currentTransaction,
                                 range = "${range.startDate.replace("/${splitMonth[1]}", "")} - ${range.endDate.replace("/${splitMonth[1]}", "")}",
                                 weekPosition = range.weekPosition,
-                                transactions = "5 Transactions",
+                                transactions = expensesRepository.countExpensesByRange(Hive().getDateFromString(range.startDate), Hive().getDateFromString(range.endDate)).toString() + " Transactions",
                                 TotalExpense = expensesRepository.loadExpensesByDate(it.expenseDate).toString(),
                                 TotalIncome = expensesRepository.loadIncomeByDate(it.expenseDate).toString()
                             )
