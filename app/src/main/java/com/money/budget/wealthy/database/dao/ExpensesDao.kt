@@ -17,6 +17,9 @@ interface ExpensesDao {
     @Query("SELECT * FROM expenses WHERE expenseDate BETWEEN :startDate AND :endDate ORDER BY expenseDate ASC")
     fun loadExpenses(startDate: Date, endDate: Date): List<ExpensesEntity>
 
+    @Query("SELECT * FROM expenses where expenseDate BETWEEN :startDate AND :endDate AND expenseType LIKE :expenseType ORDER BY expenseDate ASC")
+    fun loadExpensesByDateAndExpense(startDate: Date, endDate: Date, expenseType: String): List<ExpensesEntity>
+
     @Query("SELECT SUM(expenseAmount) as Total FROM expenses where expenseDate =:expenseDate AND expenseType LIKE '%Expense%'")
     fun loadExpensesByDate(expenseDate: Date): Float
 

@@ -19,9 +19,7 @@ import android.text.TextUtils;
  */
 public class View extends Base {
 
-    protected View() {
-
-    }
+    protected View() { }
 
     public static View instantiate() {
         return new View("new anychart.data.view()");

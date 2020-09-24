@@ -6,6 +6,7 @@ import com.money.budget.wealthy.di.environmentModule
 import com.money.budget.wealthy.ui.accounts.accountsModule
 import com.money.budget.wealthy.ui.expenses.expensesModule
 import com.money.budget.wealthy.ui.settings.settingsModule
+import com.money.budget.wealthy.ui.statistics.statisticsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -24,6 +25,7 @@ class WealthyApp : Application() {
                 environmentModule,
                 accountsModule,
                 expensesModule,
+                statisticsModule,
                 settingsModule
             )
         }

@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/expensesHostFragment"
-        android:icon="@drawable/ic_expenses"
+        android:icon="@drawable/ic_home"
         android:enabled="true"
         android:title="Expenses" />
 

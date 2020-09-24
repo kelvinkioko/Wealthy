@@ -21,6 +21,10 @@ class ExpensesRepository(application: Application) {
         return expensesDao.loadExpenses(startDate, endDate)
     }
 
+    fun loadExpensesByDateAndExpense(startDate: Date, endDate: Date, expenseType: String): List<ExpensesEntity> {
+        return expensesDao.loadExpensesByDateAndExpense(startDate, endDate, "%$expenseType")
+    }
+
     fun loadExpensesByDate(expenseDate: Date): Float {
         return expensesDao.loadExpensesByDate(expenseDate)
     }
