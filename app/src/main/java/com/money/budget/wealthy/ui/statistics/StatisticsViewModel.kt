@@ -56,6 +56,7 @@ class StatisticsViewModel(
         }
 
         val transactions = expensesRepository.loadExpensesByDateAndExpense(startDate, endDate, transactionValue)
+        _uiState.postValue(StatisticsUIState.Transactions(transactions))
     }
 }
 
@@ -71,4 +72,6 @@ sealed class StatisticsUIState {
     object Success : StatisticsUIState()
 
     data class TransactionTypes(val transactionTypesEntity: List<String>) : StatisticsUIState()
+
+    data class Transactions(val statisticsExpenseItem: List<StatisticsExpenseItem>) : StatisticsUIState()
 }

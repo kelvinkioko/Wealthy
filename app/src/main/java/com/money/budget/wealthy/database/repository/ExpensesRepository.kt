@@ -3,6 +3,7 @@ package com.money.budget.wealthy.database.repository
 import android.app.Application
 import com.money.budget.wealthy.database.WealthyDatabase
 import com.money.budget.wealthy.database.models.ExpensesEntity
+import com.money.budget.wealthy.ui.statistics.StatisticsExpenseItem
 import java.util.Date
 
 class ExpensesRepository(application: Application) {
@@ -21,8 +22,8 @@ class ExpensesRepository(application: Application) {
         return expensesDao.loadExpenses(startDate, endDate)
     }
 
-    fun loadExpensesByDateAndExpense(startDate: Date, endDate: Date, expenseType: String): List<ExpensesEntity> {
-        return expensesDao.loadExpensesByDateAndExpense(startDate, endDate, "%$expenseType")
+    fun loadExpensesByDateAndExpense(startDate: Date, endDate: Date, expenseType: String): List<StatisticsExpenseItem> {
+        return expensesDao.loadExpensesByDateAndExpense(startDate, endDate, "%$expenseType%")
     }
 
     fun loadExpensesByDate(expenseDate: Date): Float {

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.money.budget.wealthy.database.models.ExpensesEntity
+import com.money.budget.wealthy.ui.statistics.StatisticsExpenseItem
 import java.util.Date
 
 @Dao
@@ -17,8 +18,8 @@ interface ExpensesDao {
     @Query("SELECT * FROM expenses WHERE expenseDate BETWEEN :startDate AND :endDate ORDER BY expenseDate ASC")
     fun loadExpenses(startDate: Date, endDate: Date): List<ExpensesEntity>
 
-    @Query("SELECT * FROM expenses where expenseDate BETWEEN :startDate AND :endDate AND expenseType LIKE :expenseType ORDER BY expenseDate ASC")
-    fun loadExpensesByDateAndExpense(startDate: Date, endDate: Date, expenseType: String): List<ExpensesEntity>
+    @Query("SELECT expenseType, sum(expenseAmount) as expenseAmount, expenseCategory FROM expenses where expenseDate BETWEEN :startDate AND :endDate AND expenseType LIKE :expenseType GROUP BY expenseCategory ORDER BY expenseDate ASC")
+    fun loadExpensesByDateAndExpense(startDate: Date, endDate: Date, expenseType: String): List<StatisticsExpenseItem>
 
     @Query("SELECT SUM(expenseAmount) as Total FROM expenses where expenseDate =:expenseDate AND expenseType LIKE '%Expense%'")
     fun loadExpensesByDate(expenseDate: Date): Float

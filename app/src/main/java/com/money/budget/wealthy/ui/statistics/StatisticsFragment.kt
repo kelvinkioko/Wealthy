@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import com.anychart.APIlib
 import com.anychart.AnyChart
 import com.anychart.chart.common.dataentry.DataEntry
 import com.anychart.chart.common.dataentry.ValueDataEntry
@@ -28,6 +29,13 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
     private val binding by viewBinding(StatisticsFragmentBinding::bind)
 
+    private val statisticsAdapter: StatisticsAdapter by lazy {
+        StatisticsAdapter { onStatisticsExpenseItemPicked(it) }
+    }
+
+    private fun onStatisticsExpenseItemPicked(expense: StatisticsExpenseItem) {
+    }
+
     private val viewModel: StatisticsViewModel by viewModel()
 
     private var isCalendarMonthly = false
@@ -35,14 +43,15 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
     private var transactionValue: String = ""
     private var durationValue: String = ""
     private var dateValue: String = ""
+    private lateinit var pie: com.anychart.charts.Pie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupData()
         setupClickListeners()
         setupObservers()
-        loadPieChart()
+        setupStatisticsList()
+        setupPieChart()
     }
 
     private fun setupData() {
@@ -59,6 +68,30 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
             }
             viewModel.loadTransactions(transactionValue, durationValue, dateValue)
         }
+    }
+
+    private fun setupPieChart() {
+        pie = AnyChart.pie()
+        pie.labels().position("outside")
+        pie.legend().enabled(false)
+
+        pie.setOnClickListener(object :
+            ListenersInterface.OnClickListener(arrayOf("x", "value")) {
+            override fun onClick(event: Event) {}
+        })
+
+        binding.apply {
+            APIlib.getInstance().setActiveAnyChartView(anyChartView)
+            anyChartView.setChart(pie)
+        }
+    }
+
+    private fun setupStatisticsList() {
+        binding.statisticsList.adapter = statisticsAdapter
+    }
+
+    private fun populateStatisticsList(statisticsExpenseItem: List<StatisticsExpenseItem>) {
+        statisticsAdapter.setStatisticsExpense(statisticsExpenseItem)
     }
 
     private fun setupClickListeners() {
@@ -125,6 +158,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 is StatisticsUIState.TransactionTypes -> setupSpinnerAdapter(it.transactionTypesEntity)
+                is StatisticsUIState.Transactions -> loadPieChart(it.statisticsExpenseItem)
             }
         }
         viewModel.action.observeEvent(viewLifecycleOwner) {
@@ -139,27 +173,18 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
     }
 
-    private fun loadPieChart() {
-        val pie = AnyChart.pie()
-
-        pie.setOnClickListener(object :
-            ListenersInterface.OnClickListener(arrayOf("x", "value")) {
-            override fun onClick(event: Event) {}
-        })
-
+    private fun loadPieChart(statisticsExpenseItem: List<StatisticsExpenseItem>) {
+        populateStatisticsList(statisticsExpenseItem)
         val data: MutableList<DataEntry> = ArrayList()
-        data.add(ValueDataEntry("Apples", 6371664))
-        data.add(ValueDataEntry("Pears", 789622))
-        data.add(ValueDataEntry("Bananas", 7216301))
-        data.add(ValueDataEntry("Grapes", 1486621))
-        data.add(ValueDataEntry("Oranges", 1200000))
+        val loopCount = if (statisticsExpenseItem.isEmpty()) 1 else statisticsExpenseItem.size
+        for (x in 0 until loopCount) {
+            if (statisticsExpenseItem.isEmpty())
+                data.add(ValueDataEntry("$x", 100))
+            else
+                data.add(ValueDataEntry(statisticsExpenseItem[x].expenseCategory.split("#")[0], statisticsExpenseItem[x].expenseAmount))
+        }
 
         pie.data(data)
-
-        pie.labels().position("outside")
-        pie.legend().enabled(false)
-
-        binding.anyChartView.setChart(pie)
     }
 
     private fun setupSpinnerAdapter(values: List<String>) {
@@ -228,6 +253,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
             transactionValue = transactionType.selectedItem.toString()
             durationValue = durationType.selectedItem.toString()
+            setupData()
         }
     }
 }
