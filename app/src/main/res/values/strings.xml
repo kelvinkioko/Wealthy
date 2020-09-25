@@ -20,4 +20,7 @@
     <string name="thursday">THU</string>
     <string name="friday">FRI</string>
     <string name="saturday">SAT</string>
+
+    <string name="empty_statistics_string">There are no %1$s statistics for %2$s</string>
+    <string name="empty_transactions_string">There are no transactions for %1$s</string>
 </resources>

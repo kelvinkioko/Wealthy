@@ -18,18 +18,14 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="3"/>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineStart"
+    <include
+        android:id="@+id/emptyState"
+        layout="@layout/item_empty_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

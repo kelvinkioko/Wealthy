@@ -3,6 +3,8 @@ package com.money.budget.wealthy.ui.expenses.weekly
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +40,7 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
 
         val sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedExpenseViewModel::class.java) }
         sharedViewModel.toolbarMonthCalendar.observe(viewLifecycleOwner, Observer {
+            binding.emptyState.emptyText.text = String.format(getString(R.string.empty_transactions_string), it.toString())
             viewModel.loadExpenses(it.toString())
         })
     }
@@ -61,7 +64,22 @@ class WeeklyExpensesFragment : Fragment(R.layout.expenses_weekly_fragment) {
     }
 
     private fun populateExpenses(expensesEntity: List<SectionedTransactionsEntity>) {
-        expensesAdapter.submitList(expensesEntity)
+        if (expensesEntity.isEmpty()) {
+            binding.apply {
+                // Show empty
+                emptyState.emptyParent.isVisible = true
+                // Hide recycler
+                expensesList.isGone = true
+            }
+        } else {
+            binding.apply {
+                // Hide empty
+                emptyState.emptyParent.isGone = true
+                // Show recycler
+                expensesList.isVisible = true
+            }
+            expensesAdapter.submitList(expensesEntity)
+        }
     }
 
     private fun setupAccountTypesList() {

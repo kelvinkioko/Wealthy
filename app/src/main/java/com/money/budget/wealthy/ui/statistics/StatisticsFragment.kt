@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -174,17 +176,40 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
     }
 
     private fun loadPieChart(statisticsExpenseItem: List<StatisticsExpenseItem>) {
-        populateStatisticsList(statisticsExpenseItem)
-        val data: MutableList<DataEntry> = ArrayList()
-        val loopCount = if (statisticsExpenseItem.isEmpty()) 1 else statisticsExpenseItem.size
-        for (x in 0 until loopCount) {
-            if (statisticsExpenseItem.isEmpty())
-                data.add(ValueDataEntry("$x", 100))
-            else
-                data.add(ValueDataEntry(statisticsExpenseItem[x].expenseCategory.split("#")[0], statisticsExpenseItem[x].expenseAmount))
-        }
+        if (statisticsExpenseItem.isEmpty())
+            binding.apply {
+                // Show empty
+                emptyState.emptyParent.isVisible = true
+                emptyState.emptyText.text = String.format(getString(R.string.empty_statistics_string), transactionType.selectedItem.toString(), calendarMonthYear.text.toString())
+                // Hide chart & recycler
+                anyChartView.isGone = true
+                statisticsList.isGone = true
+            }
+        else {
+            binding.apply {
+                // Hide empty
+                emptyState.emptyParent.isGone = true
+                // Show chart & recycler
+                anyChartView.isVisible = true
+                statisticsList.isVisible = true
+            }
+            populateStatisticsList(statisticsExpenseItem)
+            val data: MutableList<DataEntry> = ArrayList()
+            val loopCount = if (statisticsExpenseItem.isEmpty()) 1 else statisticsExpenseItem.size
+            for (x in 0 until loopCount) {
+                if (statisticsExpenseItem.isEmpty())
+                    data.add(ValueDataEntry("$x", 100))
+                else
+                    data.add(
+                        ValueDataEntry(
+                            statisticsExpenseItem[x].expenseCategory.split("#")[0],
+                            statisticsExpenseItem[x].expenseAmount
+                        )
+                    )
+            }
 
-        pie.data(data)
+            pie.data(data)
+        }
     }
 
     private fun setupSpinnerAdapter(values: List<String>) {
