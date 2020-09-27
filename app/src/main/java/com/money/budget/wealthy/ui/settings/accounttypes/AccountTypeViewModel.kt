@@ -26,7 +26,7 @@ class AccountTypeViewModel(
     }
 
     fun addOrEditAccountType(accountID: String) {
-        val bottomSheetFragment = AddAccountTypeDialog(accountID)
+        val bottomSheetFragment = AddAccountTypeDialog(accountID = accountID)
         _action.postValue(AccountTypeActions.BottomNavigate(bottomSheetFragment).asEvent())
     }
 

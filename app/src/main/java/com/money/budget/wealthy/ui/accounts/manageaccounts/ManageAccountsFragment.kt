@@ -2,6 +2,8 @@ package com.money.budget.wealthy.ui.accounts.manageaccounts
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -68,7 +70,24 @@ class ManageAccountsFragment : Fragment(R.layout.account_manage_fragment) {
     }
 
     private fun populateAccounts(accountsEntity: List<SectionedAccountItem>) {
-        accountAdapter.submitList(accountsEntity)
+        if (accountsEntity.isEmpty()) {
+            binding.apply {
+                // Show empty
+                emptyState.emptyParent.isVisible = true
+                emptyState.emptyText.text = String.format(getString(R.string.there_is_no_list_of_accounts), "accounts")
+                emptyState.emptyAction.text = String.format(getString(R.string.add_an_account), "an account")
+                // Hide recycler
+                accountsList.isGone = true
+            }
+        } else {
+            binding.apply {
+                // Hide empty
+                emptyState.emptyParent.isGone = true
+                // Show recycler
+                accountsList.isVisible = true
+            }
+            accountAdapter.submitList(accountsEntity)
+        }
     }
 
     private fun setupAccountTypesList() {

@@ -2,6 +2,8 @@ package com.money.budget.wealthy.ui.accounts
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -39,7 +41,10 @@ class AccountsFragment : Fragment(R.layout.accounts_fragment) {
     private fun setupClickListeners() {
         binding.apply {
             manageAccounts.debouncedClick(lifecycleScope) {
-                findNavController().navigate(AccountsFragmentDirections.toManageAccountFragment())
+                viewModel.onManageClicked()
+            }
+            emptyState.emptyAction.debouncedClick(lifecycleScope) {
+                viewModel.onManageClicked()
             }
         }
     }
@@ -58,7 +63,28 @@ class AccountsFragment : Fragment(R.layout.accounts_fragment) {
     }
 
     private fun populateAccounts(accountsEntity: List<SectionedAccountDetailsItem>) {
-        accountAdapter.submitList(accountsEntity)
+        if (accountsEntity.isEmpty()) {
+            binding.apply {
+                // Show empty
+                emptyState.emptyParent.isVisible = true
+                emptyState.emptyText.text = String.format(getString(R.string.there_is_no_list_of_accounts), "accounts")
+                emptyState.emptyAction.text = String.format(getString(R.string.add_an_account), "an account")
+                // Hide recycler
+                groupList.isGone = true
+                // Rename some buttons
+                manageAccounts.text = getString(R.string.add_account)
+            }
+        } else {
+            binding.apply {
+                // Hide empty
+                emptyState.emptyParent.isGone = true
+                // Show recycler
+                groupList.isVisible = true
+                // Rename some buttons
+                manageAccounts.text = getString(R.string.manage_account)
+            }
+            accountAdapter.submitList(accountsEntity)
+        }
     }
 
     private fun setupAccountTypesList() {

@@ -38,6 +38,16 @@
         tools:itemCount="4"
         tools:listitem="@layout/item_clickable_radio" />
 
+    <include
+        android:id="@+id/emptyState"
+        layout="@layout/item_empty_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"
         android:layout_width="wrap_content"

@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -17,6 +19,7 @@ import com.money.budget.wealthy.database.models.AccountsEntity
 import com.money.budget.wealthy.database.models.CategoryTypesEntity
 import com.money.budget.wealthy.database.models.TransactionTypesEntity
 import com.money.budget.wealthy.databinding.AddExpensesFragmentBinding
+import com.money.budget.wealthy.ui.SharedViewModel
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
@@ -33,6 +36,8 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
 
     private val viewModel: ManageExpenseViewModel by viewModel()
 
+    private lateinit var sharedViewModel: SharedViewModel
+
     private var transactionTypeSelected: Boolean = false
 
     private val transactionTypeAdapter: TransactionTypesAdapter by lazy {
@@ -46,6 +51,8 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedViewModel::class.java) }
 
         setupToolbar()
         setupClickListener()
@@ -121,6 +128,11 @@ class AddExpenseFragment : Fragment(R.layout.add_expenses_fragment) {
                 is ManageExpenseActions.BottomNavigate -> showDialog(it.bottomSheetDialogFragment)
             }
         }
+        sharedViewModel.reload.observe(viewLifecycleOwner, Observer {
+            if (it.toString().toBoolean()) {
+                viewModel.chooseAccount()
+            }
+        })
         var current = ""
         accountAmount.editText!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}

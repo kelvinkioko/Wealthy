@@ -77,6 +77,9 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
                     PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
                 }
             }
+            addTransaction.debouncedClick(lifecycleScope) {
+                findNavController().navigate(ExpensesFragmentDirections.toAddExpenseFragment())
+            }
         }
     }
 
@@ -115,10 +118,6 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
                     // Handle tab unselect
                 }
             })
-
-            addTransaction.debouncedClick(lifecycleScope) {
-                findNavController().navigate(ExpensesFragmentDirections.toAddExpenseFragment())
-            }
         }
     }
 }

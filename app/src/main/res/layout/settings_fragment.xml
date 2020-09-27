@@ -50,6 +50,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Account types"
+                app:profile="@drawable/ic_settings_accounts"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -71,6 +72,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Transaction types"
+                app:profile="@drawable/ic_settings_transactions"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/accountTypesView"/>
@@ -92,6 +94,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Currency"
+                app:profile="@drawable/ic_settings_currency"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/transactionTypesView"/>
@@ -113,6 +116,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Expense categories"
+                app:profile="@drawable/ic_settings_categories"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/currencyTypesView"/>
@@ -134,6 +138,7 @@
                 android:clickable="true"
                 android:focusable="true"
                 app:text="Tell a friend"
+                app:profile="@drawable/ic_settings_share"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/categoryTypesView"/>

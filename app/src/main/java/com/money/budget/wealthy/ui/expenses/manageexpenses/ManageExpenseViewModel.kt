@@ -70,6 +70,9 @@ class ManageExpenseViewModel(
             resendAccountCallback = {
                 this.accountsEntity = it
                 _uiState.postValue(ManageExpenseUIState.Accounts(it))
+            },
+            createAccountCallback = {
+                _action.postValue(ManageExpenseActions.Navigate(AddExpenseFragmentDirections.toAddAccountFragment(accountID = "")).asEvent())
             }
         )
         _action.postValue(ManageExpenseActions.BottomNavigate(bottomSheetFragment).asEvent())

@@ -23,4 +23,10 @@
 
     <string name="empty_statistics_string">There are no %1$s statistics for %2$s</string>
     <string name="empty_transactions_string">There are no transactions for %1$s</string>
+    <string name="there_is_no_list_of_accounts">There is no list of %1$s</string>
+    <string name="add_an_account">Add %1$s</string>
+
+    <string name="add_account">Add account</string>
+    <string name="manage_account">Manage accounts</string>
+    <string name="transaction_types">Transaction types</string>
 </resources>

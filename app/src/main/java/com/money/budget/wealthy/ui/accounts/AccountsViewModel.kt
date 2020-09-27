@@ -11,6 +11,7 @@ import com.money.budget.wealthy.database.repository.AccountsRepository
 import com.money.budget.wealthy.ui.accounts.accounttypes.TypeDialogFragment
 import com.money.budget.wealthy.ui.accounts.manageaccounts.DeleteAccountDialogFragment
 import com.money.budget.wealthy.ui.accounts.manageaccounts.ManageAccountsFragmentDirections
+import com.money.budget.wealthy.ui.settings.accounttypes.AddAccountTypeDialog
 import com.money.budget.wealthy.util.Event
 import com.money.budget.wealthy.util.asEvent
 
@@ -78,6 +79,15 @@ class AccountsViewModel(
         _uiState.postValue(AccountsUIState.ManageAccounts(sectionedAccountItem))
     }
 
+    fun onManageClicked() {
+        val directions = if (accountsRepository.countAccounts() > 0) {
+            AccountsFragmentDirections.toManageAccountFragment()
+        } else {
+            AccountsFragmentDirections.toAddAccountFragment(accountID = "")
+        }
+        _action.postValue(AccountsActions.Navigate(directions).asEvent())
+    }
+
     fun loadAccountTypes() {
         val accountTypes = accountsRepository.loadAccountTypes()
         _uiState.postValue(AccountsUIState.AccountTypes(accountTypes))
@@ -106,8 +116,14 @@ class AccountsViewModel(
 
     fun selectAccountType() {
         val bottomSheetFragment = TypeDialogFragment(
-            resendAccountTypeCallback = { handleAccountTypeCallBack(it) }
+            resendAccountTypeCallback = { handleAccountTypeCallBack(it) },
+            addAccountCallback = { addOrEditAccountType("") }
         )
+        _action.postValue(AccountsActions.BottomNavigate(bottomSheetFragment).asEvent())
+    }
+
+    private fun addOrEditAccountType(accountID: String) {
+        val bottomSheetFragment = AddAccountTypeDialog(accountID = accountID)
         _action.postValue(AccountsActions.BottomNavigate(bottomSheetFragment).asEvent())
     }
 
@@ -136,6 +152,8 @@ sealed class AccountsUIState {
     data class Accounts(val accountEntity: List<SectionedAccountDetailsItem>) : AccountsUIState()
 
     data class ManageAccounts(val accountEntity: List<SectionedAccountItem>) : AccountsUIState()
+
+    object AccountTypeAdded : AccountsUIState()
 
     data class AccountTypes(val accountTypesEntity: List<AccountTypesEntity>) : AccountsUIState()
 

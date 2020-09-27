@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/emptyParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/emptyImage"
+        android:layout_width="250dp"
+        android:layout_height="140dp"
+        android:scaleType="fitXY"
+        app:srcCompat="@drawable/ic_empty_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/there_is_no_list_of_accounts"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/emptyImage"
+        app:layout_constraintStart_toStartOf="@+id/emptyImage"
+        app:layout_constraintTop_toBottomOf="@+id/emptyImage" />
+
+    <Button
+        android:id="@+id/emptyAction"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_an_account"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyText" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

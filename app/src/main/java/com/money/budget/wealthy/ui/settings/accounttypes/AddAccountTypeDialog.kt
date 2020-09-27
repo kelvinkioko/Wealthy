@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -17,6 +17,7 @@ import com.money.budget.wealthy.R
 import com.money.budget.wealthy.constants.Hive
 import com.money.budget.wealthy.database.models.AccountTypesEntity
 import com.money.budget.wealthy.databinding.SettingsAccountTypeAddDialogBinding
+import com.money.budget.wealthy.ui.SharedViewModel
 import com.money.budget.wealthy.util.debouncedClick
 import com.money.budget.wealthy.util.observeEvent
 import com.money.budget.wealthy.util.viewBinding
@@ -27,6 +28,8 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
     private val binding by viewBinding(SettingsAccountTypeAddDialogBinding::bind)
 
     private val viewModel: AccountTypeViewModel by viewModel()
+
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -53,6 +56,8 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedViewModel::class.java) }
+
         setupToolbar()
         setupObservers()
         setupClickListeners()
@@ -68,7 +73,10 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
     private fun setupObservers() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
-                is AccountTypeUIState.Success -> dismiss()
+                is AccountTypeUIState.Success -> {
+                    sharedViewModel.setReload(true)
+                    dismiss()
+                }
             }
         }
         viewModel.action.observeEvent(viewLifecycleOwner) {
@@ -95,10 +103,5 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Toast.makeText(requireContext(), accountID, Toast.LENGTH_LONG).show()
     }
 }

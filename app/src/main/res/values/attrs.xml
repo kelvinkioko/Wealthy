@@ -12,7 +12,7 @@
 
     <declare-styleable name="GenericClickableItem">
         <attr name="text" format="string" />
-        <attr name="profile" format="integer" />
+        <attr name="profile" format="reference" />
     </declare-styleable>
 
     <!-- Start of calendar attrs -->

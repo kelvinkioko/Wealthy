@@ -34,7 +34,11 @@
         android:id="@+id/addExpenseFragment"
         android:name="com.money.budget.wealthy.ui.expenses.manageexpenses.AddExpenseFragment"
         android:label="add expenses fragment"
-        tools:layout="@layout/add_expenses_fragment"/>
+        tools:layout="@layout/add_expenses_fragment">
+        <action
+            android:id="@+id/toAddAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/statisticsFragment"
@@ -59,6 +63,9 @@
         <action
             android:id="@+id/toManageAccountFragment"
             app:destination="@id/manageAccountsFragment" />
+        <action
+            android:id="@+id/toAddAccountFragment"
+            app:destination="@id/addAccountFragment" />
     </fragment>
 
     <fragment
