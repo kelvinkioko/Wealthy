@@ -1,4 +1,4 @@
-import com.money.budget.wealthy.buildsrc.BuildVersions
+import com.expense.money.manager.buildsrc.BuildVersions
 
 plugins {
     id("com.android.library")

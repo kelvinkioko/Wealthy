@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wealthy</string>
+    <string name="app_name">Money Manager</string>
     <string name="image_description">Generic image description</string>
 
     <string-array name="account_hint">

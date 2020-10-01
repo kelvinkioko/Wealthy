@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/onBoardingWelcomeFragment"
+    app:startDestination="@id/expensesHostFragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
         android:id="@+id/onBoardingWelcomeFragment"
-        android:name="com.money.budget.wealthy.ui.onboarding.OnboardingWelcomeFragment"
+        android:name="com.expense.money.manager.ui.onboarding.OnboardingWelcomeFragment"
         android:label="Onboarding fragment"
         tools:layout="@layout/onboarding_welcome">
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/expensesHostFragment"
-        android:name="com.money.budget.wealthy.ui.expenses.ExpensesFragment"
+        android:name="com.expense.money.manager.ui.expenses.ExpensesFragment"
         android:label="expenses host fragment"
         tools:layout="@layout/expenses_fragment">
         <argument
@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/addExpenseFragment"
-        android:name="com.money.budget.wealthy.ui.expenses.manageexpenses.AddExpenseFragment"
+        android:name="com.expense.money.manager.ui.expenses.manageexpenses.AddExpenseFragment"
         android:label="add expenses fragment"
         tools:layout="@layout/add_expenses_fragment">
         <action
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/statisticsFragment"
-        android:name="com.money.budget.wealthy.ui.statistics.StatisticsFragment"
+        android:name="com.expense.money.manager.ui.statistics.StatisticsFragment"
         android:label="Statistics host fragment"
         tools:layout="@layout/statistics_fragment">
         <argument
@@ -53,7 +53,7 @@
 
     <fragment
         android:id="@+id/accountsFragment"
-        android:name="com.money.budget.wealthy.ui.accounts.AccountsFragment"
+        android:name="com.expense.money.manager.ui.accounts.AccountsFragment"
         android:label="Accounts host fragment"
         tools:layout="@layout/accounts_fragment">
         <argument
@@ -70,7 +70,7 @@
 
     <fragment
         android:id="@+id/manageAccountsFragment"
-        android:name="com.money.budget.wealthy.ui.accounts.manageaccounts.ManageAccountsFragment"
+        android:name="com.expense.money.manager.ui.accounts.manageaccounts.ManageAccountsFragment"
         android:label="Manage accounts fragment"
         tools:layout="@layout/account_manage_fragment">
         <action
@@ -80,7 +80,7 @@
 
     <fragment
         android:id="@+id/addAccountFragment"
-        android:name="com.money.budget.wealthy.ui.accounts.manageaccounts.AddAccountFragment"
+        android:name="com.expense.money.manager.ui.accounts.manageaccounts.AddAccountFragment"
         android:label="Add accounts fragment"
         tools:layout="@layout/account_add_fragment">
         <argument
@@ -90,7 +90,7 @@
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.money.budget.wealthy.ui.settings.SettingsFragment"
+        android:name="com.expense.money.manager.ui.settings.SettingsFragment"
         android:label="Settings host fragment"
         tools:layout="@layout/settings_fragment">
         <argument
@@ -113,25 +113,25 @@
 
     <fragment
         android:id="@+id/settingsAccountTypesFragment"
-        android:name="com.money.budget.wealthy.ui.settings.accounttypes.AccountTypesFragment"
+        android:name="com.expense.money.manager.ui.settings.accounttypes.AccountTypesFragment"
         android:label="Manage accounts types fragment"
         tools:layout="@layout/settings_manage_account_types_fragment" />
 
     <fragment
         android:id="@+id/settingsCurrencyFragment"
-        android:name="com.money.budget.wealthy.ui.settings.currency.CurrencyFragment"
+        android:name="com.expense.money.manager.ui.settings.currency.CurrencyFragment"
         android:label="Manage currencies fragment"
         tools:layout="@layout/settings_currency_fragment" />
 
     <fragment
         android:id="@+id/expenseCategoryFragment"
-        android:name="com.money.budget.wealthy.ui.settings.expensecategory.ExpenseCategoryFragment"
+        android:name="com.expense.money.manager.ui.settings.expensecategory.ExpenseCategoryFragment"
         android:label="Expense category fragment"
         tools:layout="@layout/settings_expense_category_fragment" />
 
     <fragment
         android:id="@+id/transactionTypesFragment"
-        android:name="com.money.budget.wealthy.ui.settings.transactiontypes.TransactionTypesFragment"
+        android:name="com.expense.money.manager.ui.settings.transactiontypes.TransactionTypesFragment"
         android:label="Transaction types fragment"
         tools:layout="@layout/settings_transaction_types_fragment" />
 

@@ -1,5 +1,5 @@
-import com.money.budget.wealthy.buildsrc.BuildVersions
-import com.money.budget.wealthy.buildsrc.Versioning
+import com.expense.money.manager.buildsrc.BuildVersions
+import com.expense.money.manager.buildsrc.Versioning
 
 /*
  * This is also a manually created file

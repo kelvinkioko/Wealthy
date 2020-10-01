@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layout_marginBottom="16dp">
 
-    <com.money.budget.wealthy.widget.calendar.views.EventsCalendar
+    <com.expense.money.manager.widget.calendar.views.EventsCalendar
         android:id="@+id/eventsCalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

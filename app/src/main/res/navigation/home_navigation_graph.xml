@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/dailyExpensesFragment"
-        android:name="com.money.budget.wealthy.ui.expenses.daily.DailyExpensesFragment"
+        android:name="com.expense.money.manager.ui.expenses.daily.DailyExpensesFragment"
         android:label="Daily expenses fragment"
         tools:layout="@layout/expenses_daily_fragment"/>
 
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/weeklyExpensesFragment"
-        android:name="com.money.budget.wealthy.ui.expenses.weekly.WeeklyExpensesFragment"
+        android:name="com.expense.money.manager.ui.expenses.weekly.WeeklyExpensesFragment"
         android:label="Weekly expenses fragment"
         tools:layout="@layout/expenses_weekly_fragment"/>
 
@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/monthlyExpensesFragment"
-        android:name="com.money.budget.wealthy.ui.expenses.monthly.MonthlyExpensesFragment"
+        android:name="com.expense.money.manager.ui.expenses.monthly.MonthlyExpensesFragment"
         android:label="Monthly expenses fragment"
         tools:layout="@layout/expenses_monthly_fragment"/>
 
@@ -38,7 +38,7 @@
 
     <fragment
         android:id="@+id/calendarExpensesFragment"
-        android:name="com.money.budget.wealthy.ui.expenses.calendar.CalendarExpensesFragment"
+        android:name="com.expense.money.manager.ui.expenses.calendar.CalendarExpensesFragment"
         android:label="Calendar expenses fragment"
         tools:layout="@layout/expenses_calendar_fragment"/>
 

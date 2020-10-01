@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.money.budget.wealthy.widget.GenericActionItem
+            <com.expense.money.manager.widget.GenericActionItem
                 android:id="@+id/accountTypes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/accountTypes"/>
 
-            <com.money.budget.wealthy.widget.GenericActionItem
+            <com.expense.money.manager.widget.GenericActionItem
                 android:id="@+id/transactionTypes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/transactionTypes"/>
 
-            <com.money.budget.wealthy.widget.GenericActionItem
+            <com.expense.money.manager.widget.GenericActionItem
                 android:id="@+id/currencyTypes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/currencyTypes"/>
 
-            <com.money.budget.wealthy.widget.GenericActionItem
+            <com.expense.money.manager.widget.GenericActionItem
                 android:id="@+id/categoryTypes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -131,7 +131,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/categoryTypes"/>
 
-            <com.money.budget.wealthy.widget.GenericActionItem
+            <com.expense.money.manager.widget.GenericActionItem
                 android:id="@+id/tellAFriend"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tellAFriend"/>
 
-            <com.money.budget.wealthy.widget.GenericActionItem
+            <com.expense.money.manager.widget.GenericActionItem
                 android:id="@+id/appInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

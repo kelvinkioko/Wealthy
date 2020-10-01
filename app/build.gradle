@@ -1,4 +1,4 @@
-import com.money.budget.wealthy.buildsrc.Dependencies
+import com.expense.money.manager.buildsrc.Dependencies
 
 plugins {
     id("com.android.application")
@@ -11,7 +11,7 @@ plugins {
 apply from: "$rootProject.projectDir/android_defaults.gradle"
 
 android {
-    defaultConfig.applicationId("com.money.budget.wealthy")
+    defaultConfig.applicationId("com.expense.money.manager")
 }
 
 dependencies {

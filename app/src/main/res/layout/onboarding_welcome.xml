@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="@+id/guidelineStart"
         app:layout_constraintBottom_toTopOf="@+id/welcome_indicator" />
 
-    <com.money.budget.wealthy.widget.DotsIndicator
+    <com.expense.money.manager.widget.DotsIndicator
         android:id="@+id/welcome_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
