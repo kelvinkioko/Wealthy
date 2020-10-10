@@ -23,6 +23,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:visibility="gone"
+        app:itemIconTint="@color/bottom_bar_color_state"
+        app:itemTextColor="@color/bottom_bar_color_state"
         app:labelVisibilityMode="labeled"
         app:itemTextAppearanceActive="@style/TextAppearance.MaterialComponents.Caption"
         app:itemTextAppearanceInactive="@style/TextAppearance.MaterialComponents.Caption"

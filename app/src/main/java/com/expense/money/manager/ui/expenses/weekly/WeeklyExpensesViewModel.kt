@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.expense.money.manager.constants.Hive
+import com.expense.money.manager.constants.getShortMonthGivenNumber
 import com.expense.money.manager.database.repository.ExpensesRepository
 import com.expense.money.manager.util.Event
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -37,7 +38,7 @@ class WeeklyExpensesViewModel(
                         sectionedTransactionsItem.add(
                             SectionedTransactionsEntity.TransactionsHeader(
                                 title = currentTransaction,
-                                range = "${range.startDate.replace("/${splitMonth[1]}", "")} - ${range.endDate.replace("/${splitMonth[1]}", "")}",
+                                range = "${formatDateRange(range.startDate, splitMonth[1])} - ${formatDateRange(range.endDate, splitMonth[1])}",
                                 weekPosition = range.weekPosition,
                                 transactions = expensesRepository.countExpensesByRange(Hive().getDateFromString(range.startDate), Hive().getDateFromString(range.endDate)).toString() + " Transactions",
                                 TotalExpense = expensesRepository.loadExpensesByDate(it.expenseDate).toString(),
@@ -64,7 +65,7 @@ class WeeklyExpensesViewModel(
                 sectionedTransactionsItem.add(
                     SectionedTransactionsEntity.TransactionsHeader(
                         title = "",
-                        range = "${range.startDate.replace("/${splitMonth[1]}", "")} - ${range.endDate.replace("/${splitMonth[1]}", "")}",
+                        range = "${formatDateRange(range.startDate, splitMonth[1])} - ${formatDateRange(range.endDate, splitMonth[1])}",
                         weekPosition = range.weekPosition,
                         transactions = "0 Transaction(s)",
                         TotalExpense = "0",
@@ -75,6 +76,17 @@ class WeeklyExpensesViewModel(
         }
 
         _uiState.postValue(WeeklyExpensesUIState.WeeklyExpenses(sectionedTransactionsItem))
+    }
+
+    private fun formatDateRange(rawDate: String, year: String): String {
+        println("Format date range $rawDate")
+        println("Format date range $year")
+        val fixDate = rawDate.replace("/$year", "")
+        val splitDate = fixDate.split("/")
+
+        println("Format date range ${splitDate[1]}")
+
+        return "${splitDate[0]}, ${getShortMonthGivenNumber(splitDate[1])}"
     }
 }
 

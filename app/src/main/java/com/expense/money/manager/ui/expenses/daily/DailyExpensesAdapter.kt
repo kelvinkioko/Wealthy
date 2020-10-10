@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.expense.money.manager.R
 import com.expense.money.manager.constants.Hive
+import com.expense.money.manager.constants.getShortMonthGivenNumber
 import com.expense.money.manager.databinding.ItemExpenseDailyBinding
 import com.expense.money.manager.databinding.ItemExpenseDailyHeaderBinding
 
@@ -87,7 +88,7 @@ class DailyExpensesAdapter(private val transactionClicked: (SectionedTransaction
             binding.apply {
                 val date = Hive().formatDateHeader(content.title).split("#")
                 dayDateValue.text = date[1]
-                monthYearValue.text = date[2] + "." + date[3]
+                monthYearValue.text = "${getShortMonthGivenNumber(date[2])}, ${date[3]}"
                 saturdayValue.text = date[0]
 
                 if (!content.TotalExpense.equals("0.0", true)) {

@@ -3,22 +3,38 @@
     <color name="colorPrimary">#7066bf</color>
     <color name="colorPrimaryDark">#5d549d</color>
     <color name="colorAccent">#7066bf</color>
+    <color name="colorBackground">#f2f3f4</color>
+    <color name="colorHeader">#e5e5e5</color>
 
     <color name="colorWhite">#ffffff</color>
+
+    <!--    Text    -->
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
     <color name="hint_text">#aeb0a5</color>
 
-    <color name="colorBackground">#ffffff</color>
-    <color name="viewBackgroundColor">#929497</color>
+    <color name="divider">#50aeb0a5</color>
+
+    <color name="statusBarColor">#7066bf</color>
+
+    <color name="viewBackgroundColor">#40929497</color>
 
     <!--Indicator colors-->
     <color name="colorActive">#ffffff</color>
     <color name="colorSemiActive">#85ffffff</color>
     <color name="colorInactive">#50ffffff</color>
 
+    <!--    State colors    -->
     <color name="colorPositive">#38aba5</color>
     <color name="colorNegative">#e25d6f</color>
     <color name="colorIdle">#ffb74d</color>
     <color name="colorTransparent">#00000000</color>
+
+    <color name="header_background">#e0e0e0</color>
+
+    <!--    Bottom Bar      -->
+    <color name="bottomInactive">#666666</color>
+    <color name="bottomActive">#7066bf</color>
 
     <color name="text_black_disabled">#54000000</color>
 </resources>

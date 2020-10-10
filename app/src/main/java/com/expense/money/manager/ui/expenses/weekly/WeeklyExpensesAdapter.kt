@@ -86,7 +86,7 @@ class WeeklyExpensesAdapter(private val transactionClicked: (SectionedTransactio
 
         fun bind(content: SectionedTransactionsEntity.TransactionsHeader) {
             binding.apply {
-                weekCount.text = content.weekPosition
+                weekCount.text = "Week ${content.weekPosition} of 52"
                 rangeValue.text = content.range
                 transactionValue.text = content.transactions
 

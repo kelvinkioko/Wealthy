@@ -40,7 +40,7 @@
         android:layout_height="24dp"
         android:background="@drawable/checkbox_rounded"
         android:button="@null"
-        android:buttonTint="@color/colorPrimary"
+        android:buttonTint="@color/colorAccent"
         android:clickable="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

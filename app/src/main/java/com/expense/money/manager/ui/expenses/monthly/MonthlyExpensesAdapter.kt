@@ -39,7 +39,6 @@ class MonthlyExpensesAdapter(private val monthlyTransactions: (MonthlyTransactio
 
         fun bind(content: MonthlyTransactionsEntity) {
             binding.apply {
-                monthCount.text = content.MonthPosition
                 monthValue.text = content.MonthName
                 transactionValue.text = content.Transactions
 

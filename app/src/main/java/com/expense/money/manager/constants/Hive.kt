@@ -165,6 +165,68 @@ class Hive {
     }
 }
 
+fun getMonthGivenNumber(monthNumber: String): String {
+    var month = ""
+    when {
+        monthNumber.equals("1", ignoreCase = true) -> {
+            month = "January"
+        }
+        monthNumber.equals("2", ignoreCase = true) -> {
+            month = "February"
+        }
+        monthNumber.equals("3", ignoreCase = true) -> {
+            month = "March"
+        }
+        monthNumber.equals("4", ignoreCase = true) -> {
+            month = "April"
+        }
+        monthNumber.equals("5", ignoreCase = true) -> {
+            month = "May"
+        }
+        monthNumber.equals("6", ignoreCase = true) -> {
+            month = "June"
+        }
+        monthNumber.equals("7", ignoreCase = true) -> {
+            month = "July"
+        }
+        monthNumber.equals("8", ignoreCase = true) -> {
+            month = "August"
+        }
+        monthNumber.equals("9", ignoreCase = true) -> {
+            month = "September"
+        }
+        monthNumber.equals("10", ignoreCase = true) -> {
+            month = "October"
+        }
+        monthNumber.equals("11", ignoreCase = true) -> {
+            month = "November"
+        }
+        else -> {
+            month = "December"
+        }
+    }
+    return month
+}
+
+fun getShortMonthGivenNumber(monthNumber: String): String {
+    var month = ""
+    when {
+        monthNumber.equals("01", ignoreCase = true) -> month = "Jan"
+        monthNumber.equals("02", ignoreCase = true) -> month = "Feb"
+        monthNumber.equals("03", ignoreCase = true) -> month = "Mar"
+        monthNumber.equals("04", ignoreCase = true) -> month = "Apr"
+        monthNumber.equals("05", ignoreCase = true) -> month = "May"
+        monthNumber.equals("06", ignoreCase = true) -> month = "Jun"
+        monthNumber.equals("07", ignoreCase = true) -> month = "Jul"
+        monthNumber.equals("08", ignoreCase = true) -> month = "Aug"
+        monthNumber.equals("09", ignoreCase = true) -> month = "Sep"
+        monthNumber.equals("10", ignoreCase = true) -> month = "Oct"
+        monthNumber.equals("11", ignoreCase = true) -> month = "Nov"
+        monthNumber.equals("11", ignoreCase = true) -> month = "Dec"
+    }
+    return month
+}
+
 data class WeekRangeEntity(
     var weekPosition: String,
     var startDate: String,
