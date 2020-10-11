@@ -54,10 +54,6 @@ class ChooseCategoryAdapter(private val categoryType: (CategoryTypesEntity) -> U
                     accountTypeDescription.text = category.categoryDescription
                     accountTypeDescription.isVisible = true
                 }
-
-                if (adapterPosition == itemCount - 1) {
-                    accountView.isVisible = false
-                }
             }
         }
     }

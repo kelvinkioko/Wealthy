@@ -5,6 +5,7 @@ import com.expense.money.manager.BuildConfig
 import com.expense.money.manager.di.environmentModule
 import com.expense.money.manager.ui.accounts.accountsModule
 import com.expense.money.manager.ui.expenses.expensesModule
+import com.expense.money.manager.ui.onboarding.onBoardingModule
 import com.expense.money.manager.ui.settings.settingsModule
 import com.expense.money.manager.ui.statistics.statisticsModule
 import org.koin.android.ext.koin.androidContext
@@ -26,7 +27,8 @@ class WealthyApp : Application() {
                 accountsModule,
                 expensesModule,
                 statisticsModule,
-                settingsModule
+                settingsModule,
+                onBoardingModule
             )
         }
     }

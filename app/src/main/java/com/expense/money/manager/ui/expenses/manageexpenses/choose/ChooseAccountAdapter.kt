@@ -54,10 +54,6 @@ class ChooseAccountAdapter(private val accountClicked: (AccountsEntity) -> Unit)
                     accountTypeDescription.text = account.sourceDescription
                     accountTypeDescription.isVisible = true
                 }
-
-                if (adapterPosition == itemCount - 1) {
-                    accountView.isVisible = false
-                }
             }
         }
     }

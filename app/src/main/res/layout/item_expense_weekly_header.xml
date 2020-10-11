@@ -9,18 +9,7 @@
     <View
         android:id="@+id/headerViewTop"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_shadow"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/headerViewAlternateTop"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:background="@color/viewBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +64,7 @@
         android:layout_marginBottom="12dp"
         app:layout_goneMarginBottom="12dp"
         app:layout_constraintHorizontal_weight="1.5"
-        app:layout_constraintBottom_toTopOf="@+id/headerViewAlternateBottom"
+        app:layout_constraintBottom_toTopOf="@+id/headerViewBottom"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/incomeValue"
         app:layout_constraintTop_toBottomOf="@+id/rangeValue" />
@@ -160,22 +149,10 @@
     <View
         android:id="@+id/headerViewBottom"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_reverse"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/headerViewAlternateBottom"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
+        android:layout_height="1dp"
         android:background="@color/viewBackgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/transactionValue" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

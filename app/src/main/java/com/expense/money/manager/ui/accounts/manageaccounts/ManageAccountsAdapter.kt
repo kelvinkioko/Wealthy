@@ -67,10 +67,6 @@ class ManageAccountsAdapter :
                 accountDescription.text = account.sourceDescription
                 accountDescription.isVisible = true
 
-//                if ((position + 1) == section.items.size) {
-//                    accountView.isGone = true
-//                }
-
                 accountEdit.setOnClickListener { account.editAccountClick.invoke() }
                 accountDelete.setOnClickListener { account.deleteAccountClick.invoke() }
             }

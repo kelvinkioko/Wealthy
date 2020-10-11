@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/expensesHostFragment"
+    app:startDestination="@id/onBoardingSetupFragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
@@ -14,6 +14,31 @@
         <action
             android:id="@+id/toExpensesHostFragment"
             app:destination="@id/expensesHostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/onBoardingSetupFragment"
+        android:name="com.expense.money.manager.ui.onboarding.OnboardingSetupFragment"
+        android:label="Onboarding setup fragment"
+        tools:layout="@layout/onboarding_setup">
+        <action
+            android:id="@+id/toExpensesHostFragment"
+            app:destination="@id/expensesHostFragment" />
+        <action
+            android:id="@+id/toSettingsCurrencyFragment"
+            app:destination="@id/settingsCurrencyFragment" />
+        <action
+            android:id="@+id/toSettingsAccountTypesFragment"
+            app:destination="@id/settingsAccountTypesFragment" />
+        <action
+            android:id="@+id/toManageAccountFragment"
+            app:destination="@id/manageAccountsFragment" />
+        <action
+            android:id="@+id/toExpenseCategoryFragment"
+            app:destination="@id/expenseCategoryFragment" />
+        <action
+            android:id="@+id/toTransactionTypesFragment"
+            app:destination="@id/transactionTypesFragment" />
     </fragment>
 
     <fragment

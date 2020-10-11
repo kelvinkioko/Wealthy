@@ -54,10 +54,6 @@ class TypeAdapter(private val accountType: (AccountTypesEntity) -> Unit) :
                     accountTypeDescription.text = singleAccountType.accountDescription
                     accountTypeDescription.isVisible = true
                 }
-
-                if (adapterPosition == itemCount - 1) {
-                    accountView.isVisible = false
-                }
             }
         }
     }

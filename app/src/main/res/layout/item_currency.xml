@@ -9,17 +9,18 @@
 
     <TextView
         android:id="@+id/currencyName"
+        android:textAppearance="?attr/textAppearanceBody1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
         android:text="Night out with friends"
-        android:textAppearance="?attr/textAppearanceHeadline6"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintHorizontal_weight="1.5"
         app:layout_constraintBottom_toTopOf="@+id/currencyDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/currencyRadio"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
@@ -32,9 +33,24 @@
         android:textSize="15sp"
         app:layout_goneMarginBottom="8dp"
         app:layout_constraintHorizontal_weight="1.5"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/currencyRadio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currencyName"
+        app:layout_constraintBottom_toTopOf="@+id/currencyView" />
+
+    <com.google.android.material.radiobutton.MaterialRadioButton
+        android:id="@+id/currencyRadio"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@drawable/checkbox_rounded"
+        android:button="@null"
+        android:buttonTint="@color/colorAccent"
+        android:clickable="false"
+        android:checked="true"
+        android:visibility="gone"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/currencyView" />
 
     <View

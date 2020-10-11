@@ -2,7 +2,6 @@ package com.expense.money.manager.ui.expenses.weekly
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -98,18 +97,16 @@ class WeeklyExpensesAdapter(private val transactionClicked: (SectionedTransactio
                 incomeValue.isVisible = true
                 incomeValue.text = "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
 
-                if ((content.TotalIncome.equals("0.0", true) || content.TotalIncome.equals("0", true)) &&
-                    (content.TotalExpense.equals("0.0", true) || content.TotalExpense.equals("0", true))) {
-                    headerViewTop.isGone = true
-                    headerViewBottom.isGone = true
-                    headerViewAlternateTop.isVisible = true
-                    headerViewAlternateBottom.isVisible = true
-                } else {
-                    headerViewTop.isVisible = true
-                    headerViewBottom.isVisible = true
-                    headerViewAlternateTop.isGone = true
-                    headerViewAlternateBottom.isGone = true
-                }
+//                if ((content.TotalIncome.equals("0.0", true) || content.TotalIncome.equals("0", true)) &&
+//                    (content.TotalExpense.equals("0.0", true) || content.TotalExpense.equals("0", true))) {
+//                    headerViewTop.isVisible = true
+//                    headerViewBottom.isVisible = true
+//                } else {
+//                    headerViewTop.isVisible = true
+//                    headerViewBottom.isVisible = true
+//                    headerViewAlternateTop.isGone = true
+//                    headerViewAlternateBottom.isGone = true
+//                }
             }
         }
     }

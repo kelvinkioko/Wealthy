@@ -9,9 +9,8 @@
     <View
         android:id="@+id/headerViewTop"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_shadow"
+        android:layout_height="1dp"
+        android:background="@color/viewBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +23,7 @@
         android:paddingStart="16dp"
         android:paddingEnd="8dp"
         android:text="12"
-        android:textAppearance="?attr/textAppearanceHeadline1"
+        android:textAppearance="?attr/textAppearanceHeadline6"
         android:textSize="40sp"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/headerViewBottom"
@@ -139,12 +138,10 @@
     <View
         android:id="@+id/headerViewBottom"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_reverse"
+        android:layout_height="1dp"
+        android:background="@color/viewBackgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dayDateValue" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

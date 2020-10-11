@@ -58,7 +58,7 @@ class ChooseCategoryDialogFragment(private val categories: List<CategoryTypesEnt
 
     private fun setupToolbar() {
         binding.apply {
-            toolbarTitle.text = "Choose account"
+            toolbarTitle.text = "Choose category"
             toolbar.setNavigationOnClickListener { dismiss() }
         }
     }

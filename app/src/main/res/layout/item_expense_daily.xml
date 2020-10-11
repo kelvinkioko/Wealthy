@@ -5,9 +5,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorHeader"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="8dp">
+    android:background="@color/colorHeader">
+
+    <View
+        android:id="@+id/headerViewTop"
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:background="@color/viewBackgroundColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/transactionNameValue"
@@ -17,10 +24,12 @@
         android:text="Night out with friends"
         android:textAppearance="?attr/textAppearanceCaption"
         android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintHorizontal_weight="1.5"
         app:layout_constraintBottom_toTopOf="@+id/transactionCategoryValue"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/headerViewTop"
         app:layout_constraintEnd_toStartOf="@+id/transactionTitle"
         app:layout_constraintVertical_chainStyle="packed" />
 
@@ -33,6 +42,7 @@
         android:textStyle="bold"
         android:textAppearance="?attr/textAppearanceBody1"
         android:textSize="14sp"
+        android:layout_marginStart="16dp"
         app:layout_goneMarginBottom="8dp"
         app:layout_constraintHorizontal_weight="1.5"
         app:layout_constraintEnd_toStartOf="@+id/transactionValue"
@@ -52,6 +62,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorNegative"
         android:visibility="gone"
+        android:layout_marginEnd="16dp"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintBottom_toTopOf="@+id/transactionValue"
         app:layout_constraintStart_toEndOf="@+id/transactionNameValue"
@@ -70,6 +81,7 @@
         android:textSize="14sp"
         android:gravity="end"
         android:visibility="gone"
+        android:layout_marginEnd="16dp"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintBottom_toBottomOf="@+id/transactionCategoryValue"
         app:layout_constraintStart_toEndOf="@+id/transactionCategoryValue"
@@ -80,9 +92,8 @@
     <View
         android:id="@+id/expensesDailyView"
         android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:alpha="0.6"
-        android:background="@drawable/toolbar_reverse"
+        android:layout_height="0.5dp"
+        android:background="@color/viewBackgroundColor"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

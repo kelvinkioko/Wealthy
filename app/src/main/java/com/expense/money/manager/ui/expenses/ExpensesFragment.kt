@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -12,7 +11,6 @@ import com.expense.money.manager.R
 import com.expense.money.manager.constants.Hive
 import com.expense.money.manager.constants.PreferenceHandler
 import com.expense.money.manager.databinding.ExpensesFragmentBinding
-import com.expense.money.manager.util.debouncedClick
 import com.expense.money.manager.util.viewBinding
 import com.google.android.material.tabs.TabLayout
 
@@ -77,7 +75,7 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
                     PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
                 }
             }
-            addTransaction.debouncedClick(lifecycleScope) {
+            addTransaction.setOnClickListener {
                 findNavController().navigate(ExpensesFragmentDirections.toAddExpenseFragment())
             }
         }

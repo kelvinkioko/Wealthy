@@ -67,10 +67,6 @@ class AccountsAdapter(private val accountClicked: (SectionedAccountDetailsItem.A
                 accountName.text = account.sourceName
                 accountBalance.text = "Kes ${Hive().formatCurrency(account.sourceBalance.toFloat())}"
                 accountBalance.isVisible = true
-
-//                if ((position + 1) == section.items.size) {
-//                    accountView.isGone = true
-//                }
             }
         }
     }

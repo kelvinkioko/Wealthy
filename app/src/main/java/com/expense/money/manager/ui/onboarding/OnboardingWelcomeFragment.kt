@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @FlowPreview
 @ExperimentalCoroutinesApi
-class OnboardingWelcomeFragment : Fragment(R.layout.onboarding_welcome) {
+class OnboardingWelcomeFragment : Fragment(R.layout.onboarding_setup) {
 
     private val binding by viewBinding(OnboardingWelcomeBinding::bind)
 
@@ -26,27 +26,14 @@ class OnboardingWelcomeFragment : Fragment(R.layout.onboarding_welcome) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //  create an adapter Object
-        val adapter = WelcomePagerAdapter()
-        binding.apply {
-            //  Link adapter object to the pager
-            welcomePager.adapter = adapter
-            //  Link pager to indicator
-            welcomeIndicator.setViewPager(welcomePager)
-        }
 
         setupClickListeners()
-
-//        Hive().loadWeeks()
-//        Hive().getWeeksOfMonth()
 
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 is DefaultUIState.Loading -> { }
             }
         }
-
-//        viewModel.setupCurrency()
     }
 
     private fun setupClickListeners() {

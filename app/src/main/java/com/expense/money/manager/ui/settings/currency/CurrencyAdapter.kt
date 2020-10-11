@@ -3,10 +3,13 @@ package com.expense.money.manager.ui.settings.currency
 import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.expense.money.manager.R
+import com.expense.money.manager.constants.PreferenceHandler
 import com.expense.money.manager.databinding.ItemCurrencyBinding
 import com.expense.money.manager.databinding.ItemCurrencyHeaderBinding
 
@@ -55,6 +58,11 @@ class CurrencyAdapter(private val currencyClicked: (SectionedCurrencyItem.Curren
 
         init {
             itemView.setOnClickListener {
+                PreferenceHandler(itemView.context).apply {
+                    println("Currency code, ${(getItem(position) as SectionedCurrencyItem.CurrencyItems).currencyCode}")
+                    setCurrency((getItem(position) as SectionedCurrencyItem.CurrencyItems).currencyCode)
+                    notifyDataSetChanged()
+                }
                 currencyClicked.invoke(getItem(position) as SectionedCurrencyItem.CurrencyItems)
             }
         }
@@ -63,6 +71,13 @@ class CurrencyAdapter(private val currencyClicked: (SectionedCurrencyItem.Curren
             binding.apply {
                 currencyName.text = content.country
                 currencyDetails.text = "${content.currency} | ${content.currencyCode} | ${content.currencySymbol}"
+
+                if (PreferenceHandler(currencyName.context).getCurrency().equals(content.currencyCode, ignoreCase = false)) {
+                    println("Currency code, ${(getItem(position) as SectionedCurrencyItem.CurrencyItems).currencyCode}")
+                    currencyRadio.isVisible = true
+                } else {
+                    currencyRadio.isGone = true
+                }
             }
         }
     }

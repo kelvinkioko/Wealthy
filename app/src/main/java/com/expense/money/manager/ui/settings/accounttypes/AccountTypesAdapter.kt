@@ -51,10 +51,6 @@ class AccountTypesAdapter(private val accountClicked: (AccountTypesEntity) -> Un
                     accountTypeDescription.text = accountItem.accountDescription
                     accountTypeDescription.isVisible = true
                 }
-
-                if (adapterPosition == itemCount - 1) {
-                    accountTypeView.isVisible = false
-                }
             }
         }
     }
