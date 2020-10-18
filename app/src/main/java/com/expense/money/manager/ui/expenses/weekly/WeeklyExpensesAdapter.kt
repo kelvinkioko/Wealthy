@@ -71,10 +71,12 @@ class WeeklyExpensesAdapter(private val transactionClicked: (SectionedTransactio
                     transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorPositive))
                 }
 
+                val amount = Hive().formatCurrency(content.expenseAmount)
+
                 transactionTitle.isVisible = true
                 transactionValue.isVisible = true
                 transactionTitle.text = content.expenseType.split("#")[0]
-                transactionValue.text = "Ksh ${Hive().formatCurrency(content.expenseAmount)}"
+                transactionValue.text = "Ksh ${if (amount.equals(".00", ignoreCase = true)) { "0.00" } else { amount }}"
             }
         }
     }
@@ -89,24 +91,16 @@ class WeeklyExpensesAdapter(private val transactionClicked: (SectionedTransactio
                 rangeValue.text = content.range
                 transactionValue.text = content.transactions
 
+                val totalExpense = Hive().formatCurrency(content.TotalExpense.toFloat())
+                val totalIncome = Hive().formatCurrency(content.TotalIncome.toFloat())
+
                 expensesTitle.isVisible = true
                 expensesValue.isVisible = true
-                expensesValue.text = "Ksh ${Hive().formatCurrency(content.TotalExpense.toFloat())}"
+                expensesValue.text = "Ksh ${if (totalExpense.equals(".00", ignoreCase = true)) { "0.00" } else { totalExpense }}"
 
                 incomeTitle.isVisible = true
                 incomeValue.isVisible = true
-                incomeValue.text = "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
-
-//                if ((content.TotalIncome.equals("0.0", true) || content.TotalIncome.equals("0", true)) &&
-//                    (content.TotalExpense.equals("0.0", true) || content.TotalExpense.equals("0", true))) {
-//                    headerViewTop.isVisible = true
-//                    headerViewBottom.isVisible = true
-//                } else {
-//                    headerViewTop.isVisible = true
-//                    headerViewBottom.isVisible = true
-//                    headerViewAlternateTop.isGone = true
-//                    headerViewAlternateBottom.isGone = true
-//                }
+                incomeValue.text = "Ksh ${if (totalIncome.equals(".00", ignoreCase = true)) { "0.00" } else { totalIncome }}"
             }
         }
     }

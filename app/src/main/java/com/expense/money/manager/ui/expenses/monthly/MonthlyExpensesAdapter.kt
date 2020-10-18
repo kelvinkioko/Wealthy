@@ -42,13 +42,16 @@ class MonthlyExpensesAdapter(private val monthlyTransactions: (MonthlyTransactio
                 monthValue.text = content.MonthName
                 transactionValue.text = content.Transactions
 
+                val totalExpense = Hive().formatCurrency(content.TotalExpense.toFloat())
+                val totalIncome = Hive().formatCurrency(content.TotalIncome.toFloat())
+
                 expensesTitle.isVisible = true
                 expensesValue.isVisible = true
-                expensesValue.text = "Ksh ${Hive().formatCurrency(content.TotalExpense.toFloat())}"
+                expensesValue.text = "Ksh ${if (totalExpense.equals(".00", ignoreCase = true)) { "0.00" } else { totalExpense }}"
 
                 incomeTitle.isVisible = true
                 incomeValue.isVisible = true
-                incomeValue.text = "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
+                incomeValue.text = "Ksh ${if (totalIncome.equals(".00", ignoreCase = true)) { "0.00" } else { totalIncome }}"
             }
         }
     }

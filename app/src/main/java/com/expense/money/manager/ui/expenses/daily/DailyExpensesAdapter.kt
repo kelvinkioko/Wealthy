@@ -72,10 +72,12 @@ class DailyExpensesAdapter(private val transactionClicked: (SectionedTransaction
                     transactionTitle.setTextColor(transactionTitle.context.getColor(R.color.colorPositive))
                 }
 
+                val amount = Hive().formatCurrency(content.expenseAmount)
+
                 transactionTitle.isVisible = true
                 transactionValue.isVisible = true
                 transactionTitle.text = content.expenseType.split("#")[0]
-                transactionValue.text = "Ksh ${Hive().formatCurrency(content.expenseAmount)}"
+                transactionValue.text = "Ksh ${if (amount.equals(".00", ignoreCase = true)) { "0.00" } else { amount }}"
             }
         }
     }
@@ -91,18 +93,19 @@ class DailyExpensesAdapter(private val transactionClicked: (SectionedTransaction
                 monthYearValue.text = "${getShortMonthGivenNumber(date[2])}, ${date[3]}"
                 saturdayValue.text = date[0]
 
+                val totalExpense = Hive().formatCurrency(content.TotalExpense.toFloat())
+                val totalIncome = Hive().formatCurrency(content.TotalIncome.toFloat())
+
                 if (!content.TotalExpense.equals("0.0", true)) {
                     expensesTitle.isVisible = true
                     expensesValue.isVisible = true
-                    expensesValue.text =
-                        "Ksh ${Hive().formatCurrency(content.TotalExpense.toFloat())}"
+                    expensesValue.text = "Ksh ${if (totalExpense.equals(".00", ignoreCase = true)) { "0.00" } else { totalExpense }}"
                 }
 
                 if (!content.TotalIncome.equals("0.0", true)) {
                     incomeTitle.isVisible = true
                     incomeValue.isVisible = true
-                    incomeValue.text =
-                        "Ksh ${Hive().formatCurrency(content.TotalIncome.toFloat())}"
+                    incomeValue.text = "Ksh ${if (totalIncome.equals(".00", ignoreCase = true)) { "0.00" } else { totalIncome }}"
                 }
             }
         }

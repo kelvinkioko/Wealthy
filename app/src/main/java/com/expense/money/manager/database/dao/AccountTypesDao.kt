@@ -16,6 +16,9 @@ interface AccountTypesDao {
     @Query("SELECT * FROM account_types WHERE accountTypeID =:accountTypeID")
     fun loadAccountTypeByID(accountTypeID: String): AccountTypesEntity
 
+    @Query("SELECT * FROM account_types WHERE accountTypeName =:accountTypeName")
+    fun loadAccountTypeByAccountName(accountTypeName: String): AccountTypesEntity
+
     @Query("SELECT COUNT(id) FROM account_types")
     fun countAccountTypes(): Int
 

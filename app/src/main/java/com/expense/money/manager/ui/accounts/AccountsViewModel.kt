@@ -94,6 +94,11 @@ class AccountsViewModel(
         _uiState.postValue(AccountsUIState.AccountTypes(accountTypes))
     }
 
+    fun loadAccountTypeByID(accountTypeName: String) {
+        val accountType = accountsRepository.loadAccountTypeByAccountName(accountTypeName = accountTypeName)
+        handleAccountTypeCallBack(accountType)
+    }
+
     fun loadAccountByID(accountID: String) {
         val account = accountsRepository.loadAccountByID(accountID)
         _uiState.postValue(AccountsUIState.Account(account))
@@ -140,8 +145,22 @@ class AccountsViewModel(
         _uiState.postValue(AccountsUIState.AccountCallBack(accountTypesEntity))
     }
 
-    fun saveAccounts(account: AccountsEntity) {
-        accountsRepository.insertAccounts(accountsEntity = account)
+    fun saveAccounts(account: AccountsEntity, update: Boolean = false) {
+        if (update) {
+            accountsRepository.updateAccount(
+                sourceID = account.sourceID,
+                identifier = account.identifier,
+                sourceName = account.sourceName,
+                sourceBalance = account.sourceBalance,
+                sourceNumber = account.sourceNumber,
+                sourceType = account.sourceType,
+                sourceDescription = account.sourceDescription,
+                sourceStatus = account.sourceStatus,
+                createdAt = account.createdAt
+            )
+        } else {
+            accountsRepository.insertAccounts(accountsEntity = account)
+        }
         _uiState.postValue(AccountsUIState.Success)
     }
 }

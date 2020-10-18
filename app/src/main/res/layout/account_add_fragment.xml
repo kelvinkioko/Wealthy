@@ -161,7 +161,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/accountDescription"
                 style="@style/InputOutline"
-                android:hint="Would you mind giving the account a brief description? its optional."
+                android:hint="Brief account description? its optional."
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.07"

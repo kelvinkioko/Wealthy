@@ -33,6 +33,9 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
     private val viewModel: AccountsViewModel by viewModel()
     private val args: AddAccountFragmentArgs by navArgs()
 
+    private lateinit var accountEntity: AccountsEntity
+    private lateinit var accountTypesEntity: AccountTypesEntity
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,17 +68,19 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
     }
 
     private fun populateEditContent(accountEntity: AccountsEntity) {
+        this.accountEntity = accountEntity
         binding.apply {
             accountName.editText!!.setText(accountEntity.sourceName)
             accountAmount.editText!!.setText(accountEntity.sourceBalance)
-            accountAmount.editText!!.isEnabled = false
             accountNumber.editText!!.setText(accountEntity.sourceNumber)
             accountType.accountTypeName.text.toString()
             accountDescription.editText!!.setText(accountEntity.sourceDescription)
+            viewModel.loadAccountTypeByID(accountTypeName = accountEntity.sourceType)
         }
     }
 
     private fun renderAccountTypeCallBack(accountTypesEntity: AccountTypesEntity) {
+        this.accountTypesEntity = accountTypesEntity
         binding.apply {
             accountType.apply {
                 accountTypeName.text = accountTypesEntity.accountTypeName
@@ -113,7 +118,7 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
 
                         val account = AccountsEntity(
                             id = 0,
-                            sourceID = "acc-${Hive().getTimestamp()}",
+                            sourceID = if (::accountEntity.isInitialized) { accountEntity.sourceID } else { "acc-${Hive().getTimestamp()}" },
                             identifier = "",
                             sourceName = accountName.editText!!.text.toString(),
                             sourceBalance = accountAmount.editText!!.text.toString(),
@@ -123,7 +128,7 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
                             sourceStatus = StatusEnum.ACTIVE,
                             createdAt = Hive().getCurrentDateTime()
                         )
-                        viewModel.saveAccounts(account = account)
+                        viewModel.saveAccounts(account = account, update = ::accountEntity.isInitialized)
                     }
                 }
             }

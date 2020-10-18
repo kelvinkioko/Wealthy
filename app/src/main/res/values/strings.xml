@@ -34,4 +34,6 @@
     <string name="archive_account_type_warning">Alternatively you can archive the account type and retain all associated transactions but hide the account</string>
     <string name="delete_account_type">Delete %1$s</string>
     <string name="archive_account_type">Archive %1$s</string>
+
+    <string name="chart_color">#f2f3f4</string>
 </resources>

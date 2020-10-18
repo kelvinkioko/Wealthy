@@ -50,6 +50,10 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            anyChartView.setBackgroundColor("#000000")
+        }
+
         setupClickListeners()
         setupObservers()
         setupStatisticsList()
@@ -76,6 +80,8 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         pie = AnyChart.pie()
         pie.labels().position("outside")
         pie.legend().enabled(false)
+        pie.background().enabled(true)
+        pie.background().fill(getString(R.string.chart_color))
 
         pie.setOnClickListener(object :
             ListenersInterface.OnClickListener(arrayOf("x", "value")) {

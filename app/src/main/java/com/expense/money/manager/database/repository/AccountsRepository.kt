@@ -71,6 +71,10 @@ class AccountsRepository(application: Application) {
         return accountTypesDao.loadAccountTypeByID(accountTypeID = accountTypeID)
     }
 
+    fun loadAccountTypeByAccountName(accountTypeName: String): AccountTypesEntity {
+        return accountTypesDao.loadAccountTypeByAccountName(accountTypeName = accountTypeName)
+    }
+
     fun countAccountTypes(): Int {
         return accountTypesDao.countAccountTypes()
     }
