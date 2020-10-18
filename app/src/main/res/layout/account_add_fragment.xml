@@ -57,7 +57,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"
+                    android:inputType="textCapWords"
                     android:singleLine="true"
                     android:paddingStart="0dp"
                     android:textAppearance="?attr/textAppearanceBody1"/>
@@ -138,7 +138,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/accountAmount"
                 style="@style/InputOutline"
-                android:hint="Starting amount i.e 0.00 Ksh"
+                android:hint="Starting balance i.e 0.00 Ksh"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:letterSpacing="0.07"

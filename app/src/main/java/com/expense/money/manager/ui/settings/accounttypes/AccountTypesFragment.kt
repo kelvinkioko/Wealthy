@@ -2,12 +2,13 @@ package com.expense.money.manager.ui.settings.accounttypes
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.expense.money.manager.R
-import com.expense.money.manager.database.models.AccountTypesEntity
 import com.expense.money.manager.databinding.SettingsManageAccountTypesFragmentBinding
 import com.expense.money.manager.util.debouncedClick
 import com.expense.money.manager.util.observeEvent
@@ -25,7 +26,7 @@ class AccountTypesFragment : Fragment(R.layout.settings_manage_account_types_fra
         AccountTypesAdapter { onAccountTypePicked(it) }
     }
 
-    private fun onAccountTypePicked(accountType: AccountTypesEntity) {
+    private fun onAccountTypePicked(accountType: AccountTypesWithActionsEntity) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,6 +49,9 @@ class AccountTypesFragment : Fragment(R.layout.settings_manage_account_types_fra
             addAccountTypes.debouncedClick(lifecycleScope) {
                 viewModel.addOrEditAccountType("")
             }
+            emptyState.emptyAction.setOnClickListener {
+                viewModel.addOrEditAccountType("")
+            }
         }
     }
 
@@ -65,8 +69,25 @@ class AccountTypesFragment : Fragment(R.layout.settings_manage_account_types_fra
         }
     }
 
-    private fun populateAccountTypes(accountTypesEntity: List<AccountTypesEntity>) {
-        accountTypesAdapter.setAccountTypes(accountTypesEntity)
+    private fun populateAccountTypes(accountTypesEntity: List<AccountTypesWithActionsEntity>) {
+        if (accountTypesEntity.isEmpty()) {
+            binding.apply {
+                // Show empty
+                emptyState.emptyParent.isVisible = true
+                emptyState.emptyText.text = String.format(getString(R.string.there_is_no_list_of_accounts), "account types")
+                emptyState.emptyAction.text = String.format(getString(R.string.add_an_account), "an account type")
+                // Hide recycler
+                accountTypesList.isGone = true
+            }
+        } else {
+            binding.apply {
+                // Hide empty
+                emptyState.emptyParent.isGone = true
+                // Show recycler
+                accountTypesList.isVisible = true
+            }
+            accountTypesAdapter.setAccountTypes(accountTypesEntity)
+        }
     }
 
     private fun setupAccountTypesList() {

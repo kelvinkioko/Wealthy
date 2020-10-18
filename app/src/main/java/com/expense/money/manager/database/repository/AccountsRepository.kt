@@ -50,11 +50,15 @@ class AccountsRepository(application: Application) {
     }
 
     fun loadAccountTypeByID(accountID: String): AccountTypesEntity {
-        return loadAccountTypeByID(accountID = accountID)
+        return accountTypesDao.loadAccountTypeByID(accountID = accountID)
     }
 
     fun countAccountTypes(): Int {
         return accountTypesDao.countAccountTypes()
+    }
+
+    fun updateAccountType(accountID: String, accountTypeName: String, accountDescription: String, createdAt: String) {
+        accountTypesDao.updateAccountType(accountID = accountID, accountTypeName = accountTypeName, accountDescription = accountDescription, createdAt = createdAt)
     }
 
     fun deleteAccountTypes() {

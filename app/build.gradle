@@ -85,4 +85,6 @@ dependencies {
 
     api(Dependencies.Jsoup)
     api(Dependencies.JodaTime)
+
+    api(Dependencies.Lottie)
 }

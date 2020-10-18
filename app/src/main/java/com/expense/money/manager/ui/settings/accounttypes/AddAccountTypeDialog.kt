@@ -23,13 +23,14 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFragment() {
+class AddAccountTypeDialog(private val accountTypeID: String, val successCallBack: () -> (Unit)) : BottomSheetDialogFragment() {
 
     private val binding by viewBinding(SettingsAccountTypeAddDialogBinding::bind)
 
     private val viewModel: AccountTypeViewModel by viewModel()
 
     private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var accountTypesEntity: AccountTypesEntity
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -61,6 +62,7 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
         setupToolbar()
         setupObservers()
         setupClickListeners()
+        setupData()
     }
 
     private fun setupToolbar() {
@@ -75,7 +77,11 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
             when (it) {
                 is AccountTypeUIState.Success -> {
                     sharedViewModel.setReload(true)
+                    successCallBack()
                     dismiss()
+                }
+                is AccountTypeUIState.AccountTypeDetails -> {
+                    renderAccountTypeDetails(it.accountType)
                 }
             }
         }
@@ -83,6 +89,14 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
             when (it) {
                 is AccountTypeActions.Navigate -> findNavController().navigate(it.destination)
             }
+        }
+    }
+
+    private fun renderAccountTypeDetails(accountTypesEntity: AccountTypesEntity) {
+        this.accountTypesEntity = accountTypesEntity
+        binding.apply {
+            accountName.editText!!.setText(accountTypesEntity.accountTypeName)
+            accountDescription.editText!!.setText(accountTypesEntity.accountDescription)
         }
     }
 
@@ -94,13 +108,21 @@ class AddAccountTypeDialog(private val accountID: String) : BottomSheetDialogFra
                 } else {
                     val accountType = AccountTypesEntity(
                         id = 0,
-                        sourceID = "acctyp-${Hive().getTimestamp()}",
+                        sourceID = if (::accountTypesEntity.isInitialized) { accountTypesEntity.sourceID } else { "acctyp-${Hive().getTimestamp()}" },
                         accountTypeName = accountName.editText!!.text.toString(),
                         accountDescription = accountDescription.editText!!.text.toString(),
                         createdAt = Hive().getCurrentDateTime()
                     )
-                    viewModel.saveAccountType(accountType = accountType)
+                    viewModel.saveAccountType(accountType = accountType, update = ::accountTypesEntity.isInitialized)
                 }
+            }
+        }
+    }
+
+    private fun setupData() {
+        binding.apply {
+            if (accountTypeID.isNotEmpty()) {
+                viewModel.loadAccountTypeByID(accountTypeID = accountTypeID)
             }
         }
     }

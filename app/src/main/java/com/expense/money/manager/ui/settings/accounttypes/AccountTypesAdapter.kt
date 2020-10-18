@@ -4,13 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.expense.money.manager.database.models.AccountTypesEntity
 import com.expense.money.manager.databinding.ItemAccountTypeBinding
 
-class AccountTypesAdapter(private val accountClicked: (AccountTypesEntity) -> Unit) :
+class AccountTypesAdapter(private val accountClicked: (AccountTypesWithActionsEntity) -> Unit) :
     RecyclerView.Adapter<AccountTypesAdapter.AccountTypesViewHolder>() {
 
-    private val items = mutableListOf<AccountTypesEntity>()
+    private val items = mutableListOf<AccountTypesWithActionsEntity>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountTypesViewHolder =
         AccountTypesViewHolder(
@@ -27,7 +26,7 @@ class AccountTypesAdapter(private val accountClicked: (AccountTypesEntity) -> Un
         holder.bind(items[position])
     }
 
-    fun setAccountTypes(accountTypes: List<AccountTypesEntity>) {
+    fun setAccountTypes(accountTypes: List<AccountTypesWithActionsEntity>) {
         items.clear()
         items.addAll(accountTypes)
         notifyDataSetChanged()
@@ -43,7 +42,7 @@ class AccountTypesAdapter(private val accountClicked: (AccountTypesEntity) -> Un
             }
         }
 
-        fun bind(accountItem: AccountTypesEntity) {
+        fun bind(accountItem: AccountTypesWithActionsEntity) {
             binding.apply {
                 accountType.text = accountItem.accountTypeName
 
@@ -51,6 +50,9 @@ class AccountTypesAdapter(private val accountClicked: (AccountTypesEntity) -> Un
                     accountTypeDescription.text = accountItem.accountDescription
                     accountTypeDescription.isVisible = true
                 }
+
+                accountTypeEdit.setOnClickListener { accountItem.editAccountTypeClick.invoke() }
+                accountTypeDelete.setOnClickListener { accountItem.deleteAccountTypeClick.invoke() }
             }
         }
     }

@@ -133,6 +133,8 @@ object Dependencies {
         const val core = "com.jakewharton.timber:timber:$version"
     }
 
+    const val Lottie = "com.airbnb.android:lottie:3.4.4"
+
     const val FlowBinding = "io.github.reactivecircus.flowbinding:flowbinding-android:0.11.1"
 
     const val KTLint = "org.jlleitschuh.gradle:ktlint-gradle:9.2.1"

@@ -55,12 +55,6 @@ class ManageAccountsAdapter :
         private val binding: ItemAccountManageBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-//        init {
-//            itemView.setOnClickListener {
-//                currencyClicked.invoke(getItem(position) as SectionedAccountItem.ManageAccountsEntity)
-//            }
-//        }
-
         fun bind(account: SectionedAccountItem.ManageAccountsEntity) {
             binding.apply {
                 accountName.text = account.sourceName

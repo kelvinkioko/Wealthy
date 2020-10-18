@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:includeFontPadding="false"
-        android:text="@string/app_name"
+        android:text="Quick setup"
         android:textColor="@color/colorWhite"
         android:textAppearance="?attr/textAppearanceHeadline5"
         android:background="@color/colorPrimary"
@@ -31,6 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <ScrollView
+        android:id="@+id/scrollParent"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scrollbars="none"
@@ -83,22 +84,78 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/accountSetup"/>
 
+            <View
+                android:id="@+id/setupActionView"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/divider"
+                app:layout_constraintTop_toBottomOf="@+id/expenseTypesSetup"
+                app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingAnimation"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerInside"
+                android:layout_marginTop="8dp"
+                app:lottie_rawRes="@raw/firework"
+                app:lottie_loop="true"
+                app:lottie_autoPlay="true"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/setupActionView" />
+
+            <TextView
+                android:id="@+id/completeTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="@string/congratulations_setup_is_complete"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+                app:layout_constraintStart_toEndOf="@+id/loadingAnimation"
+                app:layout_constraintTop_toTopOf="@+id/loadingAnimation"
+                app:layout_constraintBottom_toBottomOf="@+id/loadingAnimation" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/setupActionComplete"
+                style="@style/ColoredButtonAppearance"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginVertical="8dp"
+                android:text="Welcome to money manager"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@+id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/loadingAnimation" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/setupActionGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:constraint_referenced_ids="setupActionView, loadingAnimation, completeTitle, setupActionComplete"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="16dp" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

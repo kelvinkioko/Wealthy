@@ -3,6 +3,7 @@ package com.expense.money.manager.ui.onboarding
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -72,6 +73,7 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
                         isPressed = true
                         isChecked = true
                     }
+                    validateSetupComplete()
                 }
             }
 
@@ -86,12 +88,13 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
                     preferenceHandler.setAccountTypesSetup(accountTypesSetup = true)
                 }
 
-                if (preferenceHandler.getAccountTypesSetup()!!) {
+                if (viewModel.validateAccountTypesSetup(preferenceHandler)) {
                     actionNumber.isGone = true
                     currencyRadio.apply {
                         isPressed = true
                         isChecked = true
                     }
+                    validateSetupComplete()
                 }
             }
 
@@ -106,18 +109,19 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
                     preferenceHandler.setAccountSetup(accountSetup = true)
                 }
 
-                if (preferenceHandler.getAccountSetup()!!) {
+                if (viewModel.validateAccountSetup(preferenceHandler)) {
                     actionNumber.isGone = true
                     currencyRadio.apply {
                         isPressed = true
                         isChecked = true
                     }
+                    validateSetupComplete()
                 }
             }
 
             expenseTypesSetup.apply {
                 actionNumber.text = "4"
-                currencyTitle.text = "Set up expense types"
+                currencyTitle.text = "Set up transaction types"
                 currencyDescription.text = "Create all the categories you want to add your expenses under such as rent, transport, food e.t.c. These expense categories can also be added from the settings page."
                 setupActionButton.text = "Set expense types"
                 setupActionView.isGone = true
@@ -133,16 +137,32 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
                         isPressed = true
                         isChecked = true
                     }
+                    validateSetupComplete()
+                }
+            }
+        }
+    }
+
+    private fun validateSetupComplete() {
+        val accountTypesSetup = viewModel.validateAccountTypesSetup(preferenceHandler)
+        val accountSetup = viewModel.validateAccountSetup(preferenceHandler)
+        val currencySetup = preferenceHandler.getCurrencySetup()!!
+        val expenseSetup = preferenceHandler.getExpensesSetup()!!
+        binding.apply {
+            setupActionGroup.apply {
+                isVisible = (currencySetup && accountTypesSetup && accountSetup && expenseSetup)
+                post {
+                    scrollParent.scrollBy(0, 1000)
                 }
             }
         }
     }
 
     private fun setupClickListeners() {
-//        binding.apply {
-//            onboardGetStarted.debouncedClick(lifecycleScope) {
-//                findNavController().navigate(OnboardingWelcomeFragmentDirections.toExpensesHostFragment())
-//            }
-//        }
+        binding.apply {
+            setupActionComplete.setOnClickListener {
+                findNavController().navigate(OnboardingSetupFragmentDirections.toExpensesHostFragment())
+            }
+        }
     }
 }

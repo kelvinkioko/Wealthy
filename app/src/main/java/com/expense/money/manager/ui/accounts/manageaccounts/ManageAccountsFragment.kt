@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.expense.money.manager.R
@@ -14,7 +13,6 @@ import com.expense.money.manager.ui.accounts.AccountsActions
 import com.expense.money.manager.ui.accounts.AccountsUIState
 import com.expense.money.manager.ui.accounts.AccountsViewModel
 import com.expense.money.manager.ui.accounts.SectionedAccountItem
-import com.expense.money.manager.util.debouncedClick
 import com.expense.money.manager.util.observeEvent
 import com.expense.money.manager.util.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -45,7 +43,10 @@ class ManageAccountsFragment : Fragment(R.layout.account_manage_fragment) {
 
     private fun setupClickListeners() {
         binding.apply {
-            addAccounts.debouncedClick(lifecycleScope) {
+            addAccounts.setOnClickListener {
+                viewModel.addOrEditAccounts("")
+            }
+            emptyState.emptyAction.setOnClickListener {
                 viewModel.addOrEditAccounts("")
             }
         }

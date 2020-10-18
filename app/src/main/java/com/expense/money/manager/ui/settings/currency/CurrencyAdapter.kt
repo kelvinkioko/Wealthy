@@ -59,7 +59,6 @@ class CurrencyAdapter(private val currencyClicked: (SectionedCurrencyItem.Curren
         init {
             itemView.setOnClickListener {
                 PreferenceHandler(itemView.context).apply {
-                    println("Currency code, ${(getItem(position) as SectionedCurrencyItem.CurrencyItems).currencyCode}")
                     setCurrency((getItem(position) as SectionedCurrencyItem.CurrencyItems).currencyCode)
                     notifyDataSetChanged()
                 }
@@ -73,7 +72,6 @@ class CurrencyAdapter(private val currencyClicked: (SectionedCurrencyItem.Curren
                 currencyDetails.text = "${content.currency} | ${content.currencyCode} | ${content.currencySymbol}"
 
                 if (PreferenceHandler(currencyName.context).getCurrency().equals(content.currencyCode, ignoreCase = false)) {
-                    println("Currency code, ${(getItem(position) as SectionedCurrencyItem.CurrencyItems).currencyCode}")
                     currencyRadio.isVisible = true
                 } else {
                     currencyRadio.isGone = true

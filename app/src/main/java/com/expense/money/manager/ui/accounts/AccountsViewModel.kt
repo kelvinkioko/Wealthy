@@ -122,8 +122,11 @@ class AccountsViewModel(
         _action.postValue(AccountsActions.BottomNavigate(bottomSheetFragment).asEvent())
     }
 
-    private fun addOrEditAccountType(accountID: String) {
-        val bottomSheetFragment = AddAccountTypeDialog(accountID = accountID)
+    private fun addOrEditAccountType(accountTypeID: String) {
+        val bottomSheetFragment = AddAccountTypeDialog(
+            accountTypeID = accountTypeID,
+            successCallBack = { loadAccountTypes() }
+        )
         _action.postValue(AccountsActions.BottomNavigate(bottomSheetFragment).asEvent())
     }
 

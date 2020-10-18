@@ -29,4 +29,5 @@
     <string name="add_account">Add account</string>
     <string name="manage_account">Manage accounts</string>
     <string name="transaction_types">Transaction types</string>
+    <string name="congratulations_setup_is_complete">Congratulations! Setup is complete</string>
 </resources>

@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.expense.money.manager.constants.Hive
+import com.expense.money.manager.constants.PreferenceHandler
 import com.expense.money.manager.database.models.CategoryTypesEntity
 import com.expense.money.manager.database.models.CurrencyEntity
 import com.expense.money.manager.database.models.TransactionTypesEntity
+import com.expense.money.manager.database.repository.AccountsRepository
 import com.expense.money.manager.database.repository.CategoryRepository
 import com.expense.money.manager.database.repository.CurrencyRepository
 import com.expense.money.manager.database.repository.TransactionRepository
 
 class DefaultViewModel(
+    private val accountsRepository: AccountsRepository,
     private val categoryRepository: CategoryRepository,
     private val currencyRepository: CurrencyRepository,
     private val transactionRepository: TransactionRepository
@@ -198,21 +201,20 @@ class DefaultViewModel(
             createdAt = Hive().getCurrentDateTime()
         ))
 
-        categoryTypes.add(CategoryTypesEntity(
-            id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
-            categoryName = "Education",
-            categoryDescription = "education",
-            transactionType = "Expense#TTE-20200918-103430",
-            createdAt = Hive().getCurrentDateTime()
-        ))
-
         if (categoryTypes.size != categoryRepository.countCategoryTypes()) {
             categoryRepository.deleteCategoryTypes()
             for (singleCategoryType in categoryTypes) {
                 categoryRepository.insertCategoryTypes(singleCategoryType)
             }
         }
+    }
+
+    fun validateSetup(preferenceHandler: PreferenceHandler): Boolean {
+        val accountTypesSetup = (preferenceHandler.getAccountTypesSetup()!! && (accountsRepository.countAccountTypes() > 0))
+        val accountSetup = (preferenceHandler.getAccountSetup()!! && (accountsRepository.countAccounts() > 0))
+        val currencySetup = preferenceHandler.getCurrencySetup()!!
+        val expenseSetup = preferenceHandler.getExpensesSetup()!!
+        return (currencySetup && accountTypesSetup && accountSetup && expenseSetup)
     }
 }
 

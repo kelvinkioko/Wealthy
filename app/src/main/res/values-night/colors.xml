@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#212121</color>
     <color name="colorAccent">#7066bf</color>
     <color name="colorBackground">#121212</color>
+    <color name="onBoardingBackground">#212121</color>
     <color name="colorHeader">#282828</color>
 
     <!-- Might need validation from design team  -->

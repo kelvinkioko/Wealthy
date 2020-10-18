@@ -19,6 +19,14 @@ interface AccountTypesDao {
     @Query("SELECT COUNT(id) FROM account_types")
     fun countAccountTypes(): Int
 
+    @Query("UPDATE account_types SET accountTypeName =:accountTypeName, accountDescription =:accountDescription, createdAt =:createdAt WHERE accountID = :accountID")
+    fun updateAccountType(
+        accountID: String,
+        accountTypeName: String,
+        accountDescription: String,
+        createdAt: String
+    )
+
     @Query("DELETE FROM account_types")
     fun deleteAccountTypes()
 }

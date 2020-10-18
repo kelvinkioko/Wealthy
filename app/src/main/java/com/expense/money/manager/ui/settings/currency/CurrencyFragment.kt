@@ -2,7 +2,6 @@ package com.expense.money.manager.ui.settings.currency
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
@@ -22,7 +21,6 @@ class CurrencyFragment : Fragment(R.layout.settings_currency_fragment) {
     }
 
     private fun onCurrencyTypePicked(currencyItems: SectionedCurrencyItem.CurrencyItems) {
-        Toast.makeText(requireContext(), currencyItems.country, Toast.LENGTH_LONG).show()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

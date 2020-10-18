@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/onBoardingSetupFragment"
+    app:startDestination="@id/onBoardingWelcomeFragment"
     tools:ignore="UnusedNavigation">
 
     <fragment
@@ -12,8 +12,13 @@
         android:label="Onboarding fragment"
         tools:layout="@layout/onboarding_welcome">
         <action
+            android:id="@+id/toOnBoardingSetupFragment"
+            app:destination="@id/onBoardingSetupFragment" />
+        <action
             android:id="@+id/toExpensesHostFragment"
-            app:destination="@id/expensesHostFragment" />
+            app:destination="@id/expensesHostFragment"
+            app:popUpTo="@id/onBoardingWelcomeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -23,7 +28,9 @@
         tools:layout="@layout/onboarding_setup">
         <action
             android:id="@+id/toExpensesHostFragment"
-            app:destination="@id/expensesHostFragment" />
+            app:destination="@id/expensesHostFragment"
+            app:popUpTo="@id/onBoardingSetupFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/toSettingsCurrencyFragment"
             app:destination="@id/settingsCurrencyFragment" />
