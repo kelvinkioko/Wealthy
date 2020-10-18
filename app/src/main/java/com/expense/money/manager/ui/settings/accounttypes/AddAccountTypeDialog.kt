@@ -13,6 +13,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.expense.money.manager.R
 import com.expense.money.manager.constants.Hive
+import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.AccountTypesEntity
 import com.expense.money.manager.databinding.SettingsAccountTypeAddDialogBinding
 import com.expense.money.manager.ui.SharedViewModel
@@ -96,7 +97,7 @@ class AddAccountTypeDialog(private val accountTypeID: String, val successCallBac
         this.accountTypesEntity = accountTypesEntity
         binding.apply {
             accountName.editText!!.setText(accountTypesEntity.accountTypeName)
-            accountDescription.editText!!.setText(accountTypesEntity.accountDescription)
+            accountDescription.editText!!.setText(accountTypesEntity.accountTypeDescription)
         }
     }
 
@@ -108,9 +109,10 @@ class AddAccountTypeDialog(private val accountTypeID: String, val successCallBac
                 } else {
                     val accountType = AccountTypesEntity(
                         id = 0,
-                        sourceID = if (::accountTypesEntity.isInitialized) { accountTypesEntity.sourceID } else { "acctyp-${Hive().getTimestamp()}" },
+                        accountTypeID = if (::accountTypesEntity.isInitialized) { accountTypesEntity.accountTypeID } else { "acctyp-${Hive().getTimestamp()}" },
                         accountTypeName = accountName.editText!!.text.toString(),
-                        accountDescription = accountDescription.editText!!.text.toString(),
+                        accountTypeDescription = accountDescription.editText!!.text.toString(),
+                        accountTypeStatus = StatusEnum.ACTIVE,
                         createdAt = Hive().getCurrentDateTime()
                     )
                     viewModel.saveAccountType(accountType = accountType, update = ::accountTypesEntity.isInitialized)

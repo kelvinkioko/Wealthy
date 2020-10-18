@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.expense.money.manager.constants.Hive
+import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.AccountsEntity
 import com.expense.money.manager.database.models.CategoryTypesEntity
 import com.expense.money.manager.database.models.ExpensesEntity
@@ -66,7 +67,7 @@ class ManageExpenseViewModel(
 
     fun chooseAccount() {
         val bottomSheetFragment = ChooseAccountDialogFragment(
-            accountsRepository.loadAccounts(),
+            accountsRepository.loadAccounts(sourceStatus = StatusEnum.ACTIVE),
             resendAccountCallback = {
                 this.accountsEntity = it
                 _uiState.postValue(ManageExpenseUIState.Accounts(it))

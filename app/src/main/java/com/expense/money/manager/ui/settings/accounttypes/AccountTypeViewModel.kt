@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavDirections
+import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.AccountTypesEntity
 import com.expense.money.manager.database.repository.AccountsRepository
-import com.expense.money.manager.ui.accounts.manageaccounts.DeleteAccountDialogFragment
 import com.expense.money.manager.util.Event
 import com.expense.money.manager.util.asEvent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -32,16 +32,17 @@ class AccountTypeViewModel(
     }
 
     fun loadAccountTypes() {
-        val accountTypes = accountsRepository.loadAccountTypes()
+        val accountTypes = accountsRepository.loadAccountTypes(accountTypeStatus = StatusEnum.ACTIVE)
         val updatedAccountTypes = accountTypes.map {
             AccountTypesWithActionsEntity(
                 id = it.id,
-                sourceID = it.sourceID,
+                sourceID = it.accountTypeID,
                 accountTypeName = it.accountTypeName,
-                accountDescription = it.accountDescription,
+                accountTypeDescription = it.accountTypeDescription,
+                accountTypeStatus = it.accountTypeStatus,
                 createdAt = it.createdAt,
-                deleteAccountTypeClick = { deleteAccountSheet(it.sourceID) },
-                editAccountTypeClick = { addOrEditAccountType(it.sourceID) })
+                deleteAccountTypeClick = { deleteAccountSheet(it.accountTypeID) },
+                editAccountTypeClick = { addOrEditAccountType(it.accountTypeID) })
         }
         _uiState.postValue(AccountTypeUIState.AccountTypes(updatedAccountTypes))
     }
@@ -55,7 +56,7 @@ class AccountTypeViewModel(
     }
 
     fun loadAccountTypeByID(accountTypeID: String) {
-        val accountType = accountsRepository.loadAccountTypeByID(accountID = accountTypeID)
+        val accountType = accountsRepository.loadAccountTypeByID(accountTypeID = accountTypeID)
         _uiState.postValue(AccountTypeUIState.AccountTypeDetails(accountType))
     }
 
@@ -63,7 +64,7 @@ class AccountTypeViewModel(
         viewModelScope.launch(exceptionHandler) {
             withContext(Dispatchers.IO) {
                 if (update) {
-                    accountsRepository.updateAccountType(accountID = accountType.sourceID, accountTypeName = accountType.accountTypeName, accountDescription = accountType.accountDescription, createdAt = accountType.createdAt)
+                    accountsRepository.updateAccountType(accountTypeID = accountType.accountTypeID, accountTypeName = accountType.accountTypeName, accountTypeDescription = accountType.accountTypeDescription, createdAt = accountType.createdAt)
                 } else {
                     accountsRepository.insertAccountTypes(accountTypesEntity = accountType)
                 }
@@ -73,11 +74,19 @@ class AccountTypeViewModel(
     }
 
     private fun deleteAccountSheet(accountID: String) {
-        val bottomSheetFragment = DeleteAccountDialogFragment(
+        val bottomSheetFragment = DeleteAccountTypeDialogFragment(
             accountID,
             deleteCallBack = { loadAccountTypes() }
         )
         _action.postValue(AccountTypeActions.BottomNavigate(bottomSheetFragment).asEvent())
+    }
+
+    fun deleteAccount(accountTypeID: String) {
+        accountsRepository.deleteOrArchiveAccountTypeByID(accountTypeID = accountTypeID, accountTypeStatus = StatusEnum.DELETED)
+    }
+
+    fun archiveAccount(accountTypeID: String) {
+        accountsRepository.deleteOrArchiveAccountTypeByID(accountTypeID = accountTypeID, accountTypeStatus = StatusEnum.ARCHIVED)
     }
 }
 
@@ -103,7 +112,8 @@ data class AccountTypesWithActionsEntity(
     var id: Int,
     var sourceID: String,
     var accountTypeName: String,
-    var accountDescription: String,
+    var accountTypeDescription: String,
+    var accountTypeStatus: Int,
     var createdAt: String,
     var deleteAccountTypeClick: () -> Unit,
     var editAccountTypeClick: () -> Unit

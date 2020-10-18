@@ -32,6 +32,7 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
 
         preferenceHandler = PreferenceHandler(requireActivity())
 
+        setupToolBar()
         setupData()
         setupClickListeners()
         viewModel.resetDataBasedOnPrefs()
@@ -52,6 +53,10 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
 
     private fun showDialog(bottomSheetDialogFragment: BottomSheetDialogFragment) {
         bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
+    }
+
+    private fun setupToolBar() {
+        binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
     }
 
     private fun setupData() {

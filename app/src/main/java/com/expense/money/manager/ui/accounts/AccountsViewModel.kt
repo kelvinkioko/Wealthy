@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
+import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.AccountTypesEntity
 import com.expense.money.manager.database.models.AccountsEntity
 import com.expense.money.manager.database.repository.AccountsRepository
@@ -28,7 +29,7 @@ class AccountsViewModel(
     val action: LiveData<Event<AccountsActions>> = _action
 
     fun loadAccounts() {
-        val accounts = accountsRepository.loadAccounts()
+        val accounts = accountsRepository.loadAccounts(sourceStatus = StatusEnum.ACTIVE)
 
         val sectionedAccountDetailsItem = mutableListOf<SectionedAccountDetailsItem>()
         var previousSource = ""
@@ -53,7 +54,7 @@ class AccountsViewModel(
     }
 
     fun loadManageAccounts() {
-        val accounts = accountsRepository.loadAccounts()
+        val accounts = accountsRepository.loadAccounts(sourceStatus = StatusEnum.ACTIVE)
 
         val sectionedAccountItem = mutableListOf<SectionedAccountItem>()
         var previousSource = ""
@@ -89,7 +90,7 @@ class AccountsViewModel(
     }
 
     fun loadAccountTypes() {
-        val accountTypes = accountsRepository.loadAccountTypes()
+        val accountTypes = accountsRepository.loadAccountTypes(StatusEnum.ACTIVE)
         _uiState.postValue(AccountsUIState.AccountTypes(accountTypes))
     }
 
@@ -106,8 +107,12 @@ class AccountsViewModel(
         _action.postValue(AccountsActions.BottomNavigate(bottomSheetFragment).asEvent())
     }
 
-    fun deleteAccount(accountID: String) {
-        accountsRepository.deleteAccountByID(accountID)
+    fun deleteAccount(accountTypeID: String) {
+        accountsRepository.deleteOrArchiveAccountByID(sourceID = accountTypeID, sourceStatus = StatusEnum.DELETED)
+    }
+
+    fun archiveAccount(accountTypeID: String) {
+        accountsRepository.deleteOrArchiveAccountByID(sourceID = accountTypeID, sourceStatus = StatusEnum.ARCHIVED)
     }
 
     fun addOrEditAccounts(accountID: String) {

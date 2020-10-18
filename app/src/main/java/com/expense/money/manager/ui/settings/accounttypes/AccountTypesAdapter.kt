@@ -46,8 +46,8 @@ class AccountTypesAdapter(private val accountClicked: (AccountTypesWithActionsEn
             binding.apply {
                 accountType.text = accountItem.accountTypeName
 
-                if (accountItem.accountDescription.isNotEmpty()) {
-                    accountTypeDescription.text = accountItem.accountDescription
+                if (accountItem.accountTypeDescription.isNotEmpty()) {
+                    accountTypeDescription.text = accountItem.accountTypeDescription
                     accountTypeDescription.isVisible = true
                 }
 

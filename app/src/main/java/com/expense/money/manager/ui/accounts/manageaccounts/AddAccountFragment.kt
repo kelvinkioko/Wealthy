@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.expense.money.manager.R
 import com.expense.money.manager.constants.Hive
+import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.AccountTypesEntity
 import com.expense.money.manager.database.models.AccountsEntity
 import com.expense.money.manager.databinding.AccountAddFragmentBinding
@@ -78,7 +79,7 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
         binding.apply {
             accountType.apply {
                 accountTypeName.text = accountTypesEntity.accountTypeName
-                accountTypeDescription.text = accountTypesEntity.accountDescription
+                accountTypeDescription.text = accountTypesEntity.accountTypeDescription
                 accountTypeDescription.isVisible = true
             }
         }
@@ -118,7 +119,9 @@ class AddAccountFragment : Fragment(R.layout.account_add_fragment) {
                             sourceBalance = accountAmount.editText!!.text.toString(),
                             sourceNumber = accountNumber.editText!!.text.toString(),
                             sourceType = accountType.accountTypeName.text.toString(),
-                            sourceDescription = accountDescription.editText!!.text.toString()
+                            sourceDescription = accountDescription.editText!!.text.toString(),
+                            sourceStatus = StatusEnum.ACTIVE,
+                            createdAt = Hive().getCurrentDateTime()
                         )
                         viewModel.saveAccounts(account = account)
                     }

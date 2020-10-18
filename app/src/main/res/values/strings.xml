@@ -30,4 +30,8 @@
     <string name="manage_account">Manage accounts</string>
     <string name="transaction_types">Transaction types</string>
     <string name="congratulations_setup_is_complete">Congratulations! Setup is complete</string>
+    <string name="delete_account_type_warning">You are about to delete <u><i>%1$s</i></u>. This will also purge transactions associated to the account type.</string>
+    <string name="archive_account_type_warning">Alternatively you can archive the account type and retain all associated transactions but hide the account</string>
+    <string name="delete_account_type">Delete %1$s</string>
+    <string name="archive_account_type">Archive %1$s</string>
 </resources>

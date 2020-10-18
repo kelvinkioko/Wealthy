@@ -11,8 +11,9 @@ import kotlinx.android.parcel.Parcelize
 data class AccountTypesEntity(
     @PrimaryKey(autoGenerate = true) var id: Int,
 
-    @ColumnInfo(name = "accountID") var sourceID: String,
+    @ColumnInfo(name = "accountTypeID") var accountTypeID: String,
     @ColumnInfo(name = "accountTypeName") var accountTypeName: String,
-    @ColumnInfo(name = "accountDescription") var accountDescription: String,
+    @ColumnInfo(name = "accountTypeDescription") var accountTypeDescription: String,
+    @ColumnInfo(name = "accountTypeStatus") var accountTypeStatus: Int,
     @ColumnInfo(name = "createdAt") var createdAt: String
 ) : Parcelable

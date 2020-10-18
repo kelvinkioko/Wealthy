@@ -17,5 +17,7 @@ data class AccountsEntity(
     @ColumnInfo(name = "sourceBalance") var sourceBalance: String,
     @ColumnInfo(name = "sourceNumber") var sourceNumber: String,
     @ColumnInfo(name = "sourceType") var sourceType: String,
-    @ColumnInfo(name = "sourceDescription") var sourceDescription: String
+    @ColumnInfo(name = "sourceDescription") var sourceDescription: String,
+    @ColumnInfo(name = "sourceStatus") var sourceStatus: Int,
+    @ColumnInfo(name = "createdAt") var createdAt: String
 ) : Parcelable

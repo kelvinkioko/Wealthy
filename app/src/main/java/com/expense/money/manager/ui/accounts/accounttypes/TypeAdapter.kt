@@ -50,8 +50,8 @@ class TypeAdapter(private val accountType: (AccountTypesEntity) -> Unit) :
             binding.apply {
                 accountType.text = singleAccountType.accountTypeName
 
-                if (singleAccountType.accountDescription.isNotEmpty()) {
-                    accountTypeDescription.text = singleAccountType.accountDescription
+                if (singleAccountType.accountTypeDescription.isNotEmpty()) {
+                    accountTypeDescription.text = singleAccountType.accountTypeDescription
                     accountTypeDescription.isVisible = true
                 }
             }

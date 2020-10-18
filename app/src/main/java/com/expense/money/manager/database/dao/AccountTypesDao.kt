@@ -10,21 +10,27 @@ interface AccountTypesDao {
     @Insert
     fun insertAccountTypes(vararg accountTypesEntity: AccountTypesEntity)
 
-    @Query("SELECT * FROM account_types")
-    fun loadAccountTypes(): List<AccountTypesEntity>
+    @Query("SELECT * FROM account_types WHERE accountTypeStatus =:accountTypeStatus")
+    fun loadAccountTypes(accountTypeStatus: Int): List<AccountTypesEntity>
 
-    @Query("SELECT * FROM account_types WHERE accountID =:accountID")
-    fun loadAccountTypeByID(accountID: String): AccountTypesEntity
+    @Query("SELECT * FROM account_types WHERE accountTypeID =:accountTypeID")
+    fun loadAccountTypeByID(accountTypeID: String): AccountTypesEntity
 
     @Query("SELECT COUNT(id) FROM account_types")
     fun countAccountTypes(): Int
 
-    @Query("UPDATE account_types SET accountTypeName =:accountTypeName, accountDescription =:accountDescription, createdAt =:createdAt WHERE accountID = :accountID")
+    @Query("UPDATE account_types SET accountTypeName =:accountTypeName, accountTypeDescription =:accountTypeDescription, createdAt =:createdAt WHERE accountTypeID = :accountTypeID")
     fun updateAccountType(
-        accountID: String,
+        accountTypeID: String,
         accountTypeName: String,
-        accountDescription: String,
+        accountTypeDescription: String,
         createdAt: String
+    )
+
+    @Query("UPDATE account_types SET accountTypeStatus =:accountTypeStatus WHERE accountTypeID = :accountTypeID")
+    fun deleteOrArchiveAccountTypeByID(
+        accountTypeID: String,
+        accountTypeStatus: Int
     )
 
     @Query("DELETE FROM account_types")

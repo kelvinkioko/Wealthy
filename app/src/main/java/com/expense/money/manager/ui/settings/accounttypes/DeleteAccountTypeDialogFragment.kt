@@ -1,4 +1,4 @@
-package com.expense.money.manager.ui.accounts.manageaccounts
+package com.expense.money.manager.ui.settings.accounttypes
 
 import android.app.Dialog
 import android.os.Bundle
@@ -8,24 +8,21 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
-import androidx.navigation.fragment.findNavController
 import com.expense.money.manager.R
-import com.expense.money.manager.databinding.AccountDeleteDialogBinding
-import com.expense.money.manager.ui.accounts.AccountsActions
-import com.expense.money.manager.ui.accounts.AccountsUIState
-import com.expense.money.manager.ui.accounts.AccountsViewModel
+import com.expense.money.manager.database.models.AccountTypesEntity
+import com.expense.money.manager.databinding.SettingsAccountTypeDeleteDialogBinding
 import com.expense.money.manager.util.debouncedClick
-import com.expense.money.manager.util.observeEvent
 import com.expense.money.manager.util.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class DeleteAccountDialogFragment(private val accountID: String, val deleteCallBack: () -> (Unit)) : BottomSheetDialogFragment() {
+class DeleteAccountTypeDialogFragment(private val accountTypeID: String, val deleteCallBack: () -> (Unit)) : BottomSheetDialogFragment() {
 
-    private val binding by viewBinding(AccountDeleteDialogBinding::bind)
+    private val binding by viewBinding(SettingsAccountTypeDeleteDialogBinding::bind)
 
-    private val viewModel: AccountsViewModel by viewModel()
+    private val viewModel: AccountTypeViewModel by viewModel()
+    private lateinit var accountTypesEntity: AccountTypesEntity
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -46,7 +43,7 @@ class DeleteAccountDialogFragment(private val accountID: String, val deleteCallB
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.account_delete_dialog, container, false)
+    ) = inflater.inflate(R.layout.settings_account_type_delete_dialog, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,6 +51,10 @@ class DeleteAccountDialogFragment(private val accountID: String, val deleteCallB
         setupToolbar()
         setupObservers()
         setupClickListeners()
+
+        if (accountTypeID.isNotEmpty()) {
+            viewModel.loadAccountTypeByID(accountTypeID = accountTypeID)
+        }
     }
 
     private fun setupToolbar() {
@@ -66,33 +67,39 @@ class DeleteAccountDialogFragment(private val accountID: String, val deleteCallB
     private fun setupObservers() {
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
-                is AccountsUIState.Success -> dismiss()
+                is AccountTypeUIState.Success -> {
+                    dismiss()
+                }
+                is AccountTypeUIState.AccountTypeDetails -> {
+                    setupData(it.accountType)
+                }
             }
         }
-        viewModel.action.observeEvent(viewLifecycleOwner) {
-            when (it) {
-                is AccountsActions.Navigate -> findNavController().navigate(it.destination)
-            }
+    }
+
+    private fun setupData(accountTypesEntity: AccountTypesEntity) {
+        this.accountTypesEntity = accountTypesEntity
+        binding.apply {
+            deleteMessage.text = String.format(getString(R.string.delete_account_type_warning), accountTypesEntity.accountTypeName)
+            archiveMessage.text = getString(R.string.archive_account_type_warning)
+            delete.text = String.format(getString(R.string.delete_account_type), accountTypesEntity.accountTypeName)
+            archive.text = String.format(getString(R.string.archive_account_type), accountTypesEntity.accountTypeName)
         }
     }
 
     private fun setupClickListeners() {
         binding.apply {
             delete.debouncedClick(lifecycleScope) {
-                viewModel.deleteAccount(accountID)
+                viewModel.deleteAccount(accountTypeID = accountTypesEntity.accountTypeID)
                 deleteCallBack()
                 dismiss()
             }
 
             archive.debouncedClick(lifecycleScope) {
-                viewModel.archiveAccount(accountID)
+                viewModel.archiveAccount(accountTypeID = accountTypesEntity.accountTypeID)
                 deleteCallBack()
                 dismiss()
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
     }
 }

@@ -18,8 +18,8 @@ class AccountsRepository(application: Application) {
         accountsDao.insertAccounts(accountsEntity)
     }
 
-    fun loadAccounts(): List<AccountsEntity> {
-        return accountsDao.loadAccounts()
+    fun loadAccounts(sourceStatus: Int): List<AccountsEntity> {
+        return accountsDao.loadAccounts(sourceStatus = sourceStatus)
     }
 
     fun loadAccountByID(sourceID: String): AccountsEntity {
@@ -28,6 +28,24 @@ class AccountsRepository(application: Application) {
 
     fun countAccounts(): Int {
         return accountsDao.countAccounts()
+    }
+
+    fun updateAccount(sourceID: String, identifier: String, sourceName: String, sourceBalance: String, sourceNumber: String, sourceType: String, sourceDescription: String, sourceStatus: Int, createdAt: String) {
+        accountsDao.updateAccount(
+            sourceID = sourceID,
+            identifier = identifier,
+            sourceName = sourceName,
+            sourceBalance = sourceBalance,
+            sourceNumber = sourceNumber,
+            sourceType = sourceType,
+            sourceDescription = sourceDescription,
+            sourceStatus = sourceStatus,
+            createdAt = createdAt
+        )
+    }
+
+    fun deleteOrArchiveAccountByID(sourceID: String, sourceStatus: Int) {
+        accountsDao.deleteOrArchiveAccountByID(sourceID = sourceID, sourceStatus = sourceStatus)
     }
 
     fun deleteAccountByID(sourceID: String) {
@@ -45,20 +63,27 @@ class AccountsRepository(application: Application) {
         accountTypesDao.insertAccountTypes(accountTypesEntity)
     }
 
-    fun loadAccountTypes(): List<AccountTypesEntity> {
-        return accountTypesDao.loadAccountTypes()
+    fun loadAccountTypes(accountTypeStatus: Int): List<AccountTypesEntity> {
+        return accountTypesDao.loadAccountTypes(accountTypeStatus = accountTypeStatus)
     }
 
-    fun loadAccountTypeByID(accountID: String): AccountTypesEntity {
-        return accountTypesDao.loadAccountTypeByID(accountID = accountID)
+    fun loadAccountTypeByID(accountTypeID: String): AccountTypesEntity {
+        return accountTypesDao.loadAccountTypeByID(accountTypeID = accountTypeID)
     }
 
     fun countAccountTypes(): Int {
         return accountTypesDao.countAccountTypes()
     }
 
-    fun updateAccountType(accountID: String, accountTypeName: String, accountDescription: String, createdAt: String) {
-        accountTypesDao.updateAccountType(accountID = accountID, accountTypeName = accountTypeName, accountDescription = accountDescription, createdAt = createdAt)
+    fun updateAccountType(accountTypeID: String, accountTypeName: String, accountTypeDescription: String, createdAt: String) {
+        accountTypesDao.updateAccountType(accountTypeID = accountTypeID, accountTypeName = accountTypeName, accountTypeDescription = accountTypeDescription, createdAt = createdAt)
+    }
+
+    fun deleteOrArchiveAccountTypeByID(accountTypeID: String, accountTypeStatus: Int) {
+        accountTypesDao.deleteOrArchiveAccountTypeByID(
+            accountTypeID = accountTypeID,
+            accountTypeStatus = accountTypeStatus
+        )
     }
 
     fun deleteAccountTypes() {
