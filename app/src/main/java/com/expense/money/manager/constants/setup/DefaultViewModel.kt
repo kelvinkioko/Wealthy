@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.expense.money.manager.constants.Hive
 import com.expense.money.manager.constants.PreferenceHandler
+import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.CategoryTypesEntity
 import com.expense.money.manager.database.models.CurrencyEntity
 import com.expense.money.manager.database.models.TransactionTypesEntity
@@ -135,6 +136,7 @@ class DefaultViewModel(
             categoryName = "Salary",
             categoryDescription = "Regular income from formal employment.",
             transactionType = "Income#TTE-20200918-103320",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -144,6 +146,7 @@ class DefaultViewModel(
             categoryName = "Business",
             categoryDescription = "Financed from partially or fully owned business",
             transactionType = "Income#TTE-20200918-103320",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -153,6 +156,7 @@ class DefaultViewModel(
             categoryName = "Loan",
             categoryDescription = "Sum of money borrowed and is expected to be paid back with interest",
             transactionType = "Income#TTE-20200918-103320",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -162,6 +166,7 @@ class DefaultViewModel(
             categoryName = "Debt repayment",
             categoryDescription = "past lending repaid",
             transactionType = "Income#TTE-20200918-103320",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -171,6 +176,7 @@ class DefaultViewModel(
             categoryName = "Food",
             categoryDescription = "Food",
             transactionType = "Expense#TTE-20200918-103430",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -180,6 +186,7 @@ class DefaultViewModel(
             categoryName = "Social life",
             categoryDescription = "Social",
             transactionType = "Expense#TTE-20200918-103430",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -189,6 +196,7 @@ class DefaultViewModel(
             categoryName = "Transportation",
             categoryDescription = "Movement from one destination to another",
             transactionType = "Expense#TTE-20200918-103430",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 
@@ -198,6 +206,7 @@ class DefaultViewModel(
             categoryName = "Education",
             categoryDescription = "education",
             transactionType = "Expense#TTE-20200918-103430",
+            categoryStatus = StatusEnum.ACTIVE,
             createdAt = Hive().getCurrentDateTime()
         ))
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.expense.money.manager.R
 import com.expense.money.manager.databinding.SettingsExpenseCategoryFragmentBinding
+import com.expense.money.manager.util.observeEvent
 import com.expense.money.manager.util.viewBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,8 +30,17 @@ class ExpenseCategoryFragment : Fragment(R.layout.settings_expense_category_frag
         super.onViewCreated(view, savedInstanceState)
 
         setupToolBar()
+        setupClickListeners()
         setupAccountTypesList()
         setupViewObservers()
+    }
+
+    private fun setupClickListeners() {
+        binding.apply {
+            addCategoryTypes.setOnClickListener {
+                viewModel.addOrEditCategoryTypes()
+            }
+        }
     }
 
     private fun setupToolBar() {
@@ -43,6 +53,11 @@ class ExpenseCategoryFragment : Fragment(R.layout.settings_expense_category_frag
         viewModel.uiState.observe(viewLifecycleOwner) {
             when (it) {
                 is ExpenseCategoryUIState.Categories -> populateExpenseTypes(it.categoryEntity)
+            }
+        }
+        viewModel.action.observeEvent(viewLifecycleOwner) {
+            when (it) {
+                is ExpenseCategoryActions.Navigate -> findNavController().navigate(it.destination)
             }
         }
     }

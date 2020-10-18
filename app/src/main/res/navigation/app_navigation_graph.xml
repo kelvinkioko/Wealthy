@@ -159,7 +159,21 @@
         android:id="@+id/expenseCategoryFragment"
         android:name="com.expense.money.manager.ui.settings.expensecategory.ExpenseCategoryFragment"
         android:label="Expense category fragment"
-        tools:layout="@layout/settings_expense_category_fragment" />
+        tools:layout="@layout/settings_expense_category_fragment" >
+        <action
+            android:id="@+id/toExpenseAddCategoryFragment"
+            app:destination="@id/expenseAddCategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/expenseAddCategoryFragment"
+        android:name="com.expense.money.manager.ui.settings.expensecategory.ExpenseAddCategoryFragment"
+        android:label="Add expense category fragment"
+        tools:layout="@layout/settings_expense_add_fragment">
+        <argument
+            android:name="categoryID"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/transactionTypesFragment"
