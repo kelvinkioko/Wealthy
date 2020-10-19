@@ -28,9 +28,10 @@ class TransactionTypesAdapter(private val transactionType: (TransactionTypesEnti
         holder.bind(items[position])
     }
 
-    fun setTransactionTypes(transactionType: List<TransactionTypesEntity>) {
+    fun setTransactionTypes(transactionType: List<TransactionTypesEntity>, selected: String = "") {
         items.clear()
         items.addAll(transactionType)
+        this.checkedItems = selected
         notifyDataSetChanged()
     }
 

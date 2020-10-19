@@ -84,7 +84,7 @@ class DefaultViewModel(
         currency.add(CurrencyEntity(0, "Thailand", "Thai baht", "THB", "฿", "Asia & The Pacific region"))
         currency.add(CurrencyEntity(0, "Vietnam", "Vietnamese dong", "VND", "₫", "Asia & The Pacific region"))
 
-        if (currency.size != currencyRepository.countCurrency()) {
+        if (currencyRepository.countCurrency() == 0) {
             currencyRepository.deleteCurrency()
             for (singleCurrency in currency) {
                 currencyRepository.insertCurrency(singleCurrency)
@@ -119,7 +119,7 @@ class DefaultViewModel(
             createdAt = Hive().getCurrentDateTime()
         ))
 
-        if (transactionType.size != transactionRepository.countTransactionTypes()) {
+        if (transactionRepository.countTransactionTypes() == 0) {
             transactionRepository.deleteTransactionTypes()
             for (singleTransactionType in transactionType) {
                 transactionRepository.insertTransactionTypes(singleTransactionType)
@@ -132,7 +132,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-103321",
             categoryName = "Salary",
             categoryDescription = "Regular income from formal employment.",
             transactionType = "Income#TTE-20200918-103320",
@@ -142,7 +142,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-104321",
             categoryName = "Business",
             categoryDescription = "Financed from partially or fully owned business",
             transactionType = "Income#TTE-20200918-103320",
@@ -152,7 +152,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-154321",
             categoryName = "Loan",
             categoryDescription = "Sum of money borrowed and is expected to be paid back with interest",
             transactionType = "Income#TTE-20200918-103320",
@@ -162,7 +162,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-654321",
             categoryName = "Debt repayment",
             categoryDescription = "past lending repaid",
             transactionType = "Income#TTE-20200918-103320",
@@ -172,7 +172,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-123456",
             categoryName = "Food",
             categoryDescription = "Food",
             transactionType = "Expense#TTE-20200918-103430",
@@ -182,7 +182,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-112345",
             categoryName = "Social life",
             categoryDescription = "Social",
             transactionType = "Expense#TTE-20200918-103430",
@@ -192,7 +192,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-101234",
             categoryName = "Transportation",
             categoryDescription = "Movement from one destination to another",
             transactionType = "Expense#TTE-20200918-103430",
@@ -202,7 +202,7 @@ class DefaultViewModel(
 
         categoryTypes.add(CategoryTypesEntity(
             id = 0,
-            categoryID = "CAT-${Hive().getTimestamp()}",
+            categoryID = "CAT-20200918-103123",
             categoryName = "Education",
             categoryDescription = "education",
             transactionType = "Expense#TTE-20200918-103430",
@@ -210,7 +210,7 @@ class DefaultViewModel(
             createdAt = Hive().getCurrentDateTime()
         ))
 
-        if (categoryTypes.size != categoryRepository.countCategoryTypes()) {
+        if (categoryRepository.countCategoryTypes() == 0) {
             categoryRepository.deleteCategoryTypes()
             for (singleCategoryType in categoryTypes) {
                 categoryRepository.insertCategoryTypes(singleCategoryType)

@@ -10,6 +10,6 @@ import org.koin.dsl.module
 val settingsModule = module {
     viewModel { AccountTypeViewModel(get()) }
     viewModel { CurrencyViewModel(get()) }
-    viewModel { ExpenseCategoryViewModel(get()) }
+    viewModel { ExpenseCategoryViewModel(get(), get()) }
     viewModel { TransactionTypesViewModel(get()) }
 }

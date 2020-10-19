@@ -5,8 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="16dp"
-    android:paddingTop="8dp"
+    android:paddingStart="16dp"
     android:foreground="?selectableItemBackground">
 
     <TextView
@@ -18,8 +17,9 @@
         android:maxLines="1"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:paddingTop="12dp"
         app:layout_goneMarginBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/expenseCategoryEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/categoryTypeDescription"
@@ -30,24 +30,48 @@
         android:textAppearance="?attr/textAppearanceCaption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:visibility="gone"
         app:layout_goneMarginBottom="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/expenseCategoryEdit"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categoryType"
         app:layout_constraintBottom_toTopOf="@+id/categoryTypeView"
         tools:text="Just a basic account type description that will help you understand in future"
         tools:visibility="visible"/>
 
+    <ImageView
+        android:id="@+id/expenseCategoryEdit"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:foreground="?selectableItemBackground"
+        app:srcCompat="@drawable/ic_edit"
+        app:layout_constraintEnd_toStartOf="@+id/expenseCategoryDelete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/categoryTypeView" />
+
+    <ImageView
+        android:id="@+id/expenseCategoryDelete"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?selectableItemBackground"
+        app:srcCompat="@drawable/ic_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/categoryTypeView" />
+
     <View
         android:id="@+id/categoryTypeView"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/viewBackgroundColor"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

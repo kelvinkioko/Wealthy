@@ -13,6 +13,9 @@ interface TransactionTypesDao {
     @Query("SELECT * FROM transaction_types")
     fun loadTransactionTypes(): List<TransactionTypesEntity>
 
+    @Query("SELECT * FROM transaction_types WHERE transactionID =:transactionID")
+    fun loadTransactionType(transactionID: String): TransactionTypesEntity
+
     @Query("SELECT COUNT(id) FROM transaction_types")
     fun countTransactionTypes(): Int
 

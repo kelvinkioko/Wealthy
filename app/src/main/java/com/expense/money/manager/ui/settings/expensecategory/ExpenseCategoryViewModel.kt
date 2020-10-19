@@ -9,6 +9,7 @@ import com.expense.money.manager.constants.StatusEnum
 import com.expense.money.manager.database.models.CategoryTypesEntity
 import com.expense.money.manager.database.models.TransactionTypesEntity
 import com.expense.money.manager.database.repository.CategoryRepository
+import com.expense.money.manager.database.repository.TransactionRepository
 import com.expense.money.manager.util.Event
 import com.expense.money.manager.util.asEvent
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -19,7 +20,8 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 class ExpenseCategoryViewModel(
-    private val categoryRepository: CategoryRepository
+    private val categoryRepository: CategoryRepository,
+    private val transactionRepository: TransactionRepository
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<ExpenseCategoryUIState>()
@@ -36,11 +38,21 @@ class ExpenseCategoryViewModel(
         loadExpenseCategory()
     }
 
+    fun loadTransactionTypes() {
+        val transactionTypes = transactionRepository.loadTransactionTypes()
+        _uiState.postValue(ExpenseCategoryUIState.TransactionTypes(transactionTypes))
+    }
+
+    fun loadTransactionTypeByID(transactionID: String) {
+        val transactionType = transactionRepository.loadTransactionType(transactionID = transactionID)
+        _uiState.postValue(ExpenseCategoryUIState.TransactionTypesByID(transactionType))
+    }
+
     fun addOrEditCategoryTypes(categoryID: String = "") {
         _action.postValue(ExpenseCategoryActions.Navigate(ExpenseCategoryFragmentDirections.toExpenseAddCategoryFragment(categoryID = categoryID)).asEvent())
     }
 
-    private fun loadExpenseCategory() {
+    fun loadExpenseCategory() {
         val currencies = categoryRepository.loadCategoryTypes()
 
         val sectionedCategoryItem = mutableListOf<SectionedCategoryItem>()
@@ -55,7 +67,9 @@ class ExpenseCategoryViewModel(
                 SectionedCategoryItem.CategoryItems(
                     categoryID = it.categoryID,
                     categoryName = it.categoryName,
-                    categoryDescription = it.categoryDescription
+                    categoryDescription = it.categoryDescription,
+                    deleteCategoryClick = { deleteCategoryTypesSheet(it.categoryID) },
+                    editCategoryClick = { addOrEditCategoryTypes(it.categoryID) }
                 )
             )
         }
@@ -87,12 +101,20 @@ class ExpenseCategoryViewModel(
         }
     }
 
-    fun deleteCategoryTypes(accountTypeID: String) {
-        categoryRepository.deleteOrArchiveCategoryTypesByID(categoryID = accountTypeID, categoryStatus = StatusEnum.DELETED)
+    private fun deleteCategoryTypesSheet(categoryID: String) {
+        val bottomSheetFragment = DeleteExpenseCategoryDialogFragment(
+            categoryID = categoryID,
+            deleteCallBack = { loadExpenseCategory() }
+        )
+        _action.postValue(ExpenseCategoryActions.BottomNavigate(bottomSheetFragment).asEvent())
     }
 
-    fun archiveCategoryTypes(accountTypeID: String) {
-        categoryRepository.deleteOrArchiveCategoryTypesByID(categoryID = accountTypeID, categoryStatus = StatusEnum.ARCHIVED)
+    fun deleteCategoryTypes(categoryID: String) {
+        categoryRepository.deleteOrArchiveCategoryTypesByID(categoryID = categoryID, categoryStatus = StatusEnum.DELETED)
+    }
+
+    fun archiveCategoryTypes(categoryID: String) {
+        categoryRepository.deleteOrArchiveCategoryTypesByID(categoryID = categoryID, categoryStatus = StatusEnum.ARCHIVED)
     }
 }
 
@@ -107,9 +129,11 @@ sealed class ExpenseCategoryUIState {
 
     object Success : ExpenseCategoryUIState()
 
-    data class Category(val categoryEntity: CategoryTypesEntity) : ExpenseCategoryUIState()
+    data class TransactionTypesByID(val transactionTypesEntity: TransactionTypesEntity) : ExpenseCategoryUIState()
 
-    data class TransactionType(val transactionTypesEntity: TransactionTypesEntity) : ExpenseCategoryUIState()
+    data class TransactionTypes(val transactionTypesEntity: List<TransactionTypesEntity>) : ExpenseCategoryUIState()
+
+    data class Category(val categoryEntity: CategoryTypesEntity) : ExpenseCategoryUIState()
 
     data class Categories(val categoryEntity: List<SectionedCategoryItem>) : ExpenseCategoryUIState()
 }
@@ -118,7 +142,9 @@ sealed class SectionedCategoryItem {
     data class CategoryItems(
         val categoryID: String,
         val categoryName: String,
-        val categoryDescription: String
+        val categoryDescription: String,
+        var deleteCategoryClick: () -> Unit,
+        var editCategoryClick: () -> Unit
     ) : SectionedCategoryItem()
 
     data class CategoryHeader(val title: String) : SectionedCategoryItem()

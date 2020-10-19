@@ -170,4 +170,9 @@ class OnboardingSetupFragment : Fragment(R.layout.onboarding_setup) {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        validateSetupComplete()
+    }
 }

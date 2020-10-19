@@ -65,6 +65,9 @@ class ExpenseCategoryAdapter(private val categoryClicked: (SectionedCategoryItem
                 categoryType.text = content.categoryName
                 categoryTypeDescription.text = content.categoryDescription
                 categoryTypeDescription.isVisible = true
+
+                expenseCategoryEdit.setOnClickListener { content.editCategoryClick.invoke() }
+                expenseCategoryDelete.setOnClickListener { content.deleteCategoryClick.invoke() }
             }
         }
     }

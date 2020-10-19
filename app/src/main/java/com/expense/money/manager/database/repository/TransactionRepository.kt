@@ -17,6 +17,10 @@ class TransactionRepository(application: Application) {
         return transactionTypesDao.loadTransactionTypes()
     }
 
+    fun loadTransactionType(transactionID: String): TransactionTypesEntity {
+        return transactionTypesDao.loadTransactionType(transactionID = transactionID)
+    }
+
     fun countTransactionTypes(): Int {
         return transactionTypesDao.countTransactionTypes()
     }

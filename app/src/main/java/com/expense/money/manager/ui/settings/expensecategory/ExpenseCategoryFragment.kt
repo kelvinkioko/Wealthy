@@ -10,6 +10,7 @@ import com.expense.money.manager.R
 import com.expense.money.manager.databinding.SettingsExpenseCategoryFragmentBinding
 import com.expense.money.manager.util.observeEvent
 import com.expense.money.manager.util.viewBinding
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ExpenseCategoryFragment : Fragment(R.layout.settings_expense_category_fragment) {
@@ -58,8 +59,13 @@ class ExpenseCategoryFragment : Fragment(R.layout.settings_expense_category_frag
         viewModel.action.observeEvent(viewLifecycleOwner) {
             when (it) {
                 is ExpenseCategoryActions.Navigate -> findNavController().navigate(it.destination)
+                is ExpenseCategoryActions.BottomNavigate -> showDialog(it.bottomSheetDialogFragment)
             }
         }
+    }
+
+    private fun showDialog(bottomSheetDialogFragment: BottomSheetDialogFragment) {
+        bottomSheetDialogFragment.show(parentFragmentManager, bottomSheetDialogFragment.tag)
     }
 
     private fun populateExpenseTypes(sectionedCurrencyItem: List<SectionedCategoryItem>) {
@@ -68,5 +74,10 @@ class ExpenseCategoryFragment : Fragment(R.layout.settings_expense_category_frag
 
     private fun setupAccountTypesList() {
         binding.expenseCategoryList.adapter = expenseCurrencyAdapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadExpenseCategory()
     }
 }
