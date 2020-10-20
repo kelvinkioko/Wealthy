@@ -12,6 +12,7 @@ import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import com.expense.money.manager.R
 import com.expense.money.manager.constants.PreferenceHandler
+import com.expense.money.manager.constants.getShortMonthGivenNumber
 import com.expense.money.manager.databinding.ExpensesDailyFragmentBinding
 import com.expense.money.manager.ui.expenses.SharedExpenseViewModel
 import com.expense.money.manager.util.observeEvent
@@ -39,7 +40,8 @@ class DailyExpensesFragment : Fragment(R.layout.expenses_daily_fragment) {
 
         val sharedViewModel = requireActivity().run { ViewModelProvider(this).get(SharedExpenseViewModel::class.java) }
         sharedViewModel.toolbarMonthCalendar.observe(viewLifecycleOwner, Observer {
-            binding.emptyState.emptyText.text = String.format(getString(R.string.empty_transactions_string), it.toString())
+            val timeline = it.toString().split("/")
+            binding.emptyState.emptyText.text = String.format(getString(R.string.empty_transactions_string), "${getShortMonthGivenNumber(timeline[0])}, ${timeline[1]}")
             viewModel.loadExpenses(it.toString())
         })
     }

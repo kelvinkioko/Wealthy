@@ -26,9 +26,17 @@ class GenericActionItem @JvmOverloads constructor(
         attrs?.let {
             context.obtainStyledAttributes(it, R.styleable.GenericClickableItem).apply {
                 setItemText(getString(R.styleable.GenericClickableItem_text).orEmpty())
+                setItemSubText(getString(R.styleable.GenericClickableItem_subText).orEmpty())
                 getDrawable(R.styleable.GenericClickableItem_profile)?.let { icon -> setItemIcon(icon) }
                 recycle()
             }
+        }
+    }
+
+    private fun setItemSubText(itemSubText: String) {
+        itemBinding.apply {
+            actionSubTitle.text = itemSubText
+            actionSubTitle.isVisible = actionSubTitle.text.isNotEmpty()
         }
     }
 

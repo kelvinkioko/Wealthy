@@ -17,54 +17,34 @@ class Hive {
         return mdformat.format(calendar.time)
     }
 
-    fun getCurrentMonth(): Pair<String, String>? {
+    fun getCurrentMonth(currentMonth: String = "", toFuture: Boolean = false, toPast: Boolean = false): Pair<String, String>? {
         val calendar = Calendar.getInstance()
         @SuppressLint("SimpleDateFormat") val displayFormat = SimpleDateFormat("MMM, yyyy")
         @SuppressLint("SimpleDateFormat") val dateFormat = SimpleDateFormat("MM/yyyy")
+        if (currentMonth.isNotEmpty()) {
+            val date: Date = displayFormat.parse(currentMonth)!!
+            calendar.time = date
+            if (toFuture) {
+                calendar.add(Calendar.MONTH, 1)
+            } else if (toPast) {
+                calendar.add(Calendar.MONTH, -1)
+            }
+        }
         return Pair<String, String>(displayFormat.format(calendar.time), "${dateFormat.format(calendar.time)}")
     }
 
-    fun getPreviousMonth(currentMonth: String): Pair<String, String>? {
-        val calendar = Calendar.getInstance()
-        @SuppressLint("SimpleDateFormat") val displayFormat = SimpleDateFormat("MMM, yyyy")
-        @SuppressLint("SimpleDateFormat") val dateFormat = SimpleDateFormat("MM/yyyy")
-        val date: Date = displayFormat.parse(currentMonth)!!
-        calendar.time = date
-        calendar.add(Calendar.MONTH, -1)
-        return Pair<String, String>(displayFormat.format(calendar.time), "${dateFormat.format(calendar.time)}")
-    }
-
-    fun getNextMonth(currentMonth: String): Pair<String, String>? {
-        val calendar = Calendar.getInstance()
-        @SuppressLint("SimpleDateFormat") val displayFormat = SimpleDateFormat("MMM, yyyy")
-        @SuppressLint("SimpleDateFormat") val dateFormat = SimpleDateFormat("MM/yyyy")
-        val date: Date = displayFormat.parse(currentMonth)!!
-        calendar.time = date
-        calendar.add(Calendar.MONTH, 1)
-        return Pair<String, String>(displayFormat.format(calendar.time), "${dateFormat.format(calendar.time)}")
-    }
-
-    fun getCurrentYear(): String {
+    fun getCurrentYear(currentYear: String = "", toFuture: Boolean = false, toPast: Boolean = false): String {
         val calendar = Calendar.getInstance()
         @SuppressLint("SimpleDateFormat") val displayFormat = SimpleDateFormat("yyyy")
-        return displayFormat.format(calendar.time)
-    }
-
-    fun getPreviousYear(currentMonth: String): String {
-        val calendar = Calendar.getInstance()
-        @SuppressLint("SimpleDateFormat") val displayFormat = SimpleDateFormat("yyyy")
-        val date: Date = displayFormat.parse(currentMonth)!!
-        calendar.time = date
-        calendar.add(Calendar.YEAR, -1)
-        return displayFormat.format(calendar.time)
-    }
-
-    fun getNextYear(currentMonth: String): String {
-        val calendar = Calendar.getInstance()
-        @SuppressLint("SimpleDateFormat") val displayFormat = SimpleDateFormat("yyyy")
-        val date: Date = displayFormat.parse(currentMonth)!!
-        calendar.time = date
-        calendar.add(Calendar.YEAR, 1)
+        if (currentYear.isNotEmpty()) {
+            val date: Date = displayFormat.parse(currentYear)!!
+            calendar.time = date
+            if (toFuture) {
+                calendar.add(Calendar.YEAR, 1)
+            } else if (toPast) {
+                calendar.add(Calendar.YEAR, -1)
+            }
+        }
         return displayFormat.format(calendar.time)
     }
 
@@ -222,7 +202,7 @@ fun getShortMonthGivenNumber(monthNumber: String): String {
         monthNumber.equals("09", ignoreCase = true) -> month = "Sep"
         monthNumber.equals("10", ignoreCase = true) -> month = "Oct"
         monthNumber.equals("11", ignoreCase = true) -> month = "Nov"
-        monthNumber.equals("11", ignoreCase = true) -> month = "Dec"
+        monthNumber.equals("12", ignoreCase = true) -> month = "Dec"
     }
     return month
 }

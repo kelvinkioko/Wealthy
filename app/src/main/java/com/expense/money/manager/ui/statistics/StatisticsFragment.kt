@@ -40,7 +40,7 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
     private val viewModel: StatisticsViewModel by viewModel()
 
-    private var isCalendarMonthly = false
+    private var isCalendarMonthly = true
 
     private var transactionValue: String = ""
     private var durationValue: String = ""
@@ -49,10 +49,6 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.apply {
-            anyChartView.setBackgroundColor("#000000")
-        }
 
         setupClickListeners()
         setupObservers()
@@ -63,14 +59,14 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
     private fun setupData() {
         binding.apply {
             if (isCalendarMonthly) {
-                val newCalendarDisplay = Hive().getCurrentYear()
-                calendarMonthYear.text = newCalendarDisplay
-                dateValue = newCalendarDisplay
-            } else {
                 val newCalendarDisplay = Hive().getCurrentMonth()
                 calendarMonthYear.text = newCalendarDisplay!!.first
                 PreferenceHandler(requireActivity()).setCalendarMonth("${newCalendarDisplay.first}#${newCalendarDisplay.second}")
                 dateValue = newCalendarDisplay.second
+            } else {
+                val newCalendarDisplay = Hive().getCurrentYear()
+                calendarMonthYear.text = newCalendarDisplay
+                dateValue = newCalendarDisplay
             }
             viewModel.loadTransactions(transactionValue, durationValue, dateValue)
         }
@@ -106,27 +102,27 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
         binding.apply {
             calendarPast.setOnClickListener {
                 if (isCalendarMonthly) {
-                    val newCalendarDisplay = Hive().getPreviousYear(calendarMonthYear.text.toString())
-                    calendarMonthYear.text = newCalendarDisplay
-                    dateValue = newCalendarDisplay
-                } else {
-                    val newCalendarDisplay = Hive().getPreviousMonth(calendarMonthYear.text.toString())
+                    val newCalendarDisplay = Hive().getCurrentMonth(calendarMonthYear.text.toString(), toPast = true)
                     calendarMonthYear.text = newCalendarDisplay!!.first
                     PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
                     dateValue = newCalendarDisplay.second
+                } else {
+                    val newCalendarDisplay = Hive().getCurrentYear(calendarMonthYear.text.toString(), toPast = true)
+                    calendarMonthYear.text = newCalendarDisplay
+                    dateValue = newCalendarDisplay
                 }
                 viewModel.loadTransactions(transactionValue, durationValue, dateValue)
             }
             calendarFuture.setOnClickListener {
                 if (isCalendarMonthly) {
-                    val newCalendarDisplay = Hive().getNextYear(calendarMonthYear.text.toString())
-                    calendarMonthYear.text = newCalendarDisplay
-                    dateValue = newCalendarDisplay
-                } else {
-                    val newCalendarDisplay = Hive().getNextMonth(calendarMonthYear.text.toString())
+                    val newCalendarDisplay = Hive().getCurrentMonth(calendarMonthYear.text.toString(), toFuture = true)
                     calendarMonthYear.text = newCalendarDisplay!!.first
                     PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
                     dateValue = newCalendarDisplay.second
+                } else {
+                    val newCalendarDisplay = Hive().getCurrentYear(calendarMonthYear.text.toString(), toFuture = true)
+                    calendarMonthYear.text = newCalendarDisplay
+                    dateValue = newCalendarDisplay
                 }
                 viewModel.loadTransactions(transactionValue, durationValue, dateValue)
             }
@@ -143,18 +139,18 @@ class StatisticsFragment : Fragment(R.layout.statistics_fragment) {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                     durationValue = durationType.selectedItem.toString()
-                    viewModel.loadTransactions(transactionValue, durationValue, dateValue)
                     when (durationValue) {
                         "Monthly" -> {
-                            isCalendarMonthly = false
-                            setupData()
-                        }
-                        "Yearly" -> {
                             isCalendarMonthly = true
                             setupData()
                         }
-                        "Periodically" -> { }
+                        "Yearly" -> {
+                            isCalendarMonthly = false
+                            setupData()
+                        }
+//                        "Periodically" -> { }
                     }
+                    viewModel.loadTransactions(transactionValue, durationValue, dateValue)
                 }
 
                 override fun onNothingSelected(p0: AdapterView<*>?) {}

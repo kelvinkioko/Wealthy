@@ -9,8 +9,10 @@
     <string-array name="durationType">
         <item>Monthly</item>
         <item>Yearly</item>
-        <item>Periodically</item>
     </string-array>
+
+
+<!--    <item>Periodically</item>-->
 
     <!--    Calendar    -->
     <string name="sunday">SUN</string>

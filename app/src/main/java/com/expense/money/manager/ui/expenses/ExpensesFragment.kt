@@ -53,11 +53,11 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
         binding.apply {
             calendarPast.setOnClickListener {
                 if (isCalendarMonthly) {
-                    val newCalendarDisplay = Hive().getPreviousYear(calendarMonthYear.text.toString())
+                    val newCalendarDisplay = Hive().getCurrentYear(calendarMonthYear.text.toString(), toPast = true)
                     calendarMonthYear.text = newCalendarDisplay
                     sharedViewModel.setToolbarYearCalendar(newCalendarDisplay)
                 } else {
-                    val newCalendarDisplay = Hive().getPreviousMonth(calendarMonthYear.text.toString())
+                    val newCalendarDisplay = Hive().getCurrentMonth(calendarMonthYear.text.toString(), toPast = true)
                     calendarMonthYear.text = newCalendarDisplay!!.first
                     sharedViewModel.setToolbarMonthCalendar(newCalendarDisplay.second)
                     PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")
@@ -65,11 +65,11 @@ class ExpensesFragment : Fragment(R.layout.expenses_fragment) {
             }
             calendarFuture.setOnClickListener {
                 if (isCalendarMonthly) {
-                    val newCalendarDisplay = Hive().getNextYear(calendarMonthYear.text.toString())
+                    val newCalendarDisplay = Hive().getCurrentYear(calendarMonthYear.text.toString(), toFuture = true)
                     calendarMonthYear.text = newCalendarDisplay
                     sharedViewModel.setToolbarYearCalendar(newCalendarDisplay)
                 } else {
-                    val newCalendarDisplay = Hive().getNextMonth(calendarMonthYear.text.toString())
+                    val newCalendarDisplay = Hive().getCurrentMonth(calendarMonthYear.text.toString(), toFuture = true)
                     calendarMonthYear.text = newCalendarDisplay!!.first
                     sharedViewModel.setToolbarMonthCalendar(newCalendarDisplay.second)
                     PreferenceHandler(requireActivity()).setCalendarMonth("$newCalendarDisplay#${newCalendarDisplay.second}")

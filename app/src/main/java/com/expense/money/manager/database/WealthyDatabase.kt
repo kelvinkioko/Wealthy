@@ -19,7 +19,7 @@ import com.expense.money.manager.database.models.CurrencyEntity
 import com.expense.money.manager.database.models.ExpensesEntity
 import com.expense.money.manager.database.models.TransactionTypesEntity
 
-@Database(entities = [AccountsEntity::class, AccountTypesEntity::class, CategoryTypesEntity::class, CurrencyEntity::class, ExpensesEntity::class, TransactionTypesEntity::class], version = 1)
+@Database(entities = [AccountsEntity::class, AccountTypesEntity::class, CategoryTypesEntity::class, CurrencyEntity::class, ExpensesEntity::class, TransactionTypesEntity::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class WealthyDatabase : RoomDatabase() {
 
