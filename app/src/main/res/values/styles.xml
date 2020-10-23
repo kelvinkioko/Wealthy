@@ -1,4 +1,9 @@
 <resources>
+    <style name="SplashTheme" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/statusBarColor</item>
+        <item name="android:windowBackground">@drawable/layer_splash</item>
+    </style>
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
