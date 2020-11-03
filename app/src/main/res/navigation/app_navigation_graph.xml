@@ -11,6 +11,10 @@
         android:name="com.expense.money.manager.ui.onboarding.OnboardingWelcomeFragment"
         android:label="Onboarding fragment"
         tools:layout="@layout/onboarding_welcome">
+        <argument
+            android:name="hasBottomNav"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/toOnBoardingSetupFragment"
             app:destination="@id/onBoardingSetupFragment" />
